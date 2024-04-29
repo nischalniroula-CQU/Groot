@@ -8,90 +8,116 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-@Entity
-@Data
+//@Entity
+//@Data
 public class User {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String username;
-    private String password;
-    
-    private String firebaseId; // Firebase UID
-    private Boolean isActive;
-    private Role role; // Assuming Role is an Enum (e.g., ADMIN, USER)
-    
-    public User() {
-    	
-    }
-    
-    public User(Long id, String username, String password, String firebaseId, Boolean isActive, Role role) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.firebaseId = firebaseId;
-		this.isActive = isActive;
-		this.role = role;
-	}
-
+	//@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //private Long id;
 	
-    
-	public String getFirebaseId() {
-		return firebaseId;
+
+	private String email;
+	private String phoneNumber;
+	private String city;
+	private String lastName;
+	private String id;
+	private String country;
+	private String firstName;
+	public String getEmail() {
+		return email;
 	}
-
-
-
-	public void setFirebaseId(String firebaseId) {
-		this.firebaseId = firebaseId;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
-
-
-	public Boolean getIsActive() {
-		return isActive;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
-
-
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
-
-
-
-	public Role getRole() {
-		return role;
+	public String getCity() {
+		return city;
 	}
-
-
-
-	public void setRole(Role role) {
-		this.role = role;
+	public void setCity(String city) {
+		this.city = city;
 	}
-
-
-
-	public Long getId() {
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	public String getUsername() {
-		return username;
+	public String getCountry() {
+		return country;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setCountry(String country) {
+		this.country = country;
 	}
-	public String getPassword() {
-		return password;
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
+	
+	
+	
+	//private String username;
+    //private String password;
+    
+    //private String firebaseId; // Firebase UID
+    //private Boolean isActive;
+    //private Role role; // Assuming Role is an Enum (e.g., ADMIN, USER)
+    
+	/*
+	 * public User() {
+	 * 
+	 * }
+	 * 
+	 * public User(Long id, String username, String password, String firebaseId,
+	 * Boolean isActive, Role role) { super(); this.id = id; this.username =
+	 * username; this.password = password; this.firebaseId = firebaseId;
+	 * this.isActive = isActive; this.role = role; }
+	 * 
+	 * 
+	 * 
+	 * public String getFirebaseId() { return firebaseId; }
+	 * 
+	 * 
+	 * 
+	 * public void setFirebaseId(String firebaseId) { this.firebaseId = firebaseId;
+	 * }
+	 * 
+	 * 
+	 * 
+	 * public Boolean getIsActive() { return isActive; }
+	 * 
+	 * 
+	 * 
+	 * public void setIsActive(Boolean isActive) { this.isActive = isActive; }
+	 * 
+	 * 
+	 * 
+	 * public Role getRole() { return role; }
+	 * 
+	 * 
+	 * 
+	 * public void setRole(Role role) { this.role = role; }
+	 * 
+	 * 
+	 * 
+	 * public Long getId() { return id; } public void setId(Long id) { this.id = id;
+	 * } public String getUsername() { return username; } public void
+	 * setUsername(String username) { this.username = username; } public String
+	 * getPassword() { return password; } public void setPassword(String password) {
+	 * this.password = password; }
+	 */
 	
 
     // Constructors, getters, and setters
