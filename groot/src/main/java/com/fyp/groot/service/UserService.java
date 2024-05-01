@@ -1,5 +1,8 @@
 package com.fyp.groot.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
@@ -8,8 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.fyp.groot.commons.BaseResponse;
 import com.fyp.groot.commons.utility.Constant;
+import com.fyp.groot.entity.LocalUser;
 import com.fyp.groot.entity.User;
 import com.fyp.groot.model.userlogin.UserLoginRequest;
+import com.fyp.groot.repository.UserRepository;
 //import com.fyp.groot.repository.UserRepository;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
@@ -25,6 +30,26 @@ import com.google.firebase.cloud.FirestoreClient;
 public class UserService {
 	
 	private static final String COLLECTION_NAME = "users";
+	
+	@Autowired
+    private FirebaseUserService firebaseUserService;
+	
+	@Autowired
+    private UserRepository userRepository;
+	
+	public void createUserAndLinkFirebaseUser(String email, String password) throws FirebaseAuthException {
+        // Create user in Firebase
+        UserRecord firebaseUser = firebaseUserService.createUser(email, password);
+        
+        // Create local user and link with Firebase user ID
+        LocalUser localUser = new LocalUser();
+        localUser.setFirebaseId(firebaseUser.getUid());
+        // Set other properties of localUser
+        
+        // Save local user to the database
+        userRepository.save(localUser);
+    }
+	
 	
 	public String saveUser(User user) throws InterruptedException, ExecutionException {
 		
@@ -50,6 +75,50 @@ public class UserService {
 			return null;
 		}
 	}
+	
+	
+public String updateUser(User user) throws InterruptedException, ExecutionException {
+		
+		Firestore dbFirestore = FirestoreClient.getFirestore();
+		ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection(COLLECTION_NAME).document(user.getId()).set(user);
+		
+		return collectionApiFuture.get().getUpdateTime().toString();
+		
+	}
+
+public String deleteUser(String id) throws InterruptedException, ExecutionException {
+	
+	Firestore dbFirestore = FirestoreClient.getFirestore();
+	ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection(COLLECTION_NAME).document(id).delete();
+	
+	return "Document with user id"+id+"has been deleted successfully";
+	
+}
+
+
+public List<User> getAllUserDetails() throws InterruptedException, ExecutionException {
+	
+	Firestore dbFirestore = FirestoreClient.getFirestore();
+	
+	Iterable<DocumentReference> documentIterable = dbFirestore.collection(COLLECTION_NAME).listDocuments();
+	Iterator<DocumentReference> iterator = documentIterable.iterator();
+	
+	List<User> userList = new ArrayList<>();
+	User user = null;
+	
+	while(iterator.hasNext()) {
+		DocumentReference documentReference = iterator.next();
+		ApiFuture<DocumentSnapshot> future = documentReference.get();
+		DocumentSnapshot document = future.get();
+		
+		user = document.toObject(User.class);
+		userList.add(user);
+		
+	}
+	
+	return userList;
+	
+}
 
 	/*
 	 * @Autowired private UserRepository userRepository;
