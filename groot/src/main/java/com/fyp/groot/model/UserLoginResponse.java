@@ -1,4 +1,4 @@
-package com.fyp.groot.model.userlogin;
+package com.fyp.groot.model;
 
 import org.springframework.http.HttpStatus;
 

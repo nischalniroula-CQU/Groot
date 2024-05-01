@@ -7,30 +7,36 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fyp.groot.model.userlogin.SignupRequest;
-import com.google.firebase.auth.FirebaseAuth;
+import com.fyp.groot.commons.utility.Constant;
+import com.fyp.groot.model.SignupRequest;
+import com.fyp.groot.model.SignupResponse;
+import com.fyp.groot.service.UserService;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 
 @RestController
 public class SignupController {
-	
+
+	@Autowired
+	UserService userService;
+
 	@PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody SignupRequest signupRequest) {
-        try {
-            // Create the user in Firebase Authentication
-            UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-                    .setEmail(signupRequest.getEmail())
-                    .setPassword(signupRequest.getPassword());
-            UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
+	public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest) {
+		try {
 
-            // You can also set additional properties of the user here if needed
+			SignupResponse response = new SignupResponse();
 
-            return ResponseEntity.ok().body("User created successfully. UID: " + userRecord.getUid());
-        } catch (FirebaseAuthException e) {
-            // Handle errors (e.g., email already exists, weak password, etc.)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Signup failed: " + e.getMessage());
-        }
-    }
+			UserRecord userRecord = userService.createUserAndLinkFirebaseUser(signupRequest);
+			response.setResponseCode(Constant.SUCCESS_RESPONSE_CODE);
+			response.setResponseDesc(Constant.SUCCESS_RESPONSE_DESC);
+			response.setEmail(userRecord.getEmail());
+			response.setUid(userRecord.getUid());
+
+			return ResponseEntity.ok().body(response);
+		} catch (FirebaseAuthException e) {
+			// Handle errors (e.g., email already exists, weak password, etc.)
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Signup failed: " + e.getMessage());
+		}
+	}
 
 }

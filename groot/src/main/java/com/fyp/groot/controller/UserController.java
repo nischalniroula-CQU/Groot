@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fyp.groot.entity.User;
-import com.fyp.groot.model.userlogin.UserLoginRequest;
-import com.fyp.groot.model.userlogin.UserLoginResponse;
+import com.fyp.groot.model.UserLoginRequest;
+import com.fyp.groot.model.UserLoginResponse;
 import com.fyp.groot.service.UserService;
 import com.google.cloud.Role;
 import com.google.firebase.auth.FirebaseAuth;

@@ -2,16 +2,17 @@ package com.fyp.groot.service;
 
 import org.springframework.stereotype.Service;
 
+import com.fyp.groot.model.SignupRequest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 
 @Service
 public class FirebaseUserService {
-	public UserRecord createUser(String email, String password) throws FirebaseAuthException {
+	public UserRecord createUser(SignupRequest signupRequest) throws FirebaseAuthException {
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-                .setEmail(email)
-                .setPassword(password);
+                .setEmail(signupRequest.getEmail())
+                .setPassword(signupRequest.getPassword());
 
         return FirebaseAuth.getInstance().createUser(request);
     }

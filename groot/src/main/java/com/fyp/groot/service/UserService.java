@@ -13,7 +13,8 @@ import com.fyp.groot.commons.BaseResponse;
 import com.fyp.groot.commons.utility.Constant;
 import com.fyp.groot.entity.LocalUser;
 import com.fyp.groot.entity.User;
-import com.fyp.groot.model.userlogin.UserLoginRequest;
+import com.fyp.groot.model.SignupRequest;
+import com.fyp.groot.model.UserLoginRequest;
 import com.fyp.groot.repository.UserRepository;
 //import com.fyp.groot.repository.UserRepository;
 import com.google.api.core.ApiFuture;
@@ -37,9 +38,14 @@ public class UserService {
 	@Autowired
     private UserRepository userRepository;
 	
-	public void createUserAndLinkFirebaseUser(String email, String password) throws FirebaseAuthException {
+//	UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+//    .setEmail(signupRequest.getEmail())
+//    .setPassword(signupRequest.getPassword());
+//UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
+	
+	public UserRecord createUserAndLinkFirebaseUser(SignupRequest signupRequest) throws FirebaseAuthException {
         // Create user in Firebase
-        UserRecord firebaseUser = firebaseUserService.createUser(email, password);
+        UserRecord firebaseUser = firebaseUserService.createUser(signupRequest);
         
         // Create local user and link with Firebase user ID
         LocalUser localUser = new LocalUser();
@@ -48,6 +54,8 @@ public class UserService {
         
         // Save local user to the database
         userRepository.save(localUser);
+        
+        return firebaseUser;
     }
 	
 	

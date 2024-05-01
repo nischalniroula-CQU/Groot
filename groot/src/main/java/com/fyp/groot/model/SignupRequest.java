@@ -1,4 +1,4 @@
-package com.fyp.groot.model.userlogin;
+package com.fyp.groot.model;
 
 public class SignupRequest {
 	private String email;
