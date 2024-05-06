@@ -8,21 +8,28 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-//@Entity
+@Entity
 //@Data
 public class User {
-	//@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //private Long id;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 	
 
 	private String email;
 	private String phoneNumber;
 	private String city;
 	private String lastName;
-	private String id;
+	//private String id;
 	private String country;
 	private String firstName;
+	private String password;
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -47,10 +54,10 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getCountry() {

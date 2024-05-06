@@ -32,11 +32,12 @@ public class UserController {
     @Autowired
     private UserService userService;
     
-    @PostMapping("/user")
-    public String saveUser(@RequestBody User user) throws InterruptedException, ExecutionException {
-    	
-    	return userService.saveUser(user);
-    }
+	/*
+	 * @PostMapping("/user") public String saveUser(@RequestBody User user) throws
+	 * InterruptedException, ExecutionException {
+	 * 
+	 * return userService.saveUser(user); }
+	 */
     
     @GetMapping("/user/{id}")
     public User getUser(@PathVariable String id) throws InterruptedException, ExecutionException {
@@ -44,11 +45,12 @@ public class UserController {
     	return userService.getUserDetails(id);
     }
     
-    @PutMapping("/updatUser")
-    public String updateUser(@RequestBody User user) throws InterruptedException, ExecutionException {
-    	
-    	return userService.saveUser(user);
-    }
+	/*
+	 * @PutMapping("/updatUser") public String updateUser(@RequestBody User user)
+	 * throws InterruptedException, ExecutionException {
+	 * 
+	 * return userService.saveUser(user); }
+	 */
     
     @DeleteMapping("/deleteUser/{id}")
     public String deleteUser(@PathVariable String id) throws InterruptedException, ExecutionException {

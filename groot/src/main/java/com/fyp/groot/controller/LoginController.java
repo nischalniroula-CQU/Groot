@@ -74,5 +74,20 @@ public class LoginController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Verify failed: " + e);
 		}
 	}
+	
+	
+	
+	/*
+	 * public ResponseEntity<?> verifyToken(@RequestHeader(value = "token", required
+	 * = false) String token) { if (token == null || token.isEmpty()) { return
+	 * ResponseEntity.badRequest().body("Token header is missing or empty"); }
+	 * 
+	 * try { FirebaseToken decodedToken =
+	 * FirebaseAuth.getInstance().verifyIdToken(token, false); // You can access
+	 * decoded token information here return ResponseEntity.ok().body(decodedToken);
+	 * } catch (FirebaseAuthException e) { return
+	 * ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Verify failed: " +
+	 * e.getMessage()); } }
+	 */
 
 }

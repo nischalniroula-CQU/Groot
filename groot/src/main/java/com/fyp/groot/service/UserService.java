@@ -59,14 +59,18 @@ public class UserService {
     }
 	
 	
-	public String saveUser(User user) throws InterruptedException, ExecutionException {
-		
-		Firestore dbFirestore = FirestoreClient.getFirestore();
-		ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection(COLLECTION_NAME).document(user.getId()).set(user);
-		
-		return collectionApiFuture.get().getUpdateTime().toString();
-		
-	}
+	/*
+	 * public String saveUser(User user) throws InterruptedException,
+	 * ExecutionException {
+	 * 
+	 * Firestore dbFirestore = FirestoreClient.getFirestore();
+	 * ApiFuture<WriteResult> collectionApiFuture =
+	 * dbFirestore.collection(COLLECTION_NAME).document(user.getId()).set(user);
+	 * 
+	 * return collectionApiFuture.get().getUpdateTime().toString();
+	 * 
+	 * }
+	 */
 	
 	public User getUserDetails(String id) throws InterruptedException, ExecutionException {
 		
@@ -85,14 +89,18 @@ public class UserService {
 	}
 	
 	
-public String updateUser(User user) throws InterruptedException, ExecutionException {
-		
-		Firestore dbFirestore = FirestoreClient.getFirestore();
-		ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection(COLLECTION_NAME).document(user.getId()).set(user);
-		
-		return collectionApiFuture.get().getUpdateTime().toString();
-		
-	}
+	/*
+	 * public String updateUser(User user) throws InterruptedException,
+	 * ExecutionException {
+	 * 
+	 * Firestore dbFirestore = FirestoreClient.getFirestore();
+	 * ApiFuture<WriteResult> collectionApiFuture =
+	 * dbFirestore.collection(COLLECTION_NAME).document(user.getId()).set(user);
+	 * 
+	 * return collectionApiFuture.get().getUpdateTime().toString();
+	 * 
+	 * }
+	 */
 
 public String deleteUser(String id) throws InterruptedException, ExecutionException {
 	
@@ -127,6 +135,28 @@ public List<User> getAllUserDetails() throws InterruptedException, ExecutionExce
 	return userList;
 	
 }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	/*
 	 * @Autowired private UserRepository userRepository;
@@ -175,4 +205,3 @@ public List<User> getAllUserDetails() throws InterruptedException, ExecutionExce
 	 * return response; }
 	 */
 
-}
