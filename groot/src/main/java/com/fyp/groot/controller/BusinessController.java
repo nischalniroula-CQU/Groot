@@ -11,16 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fyp.groot.entity.Business;
 import com.fyp.groot.model.AddBusinessRequest;
 import com.fyp.groot.model.AddBusinessResponse;
+import com.fyp.groot.model.ViewBusinessRequest;
+import com.fyp.groot.model.ViewBusinessResponse;
+import com.fyp.groot.model.ViewMultipleBusinessRequest;
+import com.fyp.groot.model.ViewMultipleBusinessResponse;
 import com.fyp.groot.service.BusinessService;
 
 @RestController
-@RequestMapping("/api/businesses")
+@RequestMapping("/api")
 public class BusinessController {
 	
 	@Autowired
     private BusinessService businessService;
 	
-	@PostMapping
+	@PostMapping("/businesses")
     public ResponseEntity<AddBusinessResponse> addBusiness(@RequestBody AddBusinessRequest request) {
         Business business = new Business();
         business.setName(request.getName());
@@ -62,5 +66,18 @@ public class BusinessController {
         
         return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
+	
+	@PostMapping("/view")
+    public ResponseEntity<ViewBusinessResponse> viewBusiness(@RequestBody ViewBusinessRequest request) {
+        ViewBusinessResponse response = businessService.viewBusiness(request.getBusinessId());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+	
+	
+	@PostMapping("/view-multiple")
+    public ResponseEntity<ViewMultipleBusinessResponse> viewMultipleBusinesses(@RequestBody ViewMultipleBusinessRequest request) {
+        ViewMultipleBusinessResponse response = businessService.viewMultipleBusinesses(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
 }

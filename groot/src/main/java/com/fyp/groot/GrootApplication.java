@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 public class GrootApplication {
@@ -14,3 +15,5 @@ public class GrootApplication {
 	}
 
 }
+
+//@ComponentScan(basePackages = {"com.fyp.groot.service", "com.fyp.groot.controller"})
