@@ -5,6 +5,12 @@ public class LoginResponse {
 	private String customToken;
     private String errorMessage;
 
+ // Constructors
+    public LoginResponse(String customToken, String errorMessage) {
+        this.customToken = customToken;
+        this.errorMessage = errorMessage;
+    }
+    
     // Getters and setters
     public String getCustomToken() {
         return customToken;

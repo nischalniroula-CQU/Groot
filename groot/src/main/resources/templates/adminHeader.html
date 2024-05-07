@@ -1,0 +1,30 @@
+<header>
+	    <nav class="navbar navbar-expand-md bg-body py-3">
+	        <div class="container"><a class="navbar-brand d-flex align-items-center" href="index"><img src="/img/GrootLogo.png" width="104" height="30"></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+	            <div id="userloggedin">
+	            	<div class="collapse navbar-collapse" id="navcol-2">
+					    <!-- Menu when the user is logged in -->
+					    <ul class="navbar-nav ms-auto">
+					        <li class="nav-item"><a class="nav-link" th:href="adminDashboard">Dashboard</a></li>
+					        <li class="nav-item"><a class="nav-link" th:href="adminBusinesses">Businesses</a></li>
+					        <li class="nav-item"><a class="nav-link" th:href="adminEvents">Events</a></li>
+					        <li class="nav-item"><a class="nav-link" th:href="adminProducts">Products</a></li>
+					        <li class="nav-item"><a class="nav-link" th:href="adminUsers">Users</a></li>
+					        <li class="nav-item"><a class="nav-link" th:href="adminTerms">Manage Terms</a></li>
+					    </ul>
+					    <a class="btn btn-primary ms-md-2" role="button" href="#" style="background: rgb(19,69,106);">Profile</a>
+					    <a class="btn btn-primary ms-md-2" role="button" id="logout" style="background: rgb(0,128,255);">Logout</a>
+					</div>
+	            </div>
+           </div> 
+    	</nav>
+</header>
+<script>
+function logout() {
+    // Remove the userToken from localStorage
+    localStorage.removeItem('userToken');
+    window.location.href = '/index';
+}
+// Add event listener to logout button
+document.getElementById('logout').addEventListener('click', logout);
+</script>

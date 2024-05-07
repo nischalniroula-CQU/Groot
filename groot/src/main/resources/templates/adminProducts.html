@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Groot - Manage Products</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk&amp;display=swap">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body style="--bs-primary: #13456a;--bs-primary-rgb: 19,69,106;--bs-secondary: #FF8889;--bs-secondary-rgb: 255,136,137;">
+    
+    <header id="adminHeader"></header>
+    
+    <div class="container" style="margin-top: 2vw;">
+        <div class="row">
+            <h4>
+            	Manage Products 
+            	<a href="addProduct"><button style="float:right; width: 200px;" class="btn btn-success">Add New Product</button></a>
+            </h4>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 2vw; margin-bottom: 2vw;">
+    <div class="row">
+        <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Item</th>
+                <th>Price Range</th>
+                <th>Added On</th>
+                <th>Business</th>
+                <th>Cultural</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Anzac biscuits</td>
+                <td>$21</td>
+                <td>2024-05-01</td>
+                <td>John Doe</td>
+                <td>Thai</td>
+                <td>
+                	<button class="btn btn-primary">View</button>
+                	<button class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Macadamia nuts</td>
+                <td>$23</td>
+                <td>2024-04-28</td>
+                <td>Jane Smith</td>
+                <td>Western</td>
+                <td>
+                	<button class="btn btn-primary">View</button>
+                	<button class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Barbecued snags</td>
+                <td>$16</td>
+                <td>2024-04-25</td>
+                <td>Mike Johnson</td>
+                <td>East Asia</td>
+                <td>
+                	<button class="btn btn-primary">View</button>
+                	<button class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Tim Tam</td>
+                <td>$6</td>
+                <td>2024-04-20</td>
+                <td>Emily Brown</td>
+                <td>Chinese</td>
+                <td>
+                	<button class="btn btn-primary">View</button>
+                	<button class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Pavlova</td>
+                <td>$76</td>
+                <td>2024-04-15</td>
+                <td>Alex Lee</td>
+                <td>Japanese</td>
+                <td>
+                	<button class="btn btn-primary">View</button>
+                	<button class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    	</table>
+    </div>
+</div>
+    
+    
+    
+    <footer id="footer"></footer>
+    <script src="/js/custom_functions.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Load the header and footer into div
+        $('#adminHeader').load('adminHeader');
+        $('#footer').load('footer');
+    });
+    </script>
+</body>
+
+</html>

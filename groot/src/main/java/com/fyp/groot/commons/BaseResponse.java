@@ -18,6 +18,5 @@ public class BaseResponse {
 	public void setResponseDesc(String responseDesc) {
 		this.responseDesc = responseDesc;
 	}
-	
-	
+
 }
