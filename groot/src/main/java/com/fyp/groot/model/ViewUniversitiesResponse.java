@@ -1,6 +1,8 @@
-package com.fyp.groot.entity;
+package com.fyp.groot.model;
 
 import java.util.List;
+
+import com.fyp.groot.entity.University;
 
 public class ViewUniversitiesResponse {
 	private List<University> universities;

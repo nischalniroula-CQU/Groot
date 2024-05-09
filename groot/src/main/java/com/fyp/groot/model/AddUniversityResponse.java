@@ -1,14 +1,14 @@
 package com.fyp.groot.model;
 
 public class AddUniversityResponse {
-	private Long universityID;
+	private Integer universityId;
     private String message;
     
-	public Long getUniversityID() {
-		return universityID;
+	public Integer getUniversityId() {
+		return universityId;
 	}
-	public void setUniversityID(Long universityID) {
-		this.universityID = universityID;
+	public void setUniversityId(Integer universityId) {
+		this.universityId = universityId;
 	}
 	public String getMessage() {
 		return message;

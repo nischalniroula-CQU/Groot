@@ -42,17 +42,17 @@ public class BusinessService {
                     .collect(Collectors.toList());
         }
 
-        if (request.getCategoryID() != null) {
-            businesses = businesses.stream()
-                    .filter(business -> request.getCategoryID().equals(business.getCategoryID()))
-                    .collect(Collectors.toList());
-        }
-
-        if (request.getCultureID() != null) {
-            businesses = businesses.stream()
-                    .filter(business -> request.getCultureID().equals(business.getCultureID()))
-                    .collect(Collectors.toList());
-        }
+//        if (request.getCategoryID() != null) {
+//            businesses = businesses.stream()
+//                    .filter(business -> request.getCategoryID().equals(business.getCategoryID()))
+//                    .collect(Collectors.toList());
+//        }
+//
+//        if (request.getCultureID() != null) {
+//            businesses = businesses.stream()
+//                    .filter(business -> request.getCultureID().equals(business.getCultureID()))
+//                    .collect(Collectors.toList());
+//        }
 
         if (request.getCity() != null) {
             businesses = businesses.stream()
@@ -74,16 +74,16 @@ public class BusinessService {
 
     private ViewBusinessResponse mapBusinessToResponse(Business business) {
         ViewBusinessResponse response = new ViewBusinessResponse();
-        response.setBusinessID(business.getBusinessID());
+        response.setBusinessID(business.getBusinessId());
         response.setName(business.getName());
         response.setSubtitle(business.getSubtitle());
-        response.setCategoryID(business.getCategoryID());
-        response.setCultureID(business.getCultureID());
+        //response.setCategoryID(business.getCategoryID());
+        //response.setCultureID(business.getCultureID());
         response.setBasicDetails(business.getBasicDetails());
         response.setContactMethod(business.getContactMethod());
         response.setPhoneNumber(business.getPhoneNumber());
-        response.setEmailID(business.getEmailID());
-        response.setOwnerID(business.getOwnerID());
+        response.setEmailID(business.getEmailId());
+        //response.setOwnerID(business.getOwnerID());
         response.setLocation(business.getLocation());
         response.setAddress(business.getAddress());
         response.setCity(business.getCity());
@@ -92,6 +92,10 @@ public class BusinessService {
         response.setStatus(business.getStatus());
         
         return response;
+    }
+    
+    public long countBusinesses() {
+        return businessRepository.count();
     }
 
 	public Business findById(Long businessId) {

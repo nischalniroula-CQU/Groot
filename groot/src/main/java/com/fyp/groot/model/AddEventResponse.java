@@ -2,13 +2,13 @@ package com.fyp.groot.model;
 
 public class AddEventResponse {
 	
-	private Long eventID;
+	private Integer eventID;
     private String message;
     
-	public Long getEventID() {
+	public Integer getEventID() {
 		return eventID;
 	}
-	public void setEventID(Long eventID) {
+	public void setEventID(Integer eventID) {
 		this.eventID = eventID;
 	}
 	public String getMessage() {

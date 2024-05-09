@@ -1,186 +1,245 @@
 package com.fyp.groot.entity;
 
-import java.util.Date;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.Set;
+
 
 @Entity
-@Table(name = "businesses")
 public class Business {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long businessID;
 
+    @Id
+    @Column(nullable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer businessId;
+
+    @Column
     private String name;
+
+    @Column
     private String subtitle;
-    private Long categoryID;
-    private Long cultureID;
+
+    @Column(length = 5000)
     private String basicDetails;
 
-    //@Column(name = "contact_method") // Use name that matches database column
-    private String contactMethod; 
+    @Column
+    private String contactMethod;
 
-    @Column(name = "phone_number")
-    private String phoneNumber; 
+    @Column
+    private String phoneNumber;
 
-    private String emailID;
-    private Long ownerID;
+    @Column
+    private String emailId;
+
+    @Column
     private String location;
+
+    @Column
     private String address;
+
+    @Column
     private String city;
+
+    @Column
     private String country;
 
-    @Column(name = "price_range")
-    private String priceRange; 
+    @Column
+    private String priceRange;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date addedOn;
-
+    @Column
     private String status;
 
-	public Long getBusinessID() {
-		return businessID;
-	}
+    @Column
+    private String addOn;
 
-	public void setBusinessID(Long businessID) {
-		this.businessID = businessID;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-	public String getName() {
-		return name;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "culture_id")
+    private Culture culture;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @OneToMany(mappedBy = "business")
+    private Set<Businesstiming> businessBusinesstimings;
 
-	public String getSubtitle() {
-		return subtitle;
-	}
+    @OneToMany(mappedBy = "business")
+    private Set<Event> businessEvents;
 
-	public void setSubtitle(String subtitle) {
-		this.subtitle = subtitle;
-	}
+    @OneToMany(mappedBy = "post")
+    private Set<Imagelibrary> postImagelibraries;
 
-	public Long getCategoryID() {
-		return categoryID;
-	}
-
-	public void setCategoryID(Long categoryID) {
-		this.categoryID = categoryID;
-	}
-
-	public Long getCultureID() {
-		return cultureID;
-	}
-
-	public void setCultureID(Long cultureID) {
-		this.cultureID = cultureID;
-	}
-
-	public String getBasicDetails() {
-		return basicDetails;
-	}
-
-	public void setBasicDetails(String basicDetails) {
-		this.basicDetails = basicDetails;
-	}
-
-	public String getContactMethod() {
-		return contactMethod;
-	}
-
-	public void setContactMethod(String contactMethod) {
-		this.contactMethod = contactMethod;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public String getEmailID() {
-		return emailID;
-	}
-
-	public void setEmailID(String emailID) {
-		this.emailID = emailID;
-	}
-
-	public Long getOwnerID() {
-		return ownerID;
-	}
-
-	public void setOwnerID(Long ownerID) {
-		this.ownerID = ownerID;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getPriceRange() {
-		return priceRange;
-	}
-
-	public void setPriceRange(String priceRange) {
-		this.priceRange = priceRange;
-	}
-
-	public Date getAddedOn() {
-		return addedOn;
-	}
-
-	public void setAddedOn(Date addedOn) {
-		this.addedOn = addedOn;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	} 
-
+    @OneToMany(mappedBy = "business")
+    private Set<Review> businessReviews;
     
+    //@OneToMany(mappedBy = "")
+    //private Long ownerID;
+
+    public Integer getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(final Integer businessId) {
+        this.businessId = businessId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(final String subtitle) {
+        this.subtitle = subtitle;
+    }
+
+    public String getBasicDetails() {
+        return basicDetails;
+    }
+
+    public void setBasicDetails(final String basicDetails) {
+        this.basicDetails = basicDetails;
+    }
+
+    public String getContactMethod() {
+        return contactMethod;
+    }
+
+    public void setContactMethod(final String contactMethod) {
+        this.contactMethod = contactMethod;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(final String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(final String location) {
+        this.location = location;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(final String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(final String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(final String country) {
+        this.country = country;
+    }
+
+    public String getPriceRange() {
+        return priceRange;
+    }
+
+    public void setPriceRange(final String priceRange) {
+        this.priceRange = priceRange;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(final String status) {
+        this.status = status;
+    }
+
+    public String getAddOn() {
+        return addOn;
+    }
+
+    public void setAddOn(final String addOn) {
+        this.addOn = addOn;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(final Category category) {
+        this.category = category;
+    }
+
+    public Culture getCulture() {
+        return culture;
+    }
+
+    public void setCulture(final Culture culture) {
+        this.culture = culture;
+    }
+
+    public Set<Businesstiming> getBusinessBusinesstimings() {
+        return businessBusinesstimings;
+    }
+
+    public void setBusinessBusinesstimings(final Set<Businesstiming> businessBusinesstimings) {
+        this.businessBusinesstimings = businessBusinesstimings;
+    }
+
+    public Set<Event> getBusinessEvents() {
+        return businessEvents;
+    }
+
+    public void setBusinessEvents(final Set<Event> businessEvents) {
+        this.businessEvents = businessEvents;
+    }
+
+    public Set<Imagelibrary> getPostImagelibraries() {
+        return postImagelibraries;
+    }
+
+    public void setPostImagelibraries(final Set<Imagelibrary> postImagelibraries) {
+        this.postImagelibraries = postImagelibraries;
+    }
+
+    public Set<Review> getBusinessReviews() {
+        return businessReviews;
+    }
+
+    public void setBusinessReviews(final Set<Review> businessReviews) {
+        this.businessReviews = businessReviews;
+    }
 
 }

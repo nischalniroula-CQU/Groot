@@ -5,32 +5,57 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+import java.util.Set;
+
 
 @Entity
-@Table(name = "categories")
 public class Category {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryID;
 
-    @Column(name = "category_name")
+    @Id
+    @Column(nullable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer categoryId;
+
+    @Column
     private String categoryName;
 
-	public Long getCategoryID() {
-		return categoryID;
-	}
+    @OneToMany(mappedBy = "category")
+    private Set<Business> categoryBusinesses;
 
-	public void setCategoryID(Long categoryID) {
-		this.categoryID = categoryID;
-	}
+    @OneToMany(mappedBy = "category")
+    private Set<Event> categoryEvents;
 
-	public String getCategoryName() {
-		return categoryName;
-	}
+    public Integer getCategoryId() {
+        return categoryId;
+    }
 
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
+    public void setCategoryId(final Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(final String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public Set<Business> getCategoryBusinesses() {
+        return categoryBusinesses;
+    }
+
+    public void setCategoryBusinesses(final Set<Business> categoryBusinesses) {
+        this.categoryBusinesses = categoryBusinesses;
+    }
+
+    public Set<Event> getCategoryEvents() {
+        return categoryEvents;
+    }
+
+    public void setCategoryEvents(final Set<Event> categoryEvents) {
+        this.categoryEvents = categoryEvents;
+    }
 
 }

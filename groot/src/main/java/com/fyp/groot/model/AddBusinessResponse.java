@@ -2,7 +2,7 @@ package com.fyp.groot.model;
 
 public class AddBusinessResponse {
 	
-	private Long businessID;
+	private Integer businessID;
 	private String name;
     private String subtitle;
     private Long categoryID;
@@ -19,10 +19,10 @@ public class AddBusinessResponse {
     private String priceRange;
     private String status;
     
-	public Long getBusinessID() {
+	public Integer getBusinessID() {
 		return businessID;
 	}
-	public void setBusinessID(Long businessID) {
+	public void setBusinessID(Integer businessID) {
 		this.businessID = businessID;
 	}
 	public String getName() {

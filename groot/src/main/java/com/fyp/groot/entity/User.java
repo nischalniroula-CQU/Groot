@@ -1,133 +1,181 @@
 package com.fyp.groot.entity;
 
-import com.google.cloud.Role;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import lombok.Data;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.Set;
+
 
 @Entity
-//@Data
 public class User {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-	
 
-	private String email;
-	private String phoneNumber;
-	private String city;
-	private String lastName;
-	//private String id;
-	private String country;
-	private String firstName;
-	private String password;
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	
-	
-	
-	//private String username;
-    //private String password;
-    
-    //private String firebaseId; // Firebase UID
-    //private Boolean isActive;
-    //private Role role; // Assuming Role is an Enum (e.g., ADMIN, USER)
-    
-	/*
-	 * public User() {
-	 * 
-	 * }
-	 * 
-	 * public User(Long id, String username, String password, String firebaseId,
-	 * Boolean isActive, Role role) { super(); this.id = id; this.username =
-	 * username; this.password = password; this.firebaseId = firebaseId;
-	 * this.isActive = isActive; this.role = role; }
-	 * 
-	 * 
-	 * 
-	 * public String getFirebaseId() { return firebaseId; }
-	 * 
-	 * 
-	 * 
-	 * public void setFirebaseId(String firebaseId) { this.firebaseId = firebaseId;
-	 * }
-	 * 
-	 * 
-	 * 
-	 * public Boolean getIsActive() { return isActive; }
-	 * 
-	 * 
-	 * 
-	 * public void setIsActive(Boolean isActive) { this.isActive = isActive; }
-	 * 
-	 * 
-	 * 
-	 * public Role getRole() { return role; }
-	 * 
-	 * 
-	 * 
-	 * public void setRole(Role role) { this.role = role; }
-	 * 
-	 * 
-	 * 
-	 * public Long getId() { return id; } public void setId(Long id) { this.id = id;
-	 * } public String getUsername() { return username; } public void
-	 * setUsername(String username) { this.username = username; } public String
-	 * getPassword() { return password; } public void setPassword(String password) {
-	 * this.password = password; }
-	 */
-	
+    @Id
+    @Column(nullable = false, updatable = false)
+    private String devideUsed;
 
-    // Constructors, getters, and setters
-    // Omitted for brevity
+    @Column
+    private String firebaseId;
+
+    @Column
+    private Boolean isActive;
+
+    @Column
+    private String password;
+
+    @Column(name = "\"role\"", columnDefinition = "longtext")
+    private String role;
+
+    @Column
+    private String username;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Admin> userAdmins;
+
+    @ManyToMany
+    @JoinTable(
+            name = "Businessowner",
+            joinColumns = @JoinColumn(name = "devideUsed"),
+            inverseJoinColumns = @JoinColumn(name = "planId")
+    )
+    private Set<Plan> businessownerPlans;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Event> userEvents;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Personalinterest> userPersonalinterests;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Review> userReviews;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Login user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "culture_id")
+    private Culture culture;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "university_id")
+    private University university;
+
+    public String getDevideUsed() {
+        return devideUsed;
+    }
+
+    public void setDevideUsed(final String devideUsed) {
+        this.devideUsed = devideUsed;
+    }
+
+    public String getFirebaseId() {
+        return firebaseId;
+    }
+
+    public void setFirebaseId(final String firebaseId) {
+        this.firebaseId = firebaseId;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(final Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(final String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(final String role) {
+        this.role = role;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(final String username) {
+        this.username = username;
+    }
+
+    public Set<Admin> getUserAdmins() {
+        return userAdmins;
+    }
+
+    public void setUserAdmins(final Set<Admin> userAdmins) {
+        this.userAdmins = userAdmins;
+    }
+
+    public Set<Plan> getBusinessownerPlans() {
+        return businessownerPlans;
+    }
+
+    public void setBusinessownerPlans(final Set<Plan> businessownerPlans) {
+        this.businessownerPlans = businessownerPlans;
+    }
+
+    public Set<Event> getUserEvents() {
+        return userEvents;
+    }
+
+    public void setUserEvents(final Set<Event> userEvents) {
+        this.userEvents = userEvents;
+    }
+
+    public Set<Personalinterest> getUserPersonalinterests() {
+        return userPersonalinterests;
+    }
+
+    public void setUserPersonalinterests(final Set<Personalinterest> userPersonalinterests) {
+        this.userPersonalinterests = userPersonalinterests;
+    }
+
+    public Set<Review> getUserReviews() {
+        return userReviews;
+    }
+
+    public void setUserReviews(final Set<Review> userReviews) {
+        this.userReviews = userReviews;
+    }
+
+    public Login getUser() {
+        return user;
+    }
+
+    public void setUser(final Login user) {
+        this.user = user;
+    }
+
+    public Culture getCulture() {
+        return culture;
+    }
+
+    public void setCulture(final Culture culture) {
+        this.culture = culture;
+    }
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(final University university) {
+        this.university = university;
+    }
 
 }

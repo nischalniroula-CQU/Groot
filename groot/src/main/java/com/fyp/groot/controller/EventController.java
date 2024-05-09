@@ -56,7 +56,7 @@ public class EventController {
         Event savedEvent = eventService.addEvent(event);
 
         AddEventResponse response = new AddEventResponse();
-        response.setEventID(savedEvent.getEventID());
+        response.setEventID(savedEvent.getEventId());
         response.setMessage("Event added successfully");
         //response.setEventName(savedEvent.getEventName());
         //response.setLocation(savedEvent.getLocation());

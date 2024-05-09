@@ -21,5 +21,9 @@ public class CategoryService {
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
+    
+    public long countCategories() {
+        return categoryRepository.count();
+    }
 
 }

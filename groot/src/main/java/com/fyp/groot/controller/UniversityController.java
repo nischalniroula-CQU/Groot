@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fyp.groot.entity.University;
-import com.fyp.groot.entity.ViewUniversitiesResponse;
+import com.fyp.groot.model.ViewUniversitiesResponse;
 import com.fyp.groot.model.AddUniversityRequest;
 import com.fyp.groot.model.AddUniversityResponse;
 import com.fyp.groot.service.UniversityService;
@@ -35,7 +35,7 @@ public class UniversityController {
         University addedUniversity = universityService.addUniversity(university);
 
         AddUniversityResponse response = new AddUniversityResponse();
-        response.setUniversityID(addedUniversity.getUniversityID());
+        response.setUniversityId(addedUniversity.getUniversityId());
         response.setMessage("University added successfully");
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);

@@ -5,43 +5,68 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+import java.util.Set;
+
 
 @Entity
-@Table(name = "cultures")
 public class Culture {
-	
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cultureID;
 
-    @Column(name = "culture_name")
+    @Id
+    @Column(nullable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer cultureId;
+
+    @Column
     private String cultureName;
 
-    private String status; // Consider using an Enum for status if you have a predefined set (e.g., 'active', 'inactive') 
+    @Column
+    private String status;
 
-	public Long getCultureID() {
-		return cultureID;
-	}
+    @OneToMany(mappedBy = "culture")
+    private Set<Business> cultureBusinesses;
 
-	public void setCultureID(Long cultureID) {
-		this.cultureID = cultureID;
-	}
+    @OneToMany(mappedBy = "culture")
+    private Set<User> cultureUsers;
 
-	public String getCultureName() {
-		return cultureName;
-	}
+    public Integer getCultureId() {
+        return cultureId;
+    }
 
-	public void setCultureName(String cultureName) {
-		this.cultureName = cultureName;
-	}
+    public void setCultureId(final Integer cultureId) {
+        this.cultureId = cultureId;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public String getCultureName() {
+        return cultureName;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setCultureName(final String cultureName) {
+        this.cultureName = cultureName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(final String status) {
+        this.status = status;
+    }
+
+    public Set<Business> getCultureBusinesses() {
+        return cultureBusinesses;
+    }
+
+    public void setCultureBusinesses(final Set<Business> cultureBusinesses) {
+        this.cultureBusinesses = cultureBusinesses;
+    }
+
+    public Set<User> getCultureUsers() {
+        return cultureUsers;
+    }
+
+    public void setCultureUsers(final Set<User> cultureUsers) {
+        this.cultureUsers = cultureUsers;
+    }
 
 }

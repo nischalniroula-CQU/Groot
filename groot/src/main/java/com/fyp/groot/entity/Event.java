@@ -1,76 +1,109 @@
 package com.fyp.groot.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 
 @Entity
-@Table(name = "events")
 public class Event {
-	
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long eventID;
 
-    @Column(name = "event_name")
+    @Id
+    @Column(nullable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer eventId;
+
+    @Column
     private String eventName;
 
+    @Column
     private String location;
 
-    @Column(name = "price_range")
+    @Column
     private String priceRange;
 
-    @Column(name = "max_seat")
+    @Column
     private Integer maxSeat;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "business_id")
     private Business business;
 
-	public Long getEventID() {
-		return eventID;
-	}
+    public Integer getEventId() {
+        return eventId;
+    }
 
-	public void setEventID(Long eventID) {
-		this.eventID = eventID;
-	}
+    public void setEventId(final Integer eventId) {
+        this.eventId = eventId;
+    }
 
-	public String getEventName() {
-		return eventName;
-	}
+    public String getEventName() {
+        return eventName;
+    }
 
-	public void setEventName(String eventName) {
-		this.eventName = eventName;
-	}
+    public void setEventName(final String eventName) {
+        this.eventName = eventName;
+    }
 
-	public String getLocation() {
-		return location;
-	}
+    public String getLocation() {
+        return location;
+    }
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
+    public void setLocation(final String location) {
+        this.location = location;
+    }
 
-	public String getPriceRange() {
-		return priceRange;
-	}
+    public String getPriceRange() {
+        return priceRange;
+    }
 
-	public void setPriceRange(String priceRange) {
-		this.priceRange = priceRange;
-	}
+    public void setPriceRange(final String priceRange) {
+        this.priceRange = priceRange;
+    }
 
-	public Integer getMaxSeat() {
-		return maxSeat;
-	}
+    public Integer getMaxSeat() {
+        return maxSeat;
+    }
 
-	public void setMaxSeat(Integer maxSeat) {
-		this.maxSeat = maxSeat;
-	}
+    public void setMaxSeat(final Integer maxSeat) {
+        this.maxSeat = maxSeat;
+    }
 
-	public Business getBusiness() {
-		return business;
-	}
+    public Category getCategory() {
+        return category;
+    }
 
-	public void setBusiness(Business business) {
-		this.business = business;
-	}
+    public void setCategory(final Category category) {
+        this.category = category;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(final User user) {
+        this.user = user;
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(final Business business) {
+        this.business = business;
+    }
 
 }
