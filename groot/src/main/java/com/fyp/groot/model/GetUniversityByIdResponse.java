@@ -1,9 +1,6 @@
 package com.fyp.groot.model;
 
-import java.util.Set;
-
-import com.fyp.groot.entity.Business;
-import com.fyp.groot.entity.Event;
+import com.fyp.groot.entity.University;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,10 +11,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
-	
-	private String email;
-    private String password;
-
-
+public class GetUniversityByIdResponse {
+	University university;
 }

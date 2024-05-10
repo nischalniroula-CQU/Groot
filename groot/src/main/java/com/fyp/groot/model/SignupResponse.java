@@ -1,24 +1,24 @@
 package com.fyp.groot.model;
 
-import com.fyp.groot.commons.BaseResponse;
+import java.util.Set;
 
+import com.fyp.groot.commons.BaseResponse;
+import com.fyp.groot.entity.Business;
+import com.fyp.groot.entity.Event;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SignupResponse extends BaseResponse {
+	
 	private String email;
 	private String uid;
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getUid() {
-		return uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
+	
 }

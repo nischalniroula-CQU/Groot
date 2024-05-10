@@ -1,4 +1,4 @@
-package com.fyp.groot.model;
+package com.fyp.groot.model.junk;
 
 public class AddCategoryResponse {
 	private Long categoryID;

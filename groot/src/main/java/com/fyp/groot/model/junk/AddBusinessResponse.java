@@ -1,6 +1,8 @@
-package com.fyp.groot.model;
+package com.fyp.groot.model.junk;
 
-public class AddBusinessRequest {
+public class AddBusinessResponse {
+	
+	private Long businessID;
 	private String name;
     private String subtitle;
     private Long categoryID;
@@ -17,11 +19,11 @@ public class AddBusinessRequest {
     private String priceRange;
     private String status;
     
-	public String getStatus() {
-		return status;
+	public Long getBusinessID() {
+		return businessID;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setBusinessID(Long businessID) {
+		this.businessID = businessID;
 	}
 	public String getName() {
 		return name;
@@ -107,6 +109,12 @@ public class AddBusinessRequest {
 	public void setPriceRange(String priceRange) {
 		this.priceRange = priceRange;
 	}
-    
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 
 }

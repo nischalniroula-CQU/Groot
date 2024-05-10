@@ -27,5 +27,9 @@ public class EventService {
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
     }
+    
+    public long countEvents() {
+        return eventRepository.count();
+    }
 
 }

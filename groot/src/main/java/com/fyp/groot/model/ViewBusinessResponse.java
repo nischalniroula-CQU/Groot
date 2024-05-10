@@ -1,119 +1,44 @@
 package com.fyp.groot.model;
 
-public class ViewBusinessResponse {
-	
-	private Integer businessID;
-	private String name;
-    private String subtitle;
-    private Long categoryID;
-    private Long cultureID;
-    private String basicDetails;
-    private String contactMethod; 
-    private String phoneNumber; 
-    private String emailID;
-    private Long ownerID;
-    private String location;
-    private String address;
-    private String city;
-    private String country;
-    private String priceRange;
-    private String status;
-    
-	public Integer getBusinessID() {
-		return businessID;
-	}
-	public void setBusinessID(Integer businessID) {
-		this.businessID = businessID;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getSubtitle() {
-		return subtitle;
-	}
-	public void setSubtitle(String subtitle) {
-		this.subtitle = subtitle;
-	}
-	public Long getCategoryID() {
-		return categoryID;
-	}
-	public void setCategoryID(Long categoryID) {
-		this.categoryID = categoryID;
-	}
-	public Long getCultureID() {
-		return cultureID;
-	}
-	public void setCultureID(Long cultureID) {
-		this.cultureID = cultureID;
-	}
-	public String getBasicDetails() {
-		return basicDetails;
-	}
-	public void setBasicDetails(String basicDetails) {
-		this.basicDetails = basicDetails;
-	}
-	public String getContactMethod() {
-		return contactMethod;
-	}
-	public void setContactMethod(String contactMethod) {
-		this.contactMethod = contactMethod;
-	}
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	public String getEmailID() {
-		return emailID;
-	}
-	public void setEmailID(String emailID) {
-		this.emailID = emailID;
-	}
-	public Long getOwnerID() {
-		return ownerID;
-	}
-	public void setOwnerID(Long ownerID) {
-		this.ownerID = ownerID;
-	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
-	public String getPriceRange() {
-		return priceRange;
-	}
-	public void setPriceRange(String priceRange) {
-		this.priceRange = priceRange;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
+import java.util.List;
 
+import com.fyp.groot.entity.BusinessTiming;
+import com.fyp.groot.entity.Event;
+import com.fyp.groot.entity.Imagelibrary;
+import com.fyp.groot.entity.Review;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ViewBusinessResponse {
+	private String name;
+	private String subtitle;
+	private String categoryName;
+	private String culture;
+	private String basicDetail;
+	private String contactMethod;
+	private String phoneNumber;
+	private String email;
+	private String ownerName;
+	private String latitude;
+	private String longitude;
+	private String address;
+	private String city;
+	private String country;
+	private String priceRange;
+	private String addedOn;
+	private String status;
+	private List<BusinessTiming> businessTiming;
+	private List<Review> businessReview;
+	private List<Imagelibrary> images;
+	private List<String> tags;
+	private List<Event> events;
 }

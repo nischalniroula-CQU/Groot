@@ -1,19 +1,24 @@
 package com.fyp.groot.model;
 
 import java.util.List;
+import java.util.Set;
 
+import com.fyp.groot.entity.Business;
 import com.fyp.groot.entity.Culture;
+import com.fyp.groot.entity.Event;
 
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class GetAllCulturesResponse {
 	
 	private List<Culture> cultures;
-
-	public List<Culture> getCultures() {
-		return cultures;
-	}
-
-	public void setCultures(List<Culture> cultures) {
-		this.cultures = cultures;
-	}
 
 }

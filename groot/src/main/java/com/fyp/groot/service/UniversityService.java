@@ -22,5 +22,13 @@ public class UniversityService {
     public List<University> getAllUniversities() {
         return universityRepository.findAll();
     }
+    
+    public long countUniversities() {
+        return universityRepository.count();
+    }
+
+	public University getUniversityById(Long id) {
+		return universityRepository.findById(id).orElseThrow();
+	}
 
 }

@@ -22,18 +22,20 @@ public class CategoryController {
 	@Autowired
     private CategoryService categoryService;
 	
-	@PostMapping("/addCategory")
-    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
-        Category addedCategory = categoryService.addCategory(category);
-        return new ResponseEntity<>(addedCategory, HttpStatus.CREATED);
-    }
 	
-	@GetMapping("/viewCategories")
+	@GetMapping("/getAll")
     public ResponseEntity<ViewCategoryResponse> getAllCategories() {
         List<Category> categories = categoryService.getAllCategories();
         ViewCategoryResponse response = new ViewCategoryResponse();
         response.setCategories(categories);
         return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	
+	
+//	@PostMapping("/addCategory")
+//    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
+//        Category addedCategory = categoryService.addCategory(category);
+//        return new ResponseEntity<>(addedCategory, HttpStatus.CREATED);
+//    }
 
 }

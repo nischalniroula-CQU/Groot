@@ -22,5 +22,9 @@ public class CultureService {
     public List<Culture> getAllCultures() {
         return cultureRepository.findAll();
     }
+    
+    public long countCultures() {
+        return cultureRepository.count();
+    }
 
 }

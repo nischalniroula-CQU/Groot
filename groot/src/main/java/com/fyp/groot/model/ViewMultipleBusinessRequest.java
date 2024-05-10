@@ -1,5 +1,23 @@
 package com.fyp.groot.model;
 
+import java.util.List;
+
+import com.fyp.groot.entity.BusinessTiming;
+import com.fyp.groot.entity.Event;
+import com.fyp.groot.entity.Imagelibrary;
+import com.fyp.groot.entity.Review;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ViewMultipleBusinessRequest {
 	
 	private String country;
@@ -7,29 +25,5 @@ public class ViewMultipleBusinessRequest {
     private Long cultureID;
     private String city;
     
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
-	public Long getCategoryID() {
-		return categoryID;
-	}
-	public void setCategoryID(Long categoryID) {
-		this.categoryID = categoryID;
-	}
-	public Long getCultureID() {
-		return cultureID;
-	}
-	public void setCultureID(Long cultureID) {
-		this.cultureID = cultureID;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
 
 }
