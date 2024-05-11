@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Groot - Manage Tags</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk&amp;display=swap">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body style="--bs-primary: #13456a;--bs-primary-rgb: 19,69,106;--bs-secondary: #FF8889;--bs-secondary-rgb: 255,136,137;">
+    
+    <header id="adminHeader"></header>
+    
+    <div class="container" style="margin-top: 2vw;">
+        <div class="row">
+            <h4>
+            	Manage Tags 
+            	<a href="adminAddTag"><button style="float:right; width: 200px;" class="btn btn-success">Add New Tag</button></a>
+            </h4>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 2vw; margin-bottom: 2vw;">
+	    <div class="row">
+	        <table class="table">
+	        <thead class="thead-dark">
+	            <tr>
+	                <th>Tags</th>
+	                <th>Records</th>
+	                <th>Action</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr>
+	                <td>nightlife</td>
+	                <td>20</td>
+	                <td>
+	                	<button class="btn btn-primary">Edit</button>
+	                	<button class="btn btn-danger">Delete</button>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td>resort</td>
+	                <td>5</td>
+	                <td>
+	                	<button class="btn btn-primary">Edit</button>
+	                	<button class="btn btn-danger">Delete</button>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td>hotel</td>
+	                <td>7</td>
+	                <td>
+	                	<button class="btn btn-primary">Edit</button>
+	                	<button class="btn btn-danger">Delete</button>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td>food</td>
+	                <td>4</td>
+	                <td>
+	                	<button class="btn btn-primary">Edit</button>
+	                	<button class="btn btn-danger">Delete</button>
+	                </td>
+	            </tr>
+	        </tbody>
+	    	</table>
+	    </div>
+	</div>
+	
+    <footer id="footer"></footer>
+    <script src="/js/custom_functions.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Load the header and footer into div
+        $('#adminHeader').load('adminHeader');
+        $('#footer').load('footer');
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Groot - Welcome to the home of business</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk&amp;display=swap">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body style="--bs-primary: #13456a;--bs-primary-rgb: 19,69,106;--bs-secondary: #FF8889;--bs-secondary-rgb: 255,136,137;">
+    
+    <header id="header"></header>
+    
+    <div class="row">
+	    <div style="height:200px; width:100%; overflow:hidden;" >
+	    	<img src="img/general_header.jpg" class="img-fluid" alt="Beauty Salon">
+	    </div>
+	    <div class="col-md-10" style="margin:auto;">
+		    <div class="container-fluid">
+		        <!-- Main Content and Sidebar -->
+		        <div class="row">
+			        <div class="col-md-12">
+				        <h2 class="mt-3">Beauty Salon</h2>
+				        Featured | 5k Views | Address : Xyz apartment, Melbourne, VIC 2034 | Joined 8th Jan 2024 | Save | Report
+			        </div>
+		        </div>
+		        <div class="row" style="margin-top:20px;">
+		            <div class="col-md-8">
+		                <img src="https://via.placeholder.com/800x400" class="img-fluid" alt="Beauty Salon">
+		                <h2 class="mt-3">Beauty Salon</h2>
+		                <p>We are a full service hair salon that cares for every hair texture. We also provide nail services and do eyebrows and eyelashes.</p>
+		            </div>
+		            <div class="col-md-4">
+		                <div class="card">
+		                    <div class="card-body">
+		                        <h5 class="card-title">Listing Details</h5>
+		                        <p><strong>Location:</strong> New York, NY, USA</p>
+		                        <p><strong>Phone:</strong> 555-1234</p>
+		                        <a href="#" class="btn btn-primary">View Website</a>
+		                    </div>
+		                </div>
+		                <div class="card mt-3">
+		                    <div class="card-body">
+		                        <h5 class="card-title">Opening time</h5>
+		                        <ul>
+		                            <li>Mon: 9am - 10pm</li>
+		                            <li>Tue: 9am - 10pm</li>
+		                            <li>Wed: 9am - 10pm</li>
+		                            <li>Thu: 9am - 10pm</li>
+		                            <li>Fri: 9am - 10pm</li>
+		                            <li>Sat: 9am - 10pm</li>
+		                            <li>Sun: 9am - 10pm</li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="card mt-3">
+		                    <div class="card-body">
+		                        <h5 class="card-title">Nearby</h5>
+		                        <ul>
+		                            <li>Kevin's Barber - 1.7 miles</li>
+		                            <li>Sky The Day Spa - 0.2 miles</li>
+		                            <li>The Nail Bar - 0.1 miles</li>
+		                        </ul>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+    
+
+    <footer id="footer"></footer>
+    <script src="/js/custom_functions.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Load the header and footer into div
+        $('#header').load('header');
+        $('#footer').load('footer');
+    });
+    </script>
+</body>
+</html>

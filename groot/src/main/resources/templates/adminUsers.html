@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Groot - Manage Users</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk&amp;display=swap">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body style="--bs-primary: #13456a;--bs-primary-rgb: 19,69,106;--bs-secondary: #FF8889;--bs-secondary-rgb: 255,136,137;">
+    
+    <header id="adminHeader"></header>
+    
+    <div class="container" style="margin-top: 2vw;">
+        <div class="row">
+            <h4>
+            	Manage Users 
+            </h4>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 2vw; margin-bottom: 2vw;">
+	    <div class="row">
+	        <table class="table">
+	        <thead class="thead-dark">
+	            <tr>
+	                <th>User</th>
+	                <th>Type</th>
+	                <th>Email ID</th>
+	                <th>Culture</th>
+	                <th>Joined On</th>
+	                <th>Action</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr>
+	                <td>John Doe</td>
+	                <td>User</td>
+	                <td>john.doe@example.com</td>
+	                <td>Western</td>
+	                <td>2024-05-01</td>
+	                <td>
+	                	<button class="btn btn-primary">View</button>
+	                	<button class="btn btn-danger">Delete</button>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td>Emily Brown</td>
+	                <td>User</td>
+	                <td>emily.brown@example.com</td>
+	                <td>European</td>
+	                <td>2024-05-01</td>
+	                <td>
+	                	<button class="btn btn-primary">View</button>
+	                	<button class="btn btn-danger">Delete</button>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td>Jane Smith</td>
+	                <td>User</td>
+	                <td>jane.smith@example.com</td>
+	                <td>Eastern</td>
+	                <td>2024-04-28</td>
+	                <td>
+	                	<button class="btn btn-primary">View</button>
+	                	<button class="btn btn-danger">Delete</button>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td>Alex Lee</td>
+	                <td>User</td>
+	                <td>alex.lee@example.com</td>
+	                <td>African</td>
+	                <td>2024-05-01</td>
+	                <td>
+	                	<button class="btn btn-primary">View</button>
+	                	<button class="btn btn-danger">Delete</button>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td>Mike Johnson</td>
+	                <td>User</td>
+	                <td>mike.johnson@example.com</td>
+	                <td>Asian</td>
+	                <td>2024-04-25</td>
+	                <td>
+	                	<button class="btn btn-primary">View</button>
+	                	<button class="btn btn-danger">Delete</button>
+	                </td>
+	            </tr>
+	        </tbody>
+	    	</table>
+	    </div>
+	</div>
+    
+    
+    
+    <footer id="footer"></footer>
+    <script src="/js/custom_functions.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Load the header and footer into div
+        $('#adminHeader').load('adminHeader');
+        $('#footer').load('footer');
+    });
+    </script>
+</body>
+
+</html>

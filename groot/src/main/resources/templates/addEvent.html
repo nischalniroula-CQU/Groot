@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Groot - Add Event</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk&amp;display=swap">
+</head>
+<body>
+    <header id="header"></header>
+    <div class="container" style="margin-bottom: 0px;">
+        <div class="row">
+            <div class="col-md-12">
+                <section class="position-relative py-4 py-xl-5">
+                    <div class="container">
+                        <div class="row mb-5">
+                            <div class="col">
+                                <h2 style="color: var(--bs-success-text-emphasis);">Add Event</h2>
+                                <section class="position-relative py-4 py-xl-5" style="padding-top: 48px;margin-top: 0px;">
+                                    <div class="container">
+                                        <div class="col-md-6 col-xl-11">
+                                            <div class="card mb-5" style="border-style: none;border-left-style: none;">
+                                                <form class="text-center" id="add-info-form" style="border-left-style: none;">
+                                                    <div class="mb-3">
+                                                    	<p style="text-align:left;">Event Name</p>
+                                                    	<input class="form-control" type="text" name="email">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<p style="text-align:left;">Description</p>
+                                                    	<textarea class="form-control" name="description" rows="8"></textarea>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<p style="text-align:left;">Contact No</p>
+                                                    	<input class="form-control" type="text" name="email">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<p style="text-align:left;">Email ID</p>
+                                                    	<input class="form-control" type="text" name="email">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<p style="text-align:left;">Address</p>
+                                                    	<input class="form-control" type="text" name="email">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<p style="text-align:left;">City</p>
+                                                    	<input class="form-control" type="text" name="email">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<p style="text-align:left;">Price Range</p>
+                                                    	<input class="form-control" type="text" name="email">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<p style="text-align:left;">Maximum Seats</p>
+                                                    	<input class="form-control" type="text" name="email">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<p style="text-align:left;">Gallery</p>
+                                                    	<input class="form-control" type="file" name="email">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<button class="btn btn-primary d-block w-100" type="submit" style="background: rgb(19,69,106);">Save</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <div id="error-message" style="color: red;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <footer id="footer"></footer>
+    <script src="/js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="/js/custom_functions.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Load the header and footer into div
+        $('#header').load('header');
+        $('#footer').load('footer');
+    });
+    </script>
+</body>
+</html>

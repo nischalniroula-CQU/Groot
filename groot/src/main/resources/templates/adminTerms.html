@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Groot - Manage Others</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk&amp;display=swap">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body style="--bs-primary: #13456a;--bs-primary-rgb: 19,69,106;--bs-secondary: #FF8889;--bs-secondary-rgb: 255,136,137;">
+    
+    <header id="adminHeader"></header>
+    
+    <div class="container" style="margin-top: 2vw;">
+        <div class="row">
+            <h4>Manage Others</h4>
+        </div>
+    </div>
+    
+    <div class="container" style="margin-top: 2vw; margin-bottom: 2vw;">
+		<div class="row mt-3">
+			<div class="col-12 col-lg-4">
+				<div class="card shadow-none border radius-15">
+					<div class="card-body">
+						<a href="adminCategories">
+							<h6 class="mb-0 text-primary">Category</h6>
+						</a>
+						<small>143 records</small>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-lg-4">
+				<div class="card shadow-none border radius-15">
+					<div class="card-body">
+						<a href="adminCultures">
+							<h6 class="mb-0 text-primary">Culture</h6>
+						</a>
+						<small>15 records</small>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-lg-4">
+				<div class="card shadow-none border radius-15">
+					<div class="card-body">
+						<a href="adminUniversities">
+							<h6 class="mb-0 text-primary">University</h6>
+						</a>
+						<small>345 records</small>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-3">
+			<div class="col-12 col-lg-4">
+				<div class="card shadow-none border radius-15">
+					<div class="card-body">
+						<a href="adminInterests">
+							<h6 class="mb-0 text-primary">Interest Library</h6>
+						</a>
+						<small>14324 records</small>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-lg-4">
+				<div class="card shadow-none border radius-15">
+					<div class="card-body">
+						<a href="adminTags">
+							<h6 class="mb-0 text-primary">Tag</h6>
+						</a>
+						<small>143 records</small>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+    <footer id="footer"></footer>
+    <script src="/js/custom_functions.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Load the header and footer into div
+        $('#adminHeader').load('adminHeader');
+        $('#footer').load('footer');
+    });
+    </script>
+</body>
+
+</html>
