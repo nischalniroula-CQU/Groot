@@ -41,10 +41,28 @@
                                                     	<input class="form-control" type="text" name="mobile" placeholder="Phone Number">
                                                     </div>
                                                     <div class="mb-3">
+                                                    	<input class="form-control" type="text" name="address" placeholder="Address">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<select class="form-control mb-3" id="city" name="city"></select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<select class="form-control mb-3" id="country" name="country"></select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<select class="form-control mb-3" id="university" name="university"></select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<select class="form-control mb-3" id="culture" name="culture"></select>
+                                                    </div>
+                                                    <div class="mb-3">
                                                     	<input value="sriharshan92@outlook.com" class="form-control" type="email" name="email" placeholder="Email">
                                                     </div>
                                                     <div class="mb-3">
                                                     	<input value="test123" class="form-control" type="password" name="password" placeholder="Password">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<input value="test123" class="form-control" type="password" name="recheck_password" placeholder="Password">
                                                     </div>
                                                     <div class="mb-3">
                                                     	<button class="btn btn-primary d-block w-100" type="submit" style="background: rgb(19,69,106);">Sign up</button>
@@ -67,12 +85,108 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     $(document).ready(function() {
+		$.ajax({
+            url: '/api/countries/getAll',
+            type: 'GET',
+            contentType: 'application/json',
+            headers: {
+                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+            },
+            success: function(response) {
+            	var countryDropdown = $('#country');
+            	response.countries.forEach(function(country) {
+            		countryDropdown.append($('<option>', {
+                        value: country.countryId,
+                        text: country.countryName
+                    }));
+                });
+            },
+            error: function() {
+                console.log('Failed to load countries');
+            }
+        });
+		
+		$.ajax({
+            url: '/api/cities/getAll',
+            type: 'GET',
+            contentType: 'application/json',
+            headers: {
+                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+            },
+            success: function(response) {
+            	var cityDropdown = $('#city');
+            	response.cities.forEach(function(city) {
+            		cityDropdown.append($('<option>', {
+                        value: city.cityId,
+                        text: city.cityName
+                    }));
+                });
+            },
+            error: function() {
+                console.log('Failed to load countries');
+            }
+        });
+		
+		$.ajax({
+            url: '/api/university/getAll',
+            type: 'GET',
+            contentType: 'application/json',
+            headers: {
+                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+            },
+            success: function(response) {
+            	var universityDropdown = $('#university');
+            	response.universities.forEach(function(university) {
+            		universityDropdown.append($('<option>', {
+                        value: university.id,
+                        text: university.universityName
+                    }));
+                });
+            },
+            error: function() {
+                console.log('Failed to load countries');
+            }
+        });
+		
+		$.ajax({
+            url: '/api/cultures/getAll',
+            type: 'GET',
+            contentType: 'application/json',
+            headers: {
+                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+            },
+            success: function(response) {
+            	var cultureDropdown = $('#culture');
+            	response.cultures.forEach(function(culture) {
+            		cultureDropdown.append($('<option>', {
+                        value: culture.cultureId,
+                        text: culture.cultureName
+                    }));
+                });
+            },
+            error: function() {
+                console.log('Failed to load countries');
+            }
+        });
+    });
+    
+    $(document).ready(function() {
         $('#signup-form').submit(function(event) {
             event.preventDefault(); // Stop the form from causing a page refresh.
 
             var formData = {
-                    email: $('input[name="email"]').val(),
-                    password: $('input[name="password"]').val()
+            		firstName: $('input[name="fname"]').val(),
+            		lastName: $('input[name="lname"]').val(),
+            		email: $('input[name="email"]').val(),
+            		phoneNumber: $('input[name="mobile"]').val(),
+            		address: $('input[name="address"]').val(),
+            		city: $('select[name="city"]').val(),
+            		university: $('select[name="university"]').val(),
+            		userType: "user",
+            		culture: $('select[name="culture"]').val(),
+            		country: $('select[name="country"]').val(),
+            		password: $('input[name="password"]').val(),
+            		confrimPassword: $('input[name="recheck_password"]').val()
                 };
 
             $.ajax({
@@ -82,13 +196,15 @@
                 Cookie: "JSESSIONID=AC1198314A2BB817ED2F74CD8D96EA27",
                 data: JSON.stringify(formData),
                 success: function(response) {
-                    console.log('Signup successful:', response);
+                    //console.log('Signup successful:', response);
+                    alert('Signup successful! Welcome to Groot.');
                     localStorage.setItem('userToken', JSON.stringify(response));
-                    window.location.href = '/index'; // Redirecting to another page on successful login
+                    window.location.href = '/index'; // Redirecting to login
                 },
                 error: function(xhr, status, error) {
-                    console.log('Signup failed:', xhr.responseText);
-                    $('#error-message').text('Signup failed: ' + JSON.stringify(formData)); // Display error message
+                    //console.log('Signup failed:', xhr.responseText);
+                    alert('Signup failed: ' + xhr.responseText);
+                    //$('#error-message').text('Signup failed: ' + JSON.stringify(formData)); // Display error message
                 }
             });
         });

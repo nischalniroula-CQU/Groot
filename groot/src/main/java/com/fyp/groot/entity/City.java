@@ -6,19 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class PersonalInterest {
+public class City {
 
 	@Id
-	@Column(name = "per_interest_id", nullable = false, updatable = false)
+	@Column(name = "city_id", nullable = false, updatable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long per_interest_id;
-	
-	private Long interestId;
+	private Long cityId;
 
-	private Long userId;
+	@Column(name = "city_name")
+	private String cityName;
 }

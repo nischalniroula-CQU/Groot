@@ -41,24 +41,27 @@ public class User {
 	private String city;
 	@Column
 	private String country;
+	
 	@Column(name = "user_since")
 	private OffsetDateTime userSince;
 	@Column
 	private String status;
-	@Column(name = "device_user")
+	
+	@Column
 	private String deviceUsed;
+	
 	@Column
 	private String firebaseId;
-	@Column
-	private String isActive;
+		
 	@Column(name = "user_type")
 	private String userType;
+	
 	@Column(name = "culture_id")
-	private Long cultureId;
+	private String cultureId;
+	
 	@Column(name = "university_id")
-	private Long universityId;
-	@Column(name = "admin_type")
-	private Long adminType;
-	@Column(name = "plane_id")
-	private Long planeId;
+	private String universityId;
+
+	@Column(name = "plan_id")
+	private Long planId;
 }

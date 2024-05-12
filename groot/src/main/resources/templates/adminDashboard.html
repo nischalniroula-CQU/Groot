@@ -32,7 +32,8 @@
 	                    <div class="row align-items-center mb-2 d-flex">
 	                        <div class="col-8">
 	                            <h2 class="d-flex align-items-center mb-0">
-	                                3,243
+	                                <span id="businessCounts"></span>
+    								<span id="businessError" style="color: red;"></span>
 	                            </h2>
 	                        </div>
 	                        <div class="col-4 text-right">
@@ -50,12 +51,13 @@
 	                <div class="card-statistic-3 p-4">
 	                    <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div>
 	                    <div class="mb-4">
-	                        <h5 class="card-title mb-0">Users</h5>
+	                        <h5 class="card-title mb-0">Events</h5>
 	                    </div>
 	                    <div class="row align-items-center mb-2 d-flex">
 	                        <div class="col-8">
 	                            <h2 class="d-flex align-items-center mb-0">
-	                                1,500
+	                                <span id="eventCounts"></span>
+    								<span id="eventError" style="color: red;"></span>
 	                            </h2>
 	                        </div>
 	                        <div class="col-4 text-right">
@@ -73,12 +75,13 @@
 	                <div class="card-statistic-3 p-4">
 	                    <div class="card-icon card-icon-large"><i class="fas fa-ticket-alt"></i></div>
 	                    <div class="mb-4">
-	                        <h5 class="card-title mb-0">Events</h5>
+	                        <h5 class="card-title mb-0">Users</h5>
 	                    </div>
 	                    <div class="row align-items-center mb-2 d-flex">
 	                        <div class="col-8">
 	                            <h2 class="d-flex align-items-center mb-0">
-	                                578
+	                                <span id="usersCounts"></span>
+    								<span id="usersError" style="color: red;"></span>
 	                            </h2>
 	                        </div>
 	                        <div class="col-4 text-right">
@@ -93,7 +96,29 @@
 	        </div>
 	    </div>
 	</div>
-
+	<script>
+		$(document).ready(function() {
+	        // List of entity types
+	        var entityTypes = ['business', 'event', 'users'];
+	
+	        // Function to fetch and display counts for each entity type
+	        entityTypes.forEach(function(entityType) {
+	            $.ajax({
+	                url: '/api/count/allCounts',
+	                type: 'GET',
+	                contentType: 'application/json',
+	                data: { entityType: entityType }, // Send entityType as a query parameter
+	                success: function(response) {
+	                    $('#' + entityType + 'Counts').text(response); // Update respective span by ID
+	                },
+	                error: function(xhr) {
+	                    console.log('Failed to retrieve count for ' + entityType + ':', xhr.responseText);
+	                    $('#' + entityType + 'Error').text('Failed to retrieve count: ' + xhr.responseText); // Update respective error span by ID
+	                }
+	            });
+	        });
+	    });
+	</script>
     <footer id="footer"></footer>
     <script src="/js/custom_functions.js"></script>
     <script src="/js/script.js"></script>

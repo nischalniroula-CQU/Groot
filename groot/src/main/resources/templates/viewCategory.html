@@ -25,6 +25,10 @@
 	    .hide-sidebar {
 	        display: none;
 	    }
+	    #product-list a
+	    {
+	    	text-decoration:none;
+	    }
 	</style>
 </head>
 <body style="--bs-primary: #13456a;--bs-primary-rgb: 19,69,106;--bs-secondary: #FF8889;--bs-secondary-rgb: 255,136,137;">
@@ -38,27 +42,32 @@
 			        <div class="col-md-3">
 			            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2">
 			            <h5>Filters</h5>
-			                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" style="width:100%;" id="menu">
-			                        <div class="dropdown mt-4" style="width:100%;">
-			                            Category
-			                            <select class="form-control mb-3">
-			                            	<option>Education</option>
-			                            	<option>Restaurant</option>
-			                            	<option>Tourism</option>
-			                            </select>
-			                        </div>
-			                        <div class="dropdown mt-4" style="width:100%;">
-			                            Location
-			                            <select class="form-control mb-3">
-			                            	<option>Melbourne</option>
-			                            	<option>South Yarra</option>
-			                            	<option>Sydney</option>
-			                            </select>
-			                        </div>
-			                    <!-- More filter options can be added here -->
-			                </ul>
+			            	<form id="search-form" style="border-left-style: none; width:100%;">
+				                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" style="width:100%;" id="menu">
+				                	<div class="dropdown mt-4" style="width:100%;">
+				                		Name
+										<input type"text" class="form-control mb-3" id="name" name="name">
+									</div>
+				                    <div class="dropdown mt-4" style="width:100%;">
+									    Category
+									    <select class="form-control mb-3" id="category" name="category"></select>
+									</div>
+									<div class="dropdown mt-4" style="width:100%;">
+									    Location
+									    <select class="form-control mb-3" id="location" name="location"></select>
+									</div>
+									<div class="dropdown mt-4" style="width:100%;">
+									    Culture
+									    <select class="form-control mb-3" id="culture" name="culture">
+									    	<option value="">All</option>
+									    </select>
+									</div>
+									<div class="dropdown mt-4" style="width:100%;">
+										<button class="btn btn-primary d-block w-100" type="submit" style="background: rgb(19,69,106);">Search</button>
+									</div>
+				                </ul>
+			                </form>
 			                <hr>
-			                <!-- Additional sidebar content can go here -->
 			            </div>
 			        </div>
 			        <div class="col-md-9 px-0 bg-light">
@@ -77,34 +86,134 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
+		$(document).ready(function() {
+			$.ajax({
+	            url: '/api/categories/getAll',
+	            type: 'GET',
+	            contentType: 'application/json',
+	            headers: {
+	                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+	            },
+	            success: function(response) {
+	            	var categoryDropdown = $('#category');
+	            	response.categories.forEach(function(category) {
+	            		categoryDropdown.append($('<option>', {
+	                        value: category.category_id,
+	                        text: category.categoryName
+	                    }));
+	                });
+	            },
+	            error: function() {
+	                console.log('Failed to load categories');
+	            }
+	        });
+			
+			$.ajax({
+	            url: '/api/locations/getAll',
+	            type: 'GET',
+	            contentType: 'application/json',
+	            headers: {
+	                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+	            },
+	            success: function(response) {
+	            	var locationDropdown = $('#location');
+	            	response.locations.forEach(function(location) {
+	            		locationDropdown.append($('<option>', {
+	                        value: location.id,
+	                        text: location.location
+	                    }));
+	                });
+	            },
+	            error: function() {
+	                console.log('Failed to load locations');
+	            }
+	        });
+			
+	        $.ajax({
+	            url: '/api/cultures/getAll',
+	            type: 'GET',
+	            contentType: 'application/json',
+	            headers: {
+	                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+	            },
+	            success: function(response) {
+	            	var cultureDropdown = $('#culture');
+	            	response.cultures.forEach(function(culture) {
+	                    cultureDropdown.append($('<option>', {
+	                        value: culture.cultureId,
+	                        text: culture.cultureName
+	                    }));
+	                });
+	            },
+	            error: function() {
+	                console.log('Failed to load cultures');
+	            }
+	        });
+	    });
+		
 		document.addEventListener('DOMContentLoaded', function () {
-		    const products = [
-		        { name: "Product One", description: "This is a great product with lots of features.", price: 49.99, image: "gorkhas-restaurant.png", rating: 4 },
-		        { name: "Product Two", description: "Another great product with even more features.", price: 79.99, image: "momo-central.png", rating: 5 },
-		        { name: "Product Three", description: "An excellent choice for anyone looking for quality!", price: 59.99, image: "sukunda.png", rating: 3 },
-		        { name: "Product Three", description: "An excellent choice for anyone looking for quality!", price: 59.99, image: "sukunda.png", rating: 3 },
-		        { name: "Product Three", description: "An excellent choice for anyone looking for quality!", price: 59.99, image: "sukunda.png", rating: 3 }
-		    ];
-	
-		    const productList = document.getElementById('product-list');
-		    products.forEach(product => {
-		        const colDiv = document.createElement('div');
-		        colDiv.className = 'col-md-4';
-		        const stars = '★'.repeat(product.rating) + '☆'.repeat(5 - product.rating);
-		        colDiv.innerHTML = `
-		            <div class="card h-100">
-		                <img src="img/listing/${product.image}" class="card-img-top" alt="${product.name}">
-		                <div class="card-body">
-		                    <h5 class="card-title">${product.name}</h5>
-		                    <p class="card-text">${product.description}</p>
-		                    <p class="price">$${product.price.toFixed(2)}</p>
-		                    <div class="ratings">${stars}</div>
-		                </div>
-		            </div>
-		        `;
-		        productList.appendChild(colDiv);
+		    $('#search-form').submit(function(event) {
+		        event.preventDefault(); // Stop the form from causing a page refresh.
+
+		        var formData = {
+		        	name: $('input[name="name"]').val(),
+		            categoryID: $('input[name="category"]').val(),
+		            cultureID: $('input[name="culture"]').val(),
+		            city: $('input[name="city"]').val()
+		        };
+
+		        $.ajax({
+		            url: '/api/business/getall',
+		            type: 'POST',
+		            contentType: 'application/json',
+		            headers: { // Correct placement of Cookie in headers
+		                "Cookie": "JSESSIONID=AC1198314A2BB817ED2F74CD8D96EA27"
+		            },
+		            data: JSON.stringify(formData),
+		            success: function(response) {
+		                var businessList = $('#product-list'); // The container where business details will be appended
+		                businessList.empty(); // Clear previous results
+
+		                response.businesses.forEach(function(business) {
+		                    var stars = ''; // Define stars variable properly outside the conditional scope
+		                    if (business.rating && business.rating > 0) {
+		                        stars = '★'.repeat(business.rating) + '☆'.repeat(5 - business.rating);
+		                    } else {
+		                        stars = '☆'.repeat(5);
+		                    }
+		                    
+		                    var image = '';
+		                    if (business.image && business.image != '') {
+		                        image = business.image;
+		                    } else {
+		                    	image = 'business_placeholder.jpg';
+		                    }
+
+		                    var details = `
+		                        <a href="business?id=${business.id}">
+			                        <div class="card h-100" style="padding-right:0px !important; padding-left:0px !important;">
+			                            <img src="img/listing/${image}" class="card-img-top" style="width:100%;" alt="${business.name}">
+			                            <div class="card-body">
+			                                <h5 class="card-title">${business.name}</h5>
+			                                <p class="card-text">${business.basicDetail}</p>
+			                                <p class="price">${business.priceRange}</p>
+			                                <div class="ratings">${stars}</div>
+			                            </div>
+			                        </div>
+		                        </a>
+		                    `;
+		                    businessList.append(details);
+		                });
+		            },
+		            error: function(xhr) {
+		                console.log('Failed to load businesses', xhr.responseText);
+		                businessList.append('<p style="color: red;">Failed to load business data.</p>');
+		            }
+		        });
 		    });
 		});
+
+
 	</script>
 
     <footer id="footer"></footer>

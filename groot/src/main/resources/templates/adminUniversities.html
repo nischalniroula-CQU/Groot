@@ -24,55 +24,46 @@
     </div>
     <div class="container" style="margin-top: 2vw; margin-bottom: 2vw;">
 	    <div class="row">
-	        <table class="table">
-	        <thead class="thead-dark">
-	            <tr>
-	                <th>University</th>
-	                <th>Records</th>
-	                <th>Action</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	            <tr>
-	                <td>CQUniversity</td>
-	                <td>20</td>
-	                <td>
-	                	<button class="btn btn-primary">Edit</button>
-	                	<button class="btn btn-danger">Delete</button>
-	                </td>
-	            </tr>
-	            <tr>
-	                <td>University of Melbourne</td>
-	                <td>5</td>
-	                <td>
-	                	<button class="btn btn-primary">Edit</button>
-	                	<button class="btn btn-danger">Delete</button>
-	                </td>
-	            </tr>
-	            <tr>
-	                <td>Monash University</td>
-	                <td>7</td>
-	                <td>
-	                	<button class="btn btn-primary">Edit</button>
-	                	<button class="btn btn-danger">Delete</button>
-	                </td>
-	            </tr>
-	            <tr>
-	                <td>Deakin University</td>
-	                <td>4</td>
-	                <td>
-	                	<button class="btn btn-primary">Edit</button>
-	                	<button class="btn btn-danger">Delete</button>
-	                </td>
-	            </tr>
-	        </tbody>
-	    	</table>
+	    	<div id="university-container"></div>
+	        <div id="university-error" style="color: red;"></div>
 	    </div>
 	</div>
 
     <footer id="footer"></footer>
     <script src="/js/custom_functions.js"></script>
     <script src="/js/script.js"></script>
+    <script>
+	    $(document).ready(function() {
+	        $.ajax({
+	            url: '/api/university/getAll',
+	            type: 'GET',
+	            contentType: 'application/json',
+	            headers: {
+	                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+	            },
+	            success: function(response) {
+	                var content = '<table class="table"><thead class="thead-dark"><tr><th>University</th><th>Address</th><th>City</th><th>Location</th><th>Action</th></tr></thead><tbody>';
+	                response.universities.forEach(function(university) {
+	                    // Constructing HTML content for each university
+	                		               
+	                    content += '<tr class="university-entry">' +
+	                               '<td width="25%">' + university.universityName + '</td>' +
+	                               '<td width="20%">' + university.address + '</td>' +
+	                               '<td width="20%">' + university.city + '</td>' +
+	                               '<td width="20%">' + university.location + '</td>' +
+	                               '<td width="15%"><a href="/?adminEditUniversity&id=' + university.id + '"><button class="btn btn-primary">Edit</button></a>&nbsp;<a href="/adminDelete&type=university&id=' + university.id + '"><button class="btn btn-danger">Delete</button></a></td>' +
+	                               '</tr>';
+	                });
+	                content += '</tbody></table>';
+	                $('#university-container').html(content);
+	            },
+	            error: function(xhr) {
+	                console.log('Failed to retrieve universities:', xhr.responseText);
+	                $('#university-error').text('Failed to retrieve university data: ' + xhr.responseText);
+	            }
+	        });
+	    });
+	</script>
     <script>
     $(document).ready(function() {
         // Load the header and footer into div
