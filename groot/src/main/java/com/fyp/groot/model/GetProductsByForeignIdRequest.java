@@ -1,9 +1,5 @@
 package com.fyp.groot.model;
 
-import java.util.List;
-
-import com.fyp.groot.entity.Product;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAllProductsResponse {
+public class GetProductsByForeignIdRequest {
 	
-	private List<Product> products;
+	private Long linkedId;
 
 }

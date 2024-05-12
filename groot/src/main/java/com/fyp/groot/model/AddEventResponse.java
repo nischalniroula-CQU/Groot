@@ -1,8 +1,7 @@
 package com.fyp.groot.model;
 
-import java.util.List;
-
-import com.fyp.groot.entity.Product;
+import com.fyp.groot.entity.Business;
+import com.fyp.groot.entity.Event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,8 +12,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAllProductsResponse {
+public class AddEventResponse {
 	
-	private List<Product> products;
+	//private Integer eventID;
+    //private String message;
+    private Event event;
+    
 
 }

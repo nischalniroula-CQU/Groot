@@ -1,9 +1,6 @@
 package com.fyp.groot.model;
 
-import java.util.List;
-
-import com.fyp.groot.entity.Product;
-
+import com.fyp.groot.entity.Business;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +10,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAllProductsResponse {
-	
-	private List<Product> products;
-
+public class AddBusinessResponse {
+	Business business;
 }

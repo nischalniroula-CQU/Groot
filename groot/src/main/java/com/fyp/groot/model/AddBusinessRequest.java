@@ -1,4 +1,4 @@
-package com.fyp.groot.model.junk;
+package com.fyp.groot.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
