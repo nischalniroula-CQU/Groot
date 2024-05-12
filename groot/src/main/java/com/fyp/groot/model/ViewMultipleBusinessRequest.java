@@ -17,12 +17,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ViewMultipleBusinessRequest {
-	
 	private String name;
 	private String country;
 	private Long categoryID;
 	private Long cultureID;
 	private String city;
-
-
 }

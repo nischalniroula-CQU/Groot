@@ -16,7 +16,7 @@ public class SecurityConfig {
         http
             .csrf().disable()
             .authorizeRequests(authz -> authz
-                .requestMatchers("/index", "/", "/api/login", "/login", "/signup", "/categories", "/business", "/header", "/footer", "/admin**", "/add**", "/css/**", "/js/**", "/img/**").permitAll()
+                .requestMatchers("/index", "*/**", "/api/login", "/login", "/signup", "/categories", "/business", "/header", "/footer", "/admin**", "/add**", "/css/**", "/js/**", "/img/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/index").authenticated()  // Ensure GET requests to /index are authenticated.
                 .anyRequest().authenticated())
             .logout(logout -> logout

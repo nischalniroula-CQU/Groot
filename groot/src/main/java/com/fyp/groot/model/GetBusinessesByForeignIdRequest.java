@@ -1,6 +1,5 @@
-package com.fyp.groot.model.junk;
+package com.fyp.groot.model;
 
-import com.fyp.groot.entity.Business;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddBusinessResponse {
-	Business business;
+public class GetBusinessesByForeignIdRequest {
+	private Long categoryID;
+	private Long cultureID;
+	private Long ownerId;
 }
