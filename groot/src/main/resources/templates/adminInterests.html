@@ -24,52 +24,40 @@
     </div>
     <div class="container" style="margin-top: 2vw; margin-bottom: 2vw;">
 	    <div class="row">
-	        <table class="table">
-	        <thead class="thead-dark">
-	            <tr>
-	                <th>Interest</th>
-	                <th>Records</th>
-	                <th>Action</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	            <tr>
-	                <td>Food</td>
-	                <td>20</td>
-	                <td>
-	                	<button class="btn btn-primary">Edit</button>
-	                	<button class="btn btn-danger">Delete</button>
-	                </td>
-	            </tr>
-	            <tr>
-	                <td>Party</td>
-	                <td>5</td>
-	                <td>
-	                	<button class="btn btn-primary">Edit</button>
-	                	<button class="btn btn-danger">Delete</button>
-	                </td>
-	            </tr>
-	            <tr>
-	                <td>Night Life</td>
-	                <td>7</td>
-	                <td>
-	                	<button class="btn btn-primary">Edit</button>
-	                	<button class="btn btn-danger">Delete</button>
-	                </td>
-	            </tr>
-	            <tr>
-	                <td>Travel</td>
-	                <td>4</td>
-	                <td>
-	                	<button class="btn btn-primary">Edit</button>
-	                	<button class="btn btn-danger">Delete</button>
-	                </td>
-	            </tr>
-	        </tbody>
-	    	</table>
+	        <div id="interest-container"></div>
+	        <div id="interest-error" style="color: red;"></div>
 	    </div>
 	</div>
-	
+	<script>
+	    $(document).ready(function() {
+	        $.ajax({
+	            url: '/api/interests/getAll',
+	            type: 'GET',
+	            contentType: 'application/json',
+	            headers: {
+	                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+	            },
+	            success: function(response) {
+	                var content = '<table class="table"><thead class="thead-dark"><tr><th>ID</th><th>Interest</th><th>Action</th></tr></thead><tbody>';
+	                response.interest.forEach(function(inter) {
+	                    // Constructing HTML content for each university
+	                		               
+	                    content += '<tr class="interest-entry">' +
+	                               '<td width="25%">' + inter.interestLibraryId + '</td>' +
+	                               '<td width="20%">' + inter.interest + '</td>' +
+	                               '<td width="15%"><a href="/?adminEditInterest&id=' + inter.interestLibraryId + '"><button class="btn btn-primary">Edit</button></a>&nbsp;<a href="/adminDelete&type=interest&id=' + inter.interestLibraryId + '"><button class="btn btn-danger">Delete</button></a></td>' +
+	                               '</tr>';
+	                });
+	                content += '</tbody></table>';
+	                $('#interest-container').html(content);
+	            },
+	            error: function(xhr) {
+	                console.log('Failed to retrieve universities:', xhr.responseText);
+	                $('#interest-error').text('Failed to retrieve university data: ' + xhr.responseText);
+	            }
+	        });
+	    });
+	</script>
     <footer id="footer"></footer>
     <script src="/js/custom_functions.js"></script>
     <script src="/js/script.js"></script>

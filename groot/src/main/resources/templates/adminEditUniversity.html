@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Groot - Manage Categories</title>
+    <title>Groot - Manage Universities</title>
     <link rel="icon" type="image/x-icon" href="/img/favicon.png">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk&amp;display=swap">
@@ -17,15 +17,26 @@
     <div class="container" style="margin-top: 2vw;">
         <div class="row">
             <h4>
-            	Manage Categories 
-            	<a href="adminAddCategory"><button style="float:right; width: 200px;" class="btn btn-success">Add New Category</button></a>
+            	Manage Universities 
+            	<a href="adminAddUniversity"><button style="float:right; width: 200px;" class="btn btn-success">Add New University</button></a>
             </h4>
         </div>
     </div>
     <div class="container" style="margin-top: 2vw; margin-bottom: 2vw;">
 	    <div class="row">
-	        <div id="category-container"></div>
-	        <div id="category-error" style="color: red;"></div>
+	        <table class="table">
+	        <thead class="thead-dark">
+	            <tr>
+	                <th>University</th>
+	                <th>Records</th>
+	                <th>Action</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <div id="university-container"></div>
+	            <div id="university-error" style="color: red;"></div>
+	        </tbody>
+	    	</table>
 	    </div>
 	</div>
 
@@ -35,28 +46,28 @@
     <script>
 	    $(document).ready(function() {
 	        $.ajax({
-	            url: '/api/categories/getAll',
+	            url: '/api/university/getAll',
 	            type: 'GET',
 	            contentType: 'application/json',
 	            headers: {
 	                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
 	            },
 	            success: function(response) {
-	                var content = '<table class="table"><thead class="thead-dark"><tr><th>ID</th><th>Category</th><th>Action</th></tr></thead><tbody>';
-	                response.categories.forEach(function(category) {
+	                var content = '';
+	                response.universities.forEach(function(university) {
+	                    // Constructing HTML content for each university
 	                		               
-	                    content += '<tr class="culture-entry">' +
-	                               '<td width="25%">' + category.categoryId + '</td>' +
-	                               '<td width="20%">' + category.categoryName + '</td>' +
-	                               '<td width="15%"><a href="/?adminEditCategory&id=' + category.categoryId + '"><button class="btn btn-primary">Edit</button></a>&nbsp;<a href="/adminDelete&type=category&id=' + category.categoryId + '"><button class="btn btn-danger">Delete</button></a></td>' +
+	                    content += '<tr class="university-entry">' +
+	                               '<td width="25%">' + university.universityName + '</td>' +
+	                               '<td width="25%">' + university.city + '</td>' +
+	                               '<td width="25%"><a href="/?adminEditUniversity&id=' + university.id + '"><button class="btn btn-primary">Edit</button></a>&nbsp;<a href="?adminEditUniversity&id=' + university.id + '"><button class="btn btn-danger">Delete</button></a></td>' +
 	                               '</tr>';
 	                });
-	                content += '</tbody></table>';
-	                $('#category-container').html(content);
+	                $('#university-container').html(content);
 	            },
 	            error: function(xhr) {
 	                console.log('Failed to retrieve universities:', xhr.responseText);
-	                $('#culture-error').text('Failed to retrieve university data: ' + xhr.responseText);
+	                $('#university-error').text('Failed to retrieve university data: ' + xhr.responseText);
 	            }
 	        });
 	    });

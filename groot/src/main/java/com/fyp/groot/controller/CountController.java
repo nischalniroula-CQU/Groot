@@ -12,6 +12,9 @@ import com.fyp.groot.service.CategoryService;
 import com.fyp.groot.service.CultureService;
 import com.fyp.groot.service.EventService;
 import com.fyp.groot.service.UniversityService;
+import com.fyp.groot.service.UserService;
+import com.fyp.groot.service.InterestService;
+import com.fyp.groot.service.TagService;
 
 @RestController
 @RequestMapping("/api/count")
@@ -32,6 +35,15 @@ public class CountController {
     @Autowired
     private UniversityService universityService;
     
+    @Autowired
+    private UserService userService;
+    
+    @Autowired
+    private InterestService interestService;
+    
+    @Autowired
+    private TagService tagService;
+    
     @GetMapping("/allCounts")
     public ResponseEntity<Long> getCount(@RequestParam String entityType) {
         switch (entityType) {
@@ -45,6 +57,12 @@ public class CountController {
                 return ResponseEntity.ok(eventService.countEvents());
             case "university":
                 return ResponseEntity.ok(universityService.countUniversities());
+            case "users":
+                return ResponseEntity.ok(userService.countUsers());
+            case "interests":
+                return ResponseEntity.ok(interestService.countInterests());
+            case "tags":
+                return ResponseEntity.ok(tagService.countTags());
             // ... cases for other entities ...
             default:
                 throw new IllegalArgumentException("Invalid entity type"); 

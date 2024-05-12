@@ -28,7 +28,10 @@
 						<a href="adminCategories">
 							<h6 class="mb-0 text-primary">Category</h6>
 						</a>
-						<small>143 records</small>
+						<small>
+							<span id="categoryCounts"></span>
+    						<span id="categoryError" style="color: red;"></span>
+    					</small>
 					</div>
 				</div>
 			</div>
@@ -38,7 +41,10 @@
 						<a href="adminCultures">
 							<h6 class="mb-0 text-primary">Culture</h6>
 						</a>
-						<small>15 records</small>
+						<small>
+							<span id="cultureCounts"></span>
+    						<span id="cultureError" style="color: red;"></span>
+    					</small>
 					</div>
 				</div>
 			</div>
@@ -48,8 +54,11 @@
 						<a href="adminUniversities">
 							<h6 class="mb-0 text-primary">University</h6>
 						</a>
-						<small>345 records</small>
-					</div>
+						<small>
+							<span id="universityCounts"></span>
+    						<span id="universityError" style="color: red;"></span>
+    					</small>
+    				</div>
 				</div>
 			</div>
 		</div>
@@ -60,7 +69,10 @@
 						<a href="adminInterests">
 							<h6 class="mb-0 text-primary">Interest Library</h6>
 						</a>
-						<small>14324 records</small>
+						<small>
+							<span id="interestsCounts"></span>
+    						<span id="interestsError" style="color: red;"></span>
+    					</small>
 					</div>
 				</div>
 			</div>
@@ -70,7 +82,10 @@
 						<a href="adminTags">
 							<h6 class="mb-0 text-primary">Tag</h6>
 						</a>
-						<small>143 records</small>
+						<small>
+							<span id="tagsCounts"></span>
+    						<span id="tagsError" style="color: red;"></span>
+    					</small>
 					</div>
 				</div>
 			</div>
@@ -80,6 +95,29 @@
     <footer id="footer"></footer>
     <script src="/js/custom_functions.js"></script>
     <script src="/js/script.js"></script>
+    <script>
+		$(document).ready(function() {
+	        // List of entity types
+	        var entityTypes = ['category', 'culture', 'university', 'interests', 'tags'];
+	
+	        // Function to fetch and display counts for each entity type
+	        entityTypes.forEach(function(entityType) {
+	            $.ajax({
+	                url: '/api/count/allCounts',
+	                type: 'GET',
+	                contentType: 'application/json',
+	                data: { entityType: entityType }, // Send entityType as a query parameter
+	                success: function(response) {
+	                    $('#' + entityType + 'Counts').text(response); // Update respective span by ID
+	                },
+	                error: function(xhr) {
+	                    console.log('Failed to retrieve count for ' + entityType + ':', xhr.responseText);
+	                    $('#' + entityType + 'Error').text('Failed to retrieve ' + xhr.responseText);
+	                }
+	            });
+	        });
+	    });
+	</script>
     <script>
     $(document).ready(function() {
         // Load the header and footer into div

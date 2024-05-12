@@ -1,5 +1,6 @@
 package com.fyp.groot.service;
 
+import com.fyp.groot.entity.Event;
 import com.fyp.groot.entity.User;
 import com.fyp.groot.model.SignupRequest;
 import com.fyp.groot.repository.UserRepository;
@@ -41,6 +42,22 @@ public class UserService {
 
 		// Create local user and link with Firebase user ID
 		User user = new User();
+				
+		user.setFirstName(signupRequest.getFirstName());
+		user.setLastName(signupRequest.getLastName());
+		user.setEmailId(signupRequest.getEmail());
+		user.setUsername(signupRequest.getEmail());
+		user.setStatus("active");
+		user.setCity(signupRequest.getCity());
+		user.setCountry(signupRequest.getCountry());
+		user.setPhoneNumber(signupRequest.getPhoneNumber());
+		user.setPassword(signupRequest.getPassword());
+		
+		user.setUserType(signupRequest.getUserType());
+		user.setAddress(signupRequest.getAddress());
+		user.setCultureId(signupRequest.getCulture());
+		user.setUniversityId(signupRequest.getUniversity());
+		
 		user.setFirebaseId(firebaseUser.getUid());
 		// Set other properties of user
 
@@ -102,7 +119,12 @@ public class UserService {
 		return "Document with user id" + id + "has been deleted successfully";
 
 	}
-
+	public List<User> getAllUserDetails() {
+        return userRepository.findAll();
+    }
+	
+	
+/*
 	public List<User> getAllUserDetails() throws InterruptedException, ExecutionException {
 
 		Firestore dbFirestore = FirestoreClient.getFirestore();
@@ -126,6 +148,11 @@ public class UserService {
 		return userList;
 
 	}
+	*/
+
+public long countUsers() {
+    return userRepository.count();
+}
 
 }
 

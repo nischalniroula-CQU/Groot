@@ -39,6 +39,10 @@ public class SignupController {
 		login.setPhoneNumber(signupRequest.getPhoneNumber());
 		login.setPassword(signupRequest.getPassword());
 		
+		login.setUserType(signupRequest.getUserType());
+		login.setAddress(signupRequest.getAddress());
+		login.setCultureId(signupRequest.getCulture());
+		login.setUniversityId(signupRequest.getUniversity());
 		
 		try {
 

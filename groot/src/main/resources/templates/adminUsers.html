@@ -23,75 +23,8 @@
     </div>
     <div class="container" style="margin-top: 2vw; margin-bottom: 2vw;">
 	    <div class="row">
-	        <table class="table">
-	        <thead class="thead-dark">
-	            <tr>
-	                <th>User</th>
-	                <th>Type</th>
-	                <th>Email ID</th>
-	                <th>Culture</th>
-	                <th>Joined On</th>
-	                <th>Action</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	            <tr>
-	                <td>John Doe</td>
-	                <td>User</td>
-	                <td>john.doe@example.com</td>
-	                <td>Western</td>
-	                <td>2024-05-01</td>
-	                <td>
-	                	<button class="btn btn-primary">View</button>
-	                	<button class="btn btn-danger">Delete</button>
-	                </td>
-	            </tr>
-	            <tr>
-	                <td>Emily Brown</td>
-	                <td>User</td>
-	                <td>emily.brown@example.com</td>
-	                <td>European</td>
-	                <td>2024-05-01</td>
-	                <td>
-	                	<button class="btn btn-primary">View</button>
-	                	<button class="btn btn-danger">Delete</button>
-	                </td>
-	            </tr>
-	            <tr>
-	                <td>Jane Smith</td>
-	                <td>User</td>
-	                <td>jane.smith@example.com</td>
-	                <td>Eastern</td>
-	                <td>2024-04-28</td>
-	                <td>
-	                	<button class="btn btn-primary">View</button>
-	                	<button class="btn btn-danger">Delete</button>
-	                </td>
-	            </tr>
-	            <tr>
-	                <td>Alex Lee</td>
-	                <td>User</td>
-	                <td>alex.lee@example.com</td>
-	                <td>African</td>
-	                <td>2024-05-01</td>
-	                <td>
-	                	<button class="btn btn-primary">View</button>
-	                	<button class="btn btn-danger">Delete</button>
-	                </td>
-	            </tr>
-	            <tr>
-	                <td>Mike Johnson</td>
-	                <td>User</td>
-	                <td>mike.johnson@example.com</td>
-	                <td>Asian</td>
-	                <td>2024-04-25</td>
-	                <td>
-	                	<button class="btn btn-primary">View</button>
-	                	<button class="btn btn-danger">Delete</button>
-	                </td>
-	            </tr>
-	        </tbody>
-	    	</table>
+	    	<div id="user-container"></div>
+	        <div id="user-error" style="color: red;"></div>
 	    </div>
 	</div>
     
@@ -100,6 +33,38 @@
     <footer id="footer"></footer>
     <script src="/js/custom_functions.js"></script>
     <script src="/js/script.js"></script>
+    <script>
+	    $(document).ready(function() {
+	        $.ajax({
+	            url: '/api/allUser',
+	            type: 'GET',
+	            contentType: 'application/json',
+	            headers: {
+	                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+	            },
+	            success: function(response) {
+	                var content = '<table class="table"><thead class="thead-dark"><tr><th>Event</th><th>Business Name</th><th>Location</th><th>Max Seat</th><th>Price</th><th>Action</th></tr></thead><tbody>';
+	                response.forEach(function(usr) {
+	                		               
+	                    content += '<tr class="culture-entry">' +
+	                               '<td width="25%">' + usr.firstName + ' ' + usr.lastName +'</td>' +
+	                               '<td width="20%">' + usr.emailId + '</td>' +
+	                               '<td width="10%">' + usr.phoneNumber + '</td>' +
+	                               '<td width="10%">' + usr.city + '</td>' +
+	                               '<td width="10%">' + usr.cultureId + '</td>' +
+	                               '<td width="15%"><a href="/?adminEditUser&id=' + usr.userId + '"><button class="btn btn-primary">Edit</button></a>&nbsp;<a href="/adminDelete&type=user&id=' + usr.userId + '"><button class="btn btn-danger">Delete</button></a></td>' +
+	                               '</tr>';
+	                });
+	                content += '</tbody></table>';
+	                $('#user-container').html(content);
+	            },
+	            error: function(xhr) {
+	                console.log('Failed to retrieve user:', xhr.responseText);
+	                $('#user-error').text('Failed to retrieve user data: ' + xhr.responseText);
+	            }
+	        });
+	    });
+	</script>
     <script>
     $(document).ready(function() {
         // Load the header and footer into div

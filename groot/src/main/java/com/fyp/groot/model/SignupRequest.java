@@ -24,7 +24,10 @@ public class SignupRequest {
 	private String country;
     private String password;
     private String confrimPassword;
+    private String userType;
+    private String address;
+    private String culture;
+    private String university;
     
-
 
 }
