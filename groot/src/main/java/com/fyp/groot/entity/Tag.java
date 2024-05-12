@@ -1,48 +1,27 @@
 package com.fyp.groot.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
+@Table(name = "tag")
 public class Tag {
 
-    @Id
-    @Column(nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer tagId;
+	@Id
+	@Column(nullable = false, updatable = false, name = "tag_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long tagId;
 
-    @Column
-    private Integer linkedId;
+	@Column(name = "linked_id")
+	private Long linkedId;
 
-    @Column
-    private String tag;
-
-    public Integer getTagId() {
-        return tagId;
-    }
-
-    public void setTagId(final Integer tagId) {
-        this.tagId = tagId;
-    }
-
-    public Integer getLinkedId() {
-        return linkedId;
-    }
-
-    public void setLinkedId(final Integer linkedId) {
-        this.linkedId = linkedId;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(final String tag) {
-        this.tag = tag;
-    }
-
+	@Column(name = "tag")
+	private String tag;
 }

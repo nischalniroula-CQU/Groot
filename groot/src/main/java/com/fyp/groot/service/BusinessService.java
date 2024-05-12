@@ -52,13 +52,19 @@ public class BusinessService {
 
 		if (request.getCategoryID() != null) {
 			businesses = businesses.stream()
-					.filter(business -> request.getCategoryID().equals(business.getCategory().getCategoryId()))
+					.filter(business -> request.getCategoryID().equals(business.getCategoryId()))
+					.collect(Collectors.toList());
+		}
+		
+		if (request.getName() != null) {
+			businesses = businesses.stream()
+					.filter(business -> request.getName().equalsIgnoreCase(business.getName()))
 					.collect(Collectors.toList());
 		}
 
 		if (request.getCultureID() != null) {
 			businesses = businesses.stream()
-					.filter(business -> request.getCultureID().equals(business.getCulture().getCultureId()))
+					.filter(business -> request.getCultureID().equals(business.getCultureId()))
 					.collect(Collectors.toList());
 		}
 
@@ -83,13 +89,9 @@ public class BusinessService {
 				.addedOn(business.getAddOn())
 				.address(business.getAddress())
 				.basicDetail(business.getBasicDetails())
-				.businessReview(business.getBusinessReviews())
-				.categoryName(business.getCategory().getCategoryName())
 				.address(business.getAddress())
-				.businessReview(business.getBusinessReviews())
-				.businessTiming(business.getBusinessTimings())
 				.subtitle(business.getSubtitle())
-				.culture(business.getCulture().getCultureName())
+				.cultureId(business.getCultureId())
 				.contactMethod(business.getContactMethod())
 				.phoneNumber(business.getPhoneNumber())
 				.email(business.getEmailId())
@@ -99,11 +101,6 @@ public class BusinessService {
 				.country(business.getCountry())
 				.priceRange(business.getPriceRange())
 				.status(business.getStatus())
-				.businessTiming(business.getBusinessTimings())
-				.businessReview(business.getBusinessReviews())
-				.images(business.getPostImagelibraries())
-				//.tags()
-				.events(business.getBusinessEvents())
 				.build();
 	}
 

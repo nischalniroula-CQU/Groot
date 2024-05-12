@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fyp.groot.commons.utility.Constant;
-import com.fyp.groot.entity.Login;
+import com.fyp.groot.entity.User;
 import com.fyp.groot.model.SignupRequest;
 import com.fyp.groot.model.SignupResponse;
 import com.fyp.groot.service.UserService;
@@ -25,11 +25,11 @@ public class SignupController {
 	public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest) {
 		
 		// Add password validation
-	    if (!signupRequest.getPassword().equals(signupRequest.getConfrimPassword())) {
-	        return ResponseEntity.badRequest().body("Passwords do not match");
-	    }else {
+	   // if (!signupRequest.getPassword().equals(signupRequest.getConfrimPassword())) {
+	     //   return ResponseEntity.badRequest().body("Passwords do not match");
+	    //}else {
 		
-		Login login = new Login();
+		User login = new User();
 		
 		login.setFirstName(signupRequest.getFirstName());
 		login.setLastName(signupRequest.getLastName());
@@ -57,6 +57,6 @@ public class SignupController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Signup failed: " + e.getMessage());
 		}
 	    }
-	}
+	//}
 
 }

@@ -11,18 +11,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Plan {
+public class ImageLibrary {
 
 	@Id
-	@Column(name = "plan_id", nullable = false, updatable = false)
+	@Column(name = "image_id", nullable = false, updatable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long planId;
-
-	@Column(name = "plan_name")
-	private String planName;
-
-	@Column(name = "price")
-	private String price;
+	private Long imageId;
+	@Column(name = "type")
+	private String type;
+	@Column(name = "image_name")
+	private String imageName;
+	@Column(name = "post_id")
+	private Long postId;
 }
-
-

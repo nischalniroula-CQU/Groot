@@ -36,6 +36,17 @@ public class UniversityController {
 		GetUniversityByIdResponse response = new GetUniversityByIdResponse(university);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	
+	//Example for getting on foreign key
+//	@GetMapping("/by-student/{studentId}") // Fetch universities by student ID (foreign key)
+//	public ResponseEntity<List<UniversityResponse>> getUniversitiesByStudentId(@PathVariable Long studentId) {
+//	    List<UniversityResponse> responses = universityService.getUniversitiesByStudentId(studentId);
+//	    return ResponseEntity.ok(responses);
+//	}
+	
+	
+	
+	
 
 //	@PostMapping("/addUniversity")
 //    public ResponseEntity<AddUniversityResponse> addUniversity(@RequestBody AddUniversityRequest request) {

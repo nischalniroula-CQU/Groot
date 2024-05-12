@@ -1,33 +1,23 @@
 package com.fyp.groot.entity;
 
-import java.util.List;
-import java.util.Set;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "business")
 public class Business {
 
 	@Id
-	@Column(nullable = false, updatable = false)
+	@Column(name = "business_id", nullable = false, updatable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long businessId;
 
 	@Column
 	private String name;
@@ -67,30 +57,19 @@ public class Business {
 
 	@Column
 	private String addOn;
-	
+
 	@Column
 	private String latitude;
-	
+
 	@Column
 	private String longitude;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "category_id")
-	private Category category;
+	@Column(name = "category_id")
+	private Long categoryId;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "culture_id")
-	private Culture culture;
+	@Column(name = "culture_id")
+	private Long cultureId;
 
-	@OneToMany(mappedBy = "business")
-	private List<BusinessTiming> businessTimings;
-
-	@OneToMany(mappedBy = "business")
-	private List<Event> businessEvents;
-
-	@OneToMany(mappedBy = "post")
-	private List<Imagelibrary> postImagelibraries;
-
-	@OneToMany(mappedBy = "business")
-	private List<Review> businessReviews;
+	@Column(name = "owner_id")
+	private Long ownerId;
 }

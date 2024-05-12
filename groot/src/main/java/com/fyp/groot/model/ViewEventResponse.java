@@ -2,7 +2,6 @@ package com.fyp.groot.model;
 
 import java.util.List;
 
-import com.fyp.groot.entity.BusinessTiming;
 import com.fyp.groot.entity.Event;
 
 import lombok.AllArgsConstructor;
@@ -16,13 +15,9 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ViewMultipleBusinessRequest {
+public class ViewEventResponse {
 	
-	private String name;
-	private String country;
-	private Long categoryID;
-	private Long cultureID;
-	private String city;
-
+	private Event event;
+	
 
 }

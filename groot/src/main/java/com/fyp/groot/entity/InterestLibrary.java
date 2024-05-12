@@ -11,18 +11,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Plan {
-
+@Table(name = "interest_library")
+public class InterestLibrary {
 	@Id
-	@Column(name = "plan_id", nullable = false, updatable = false)
+	@Column(name = "interest_library_id", nullable = false, updatable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long planId;
-
-	@Column(name = "plan_name")
-	private String planName;
-
-	@Column(name = "price")
-	private String price;
+	private Long interestLibraryId;
+	@Column(name = "interest")
+	private String interest;
 }
-
-
