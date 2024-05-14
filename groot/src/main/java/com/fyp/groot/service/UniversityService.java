@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fyp.groot.entity.Culture;
 import com.fyp.groot.entity.University;
 import com.fyp.groot.repository.UniversityRepository;
 
@@ -29,6 +30,16 @@ public class UniversityService {
 
 	public University getUniversityById(Long id) {
 		return universityRepository.findById(id).orElseThrow();
+	}
+	
+	public University updateUniversity(University university, Long universityId) {
+
+		University existingUniversity = universityRepository.findById(universityId).orElseThrow();
+		return universityRepository.save(existingUniversity);
+	}
+	
+	public void deleteUniversity(Long universityId) {
+		universityRepository.deleteById(universityId);
 	}
 
 }

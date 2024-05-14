@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fyp.groot.entity.Country;
 import com.fyp.groot.entity.Culture;
 import com.fyp.groot.repository.CultureRepository;
 
@@ -22,6 +23,16 @@ public class CultureService {
     public List<Culture> getAllCultures() {
         return cultureRepository.findAll();
     }
+    
+    public Culture updateCulture(Culture culture, Long cultureId) {
+
+    	Culture existingCulture = cultureRepository.findById(cultureId).orElseThrow();
+		return cultureRepository.save(existingCulture);
+	}
+    
+    public void deleteCulture(Long cultureId) {
+    	cultureRepository.deleteById(cultureId);
+	}
     
     public long countCultures() {
         return cultureRepository.count();
