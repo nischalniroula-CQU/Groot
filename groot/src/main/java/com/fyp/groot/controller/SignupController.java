@@ -37,7 +37,7 @@ public class SignupController {
 		login.setCity(signupRequest.getCity());
 		login.setCountry(signupRequest.getCountry());
 		login.setPhoneNumber(signupRequest.getPhoneNumber());
-		login.setPassword(signupRequest.getPassword());
+		//login.setPassword(signupRequest.getPassword());
 		
 		login.setUserType(signupRequest.getUserType());
 		login.setAddress(signupRequest.getAddress());

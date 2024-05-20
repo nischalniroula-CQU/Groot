@@ -52,7 +52,7 @@ public class UserService {
 		user.setCity(signupRequest.getCity());
 		user.setCountry(signupRequest.getCountry());
 		user.setPhoneNumber(signupRequest.getPhoneNumber());
-		user.setPassword(signupRequest.getPassword());
+		//user.setPassword(signupRequest.getPassword());
 		
 		user.setUserType(signupRequest.getUserType());
 		user.setAddress(signupRequest.getAddress());
