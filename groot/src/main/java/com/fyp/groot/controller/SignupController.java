@@ -1,5 +1,7 @@
 package com.fyp.groot.controller;
 
+import java.time.OffsetDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +45,7 @@ public class SignupController {
 		login.setAddress(signupRequest.getAddress());
 		login.setCultureId(signupRequest.getCulture());
 		login.setUniversityId(signupRequest.getUniversity());
+		login.setUserSince(OffsetDateTime.now());
 		
 		try {
 

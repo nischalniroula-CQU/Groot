@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Getter
@@ -26,7 +27,7 @@ public class User {
 	//@Column
 	//private String password;
 	@Column
-	private Date lastLogin;
+	private LocalDateTime lastLogin;
 	@Column
 	private String firstName;
 	@Column

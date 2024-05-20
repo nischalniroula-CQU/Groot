@@ -27,7 +27,7 @@ public class AddBusinessRequest {
 	private String country;
 	private String priceRange;
 	private String status;
-	private String addOn;
+	//private String addOn;
 	private String latitude;
 	private String longitude;
 	private Long categoryId;

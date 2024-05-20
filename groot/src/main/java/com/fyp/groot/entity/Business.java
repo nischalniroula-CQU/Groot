@@ -1,5 +1,6 @@
 package com.fyp.groot.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -56,7 +57,7 @@ public class Business {
 	private String status;
 
 	@Column
-	private String addOn;
+	private LocalDateTime addOn;
 
 	@Column
 	private String latitude;

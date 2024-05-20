@@ -1,5 +1,6 @@
 package com.fyp.groot.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fyp.groot.entity.BusinessTiming;
@@ -28,7 +29,7 @@ public class ViewBusinessResponse {
 	private String city;
 	private String country;
 	private String priceRange;
-	private String addedOn;
+	private LocalDateTime addedOn;
 	private String status;
 	private BusinessTiming businessTiming;
 	private List<ImageLibrary> images;

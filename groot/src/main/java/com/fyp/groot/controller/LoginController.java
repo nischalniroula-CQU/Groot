@@ -1,5 +1,7 @@
 package com.fyp.groot.controller;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fyp.groot.commons.utility.Constant;
+import com.fyp.groot.entity.User;
 import com.fyp.groot.model.LoginRequest;
 import com.fyp.groot.model.LoginResponse;
 import com.fyp.groot.model.UserDetail;
@@ -32,6 +35,10 @@ public class LoginController {
 			UserRecord userRecord = FirebaseAuth.getInstance().getUserByEmail(loginRequest.getEmail());
 
 			if (!userRecord.isDisabled()) {
+				
+				User user = new User();
+				user.setLastLogin(LocalDateTime.now());
+				
 				// After successful retrieval, generate a custom token for the user
 				String customToken = FirebaseAuth.getInstance().createCustomToken(userRecord.getUid());
 				

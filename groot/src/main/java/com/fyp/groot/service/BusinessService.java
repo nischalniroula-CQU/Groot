@@ -16,6 +16,7 @@ import com.fyp.groot.repository.ImageLibraryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +40,7 @@ public class BusinessService {
 		business = Business.builder().name(request.getName()).subtitle(request.getSubtitle()).basicDetails(request.getBasicDetails())
 				.contactMethod(request.getContactMethod()).phoneNumber(request.getPhoneNumber()).emailId(request.getEmailId()).location(request.getLocation())
 				.address(request.getAddress()).city(request.getCity()).country(request.getCountry()).priceRange(request.getPriceRange())
-				.status(request.getStatus()).addOn(request.getAddOn()).latitude(request.getLatitude()).longitude(request.getLongitude())
+				.status(request.getStatus()).addOn(LocalDateTime.now()).latitude(request.getLatitude()).longitude(request.getLongitude())
 				.categoryId(request.getCategoryId()).cultureId(request.getCultureId()).ownerId(request.getOwnerId()).build();
 
 		return business;

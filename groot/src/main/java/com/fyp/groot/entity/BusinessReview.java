@@ -1,5 +1,7 @@
 package com.fyp.groot.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,5 +37,5 @@ public class BusinessReview {
 	private String status;
 
 	@Column(name = "add_on")
-	private String addOn;
+	private LocalDateTime addOn;
 }

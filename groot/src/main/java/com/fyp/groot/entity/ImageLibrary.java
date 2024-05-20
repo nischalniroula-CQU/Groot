@@ -17,14 +17,19 @@ public class ImageLibrary {
 	@Column(name = "image_id", nullable = false, updatable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long imageId;
+	
 	@Column(name = "type")
 	private String type;
+	
 	@Column(name = "image_name")
 	private String imageName;
+	
 	@Column(name = "post_id")
 	private Long postId;
+	
 	//@Column(name = "is_cover_image")
 	//private boolean isCoverImage;
+	
 	@Column(name = "business_id")
 	private Long businessId;
 }
