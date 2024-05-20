@@ -42,13 +42,19 @@ public class BusinessController {
 		businessService.deleteBusiness(businessId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
+	
 	@PostMapping("/add")
 	public ResponseEntity<AddBusinessResponse> addBusiness(@RequestBody AddBusinessRequest request) {
-		AddBusinessResponse response = new AddBusinessResponse();
-		response.setBusiness(businessService.addBusiness(request));
-		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	    AddBusinessResponse response = businessService.addBusiness(request); // Get the response from the service
+	    return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
+
+//	@PostMapping("/add")
+//	public ResponseEntity<AddBusinessResponse> addBusiness(@RequestBody AddBusinessRequest request) {
+//		AddBusinessResponse response = new AddBusinessResponse();
+//		response.setBusiness(businessService.addBusiness(request));
+//		return new ResponseEntity<>(response, HttpStatus.CREATED);
+//	}
 
 	@PostMapping("/getbyfilter")
 	public ResponseEntity<ViewMultipleBusinessResponse> getBusinessesByFilter(@RequestBody GetBusinessesByForeignIdRequest request) {

@@ -1,5 +1,7 @@
 package com.fyp.groot.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -70,4 +72,11 @@ public class Business {
 
 	@Column(name = "owner_id")
 	private Long ownerId;
+	
+//	@Column(name = "business_timing")
+//	private BusinessTiming businessTiming;
+//	
+//	@Column
+//	private List<ImageLibrary> images;
+	
 }

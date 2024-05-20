@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -80,22 +81,28 @@ public class UserService {
 	 *
 	 * }
 	 */
-
-	public User getUserDetails(String id) throws InterruptedException, ExecutionException {
-
-		Firestore dbFirestore = FirestoreClient.getFirestore();
-		DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(id);
-		ApiFuture<DocumentSnapshot> future = documentReference.get();
-		DocumentSnapshot document = future.get();
-
-		User user = null;
-		if (document.exists()) {
-			user = document.toObject(User.class);
-			return user;
-		} else {
-			return null;
-		}
+	
+	public Optional<User> getUserById(Long id) {
+		Optional<User> user = userRepository.findById(id);
+		
+		return user;
 	}
+
+//	public User getUserDetails(String id) throws InterruptedException, ExecutionException {
+//
+//		Firestore dbFirestore = FirestoreClient.getFirestore();
+//		DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(id);
+//		ApiFuture<DocumentSnapshot> future = documentReference.get();
+//		DocumentSnapshot document = future.get();
+//
+//		User user = null;
+//		if (document.exists()) {
+//			user = document.toObject(User.class);
+//			return user;
+//		} else {
+//			return null;
+//		}
+//	}
 
 
 	/*

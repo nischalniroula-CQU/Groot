@@ -1,5 +1,10 @@
 package com.fyp.groot.model;
 
+import java.util.List;
+
+import com.fyp.groot.entity.BusinessTiming;
+import com.fyp.groot.entity.ImageLibrary;
+
 import lombok.*;
 
 @Getter
@@ -25,4 +30,6 @@ public class ViewBusinessResponse {
 	private String priceRange;
 	private String addedOn;
 	private String status;
+	private BusinessTiming businessTiming;
+	private List<ImageLibrary> images;
 }

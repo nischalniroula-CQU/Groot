@@ -1,6 +1,8 @@
 package com.fyp.groot.service;
 
 import com.fyp.groot.entity.Business;
+import com.fyp.groot.entity.BusinessTiming;
+import com.fyp.groot.entity.ImageLibrary;
 import com.fyp.groot.model.GetBusinessesByForeignIdRequest;
 import com.fyp.groot.model.ViewBusinessResponse;
 import com.fyp.groot.model.ViewMultipleBusinessRequest;
@@ -8,6 +10,9 @@ import com.fyp.groot.model.ViewMultipleBusinessResponse;
 import com.fyp.groot.model.AddBusinessRequest;
 import com.fyp.groot.model.AddBusinessResponse;
 import com.fyp.groot.repository.BusinessRepository;
+import com.fyp.groot.repository.BusinessTimingRepository;
+import com.fyp.groot.repository.ImageLibraryRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +24,15 @@ public class BusinessService {
 
 	@Autowired
 	private BusinessRepository businessRepository;
+	
+	@Autowired
+    private ImageLibraryService imageLibraryService; 
+
+    @Autowired
+    private BusinessTimingRepository businessTimingRepository;
+    
+    @Autowired
+    private ImageLibraryRepository imageLibraryRepository;
 
 	private Business mapRequestToBusiness(AddBusinessRequest request, Business business) {
 
@@ -44,15 +58,52 @@ public class BusinessService {
 		existingBusiness = mapRequestToBusiness(request, existingBusiness);
 
 		Business updatedBusiness = businessRepository.save(existingBusiness);
+		
+		if (request.getBusinessTiming() != null) {
+            BusinessTiming existingBusinessTiming = businessTimingRepository.findByBusinessId(businessId);
+            if (existingBusinessTiming != null) {
+                // Update the existing BusinessTiming entity
+                existingBusinessTiming.setMonday(request.getBusinessTiming().getMonday());
+                existingBusinessTiming.setTuesday(request.getBusinessTiming().getTuesday());
+                existingBusinessTiming.setWednesday(request.getBusinessTiming().getWednesday());
+                existingBusinessTiming.setThursday(request.getBusinessTiming().getThursday());
+                existingBusinessTiming.setFriday(request.getBusinessTiming().getFriday());
+                existingBusinessTiming.setSaturday(request.getBusinessTiming().getSaturday());
+                existingBusinessTiming.setSunday(request.getBusinessTiming().getSunday());
+
+                businessTimingRepository.save(existingBusinessTiming);
+            } else {
+                // Create a new BusinessTiming entity if it doesn't exist
+                request.getBusinessTiming().setBusinessId(businessId);
+                businessTimingRepository.save(request.getBusinessTiming());
+            }
+        }
 		response.setBusiness(updatedBusiness);
 		return response;
 	}
 
-	public Business addBusiness(AddBusinessRequest request) {
-		// Add business logic here (validation, etc.)
-		Business business = mapRequestToBusiness(request, new Business());
-		return businessRepository.save(business);
-	}
+	public AddBusinessResponse addBusiness(AddBusinessRequest request) {
+        Business business = mapRequestToBusiness(request, new Business());
+        business = businessRepository.save(business);
+
+        // Save the images associated with the business
+        if (request.getImages() != null && !request.getImages().isEmpty()) {
+            for (ImageLibrary image : request.getImages()) {
+                image.setBusinessId(business.getBusinessId()); 
+                imageLibraryService.addImage(image); // Pass ImageLibrary directly
+            }
+        }
+        
+        // Save the business timing associated with the business
+        if (request.getBusinessTiming() != null) {
+            request.getBusinessTiming().setBusinessId(business.getBusinessId());
+            businessTimingRepository.save(request.getBusinessTiming());
+        }
+
+        AddBusinessResponse response = new AddBusinessResponse();
+        response.setBusiness(business);
+        return response;
+    }
 
 	public void deleteBusiness(Long businessId) {
 		businessRepository.deleteById(businessId);
@@ -93,11 +144,36 @@ public class BusinessService {
 	}
 
 	private ViewBusinessResponse mapBusinessToResponse(Business business) {
-		return ViewBusinessResponse.builder().name(business.getName()).addedOn(business.getAddOn()).address(business.getAddress())
+		
+		List<ImageLibrary> imagelibrary=imageLibraryRepository.findByBusinessId(business.getBusinessId());
+        BusinessTiming businessTiming = businessTimingRepository.findByBusinessId(business.getBusinessId());
+        
+        return ViewBusinessResponse.builder().name(business.getName()).addedOn(business.getAddOn()).address(business.getAddress())
 				.basicDetail(business.getBasicDetails()).address(business.getAddress()).subtitle(business.getSubtitle()).cultureId(business.getCultureId())
 				.contactMethod(business.getContactMethod()).phoneNumber(business.getPhoneNumber()).email(business.getEmailId()).latitude(business.getLatitude())
 				.longitude(business.getLongitude()).city(business.getCity()).country(business.getCountry()).priceRange(business.getPriceRange())
-				.status(business.getStatus()).build();
+				.status(business.getStatus())
+				.images(imagelibrary)
+				.businessTiming(businessTiming)
+				.build();
+		
+		// Fetch and add imageLibrary and businessTiming details to the response
+        //List<ImageLibraryResponse> images = imageLibraryService.getImagesByBusinessId(business.getBusinessId());
+        
+		 //List<ImageLibrary> imagelibrary=imageLibraryRepository.findByBusinessId(business.getBusinessId());
+         //BusinessTiming businessTiming = businessTimingRepository.findByBusinessId(business.getBusinessId());
+        //return ViewBusinessResponse.builder()
+                //.images(imagelibrary) // Use imagelibrary (List<ImageLibrary>)
+                //.businessTiming(businessTiming)
+                // ... other fields
+                //.build();
+        
+//        ViewBusinessResponse response = ViewBusinessResponse.builder()
+//            .images(images)
+//            .businessTiming(businessTiming)
+//            .build();
+
+        //return response;
 	}
 
 	public long countBusinesses() {

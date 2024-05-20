@@ -2,6 +2,7 @@ package com.fyp.groot.controller;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,10 @@ public class UserController {
 	 */
     
     @GetMapping("/user/{id}")
-    public User getUser(@PathVariable String id) throws InterruptedException, ExecutionException {
+    public Optional<User> getUser(@PathVariable Long id) throws InterruptedException, ExecutionException {
     	
-    	return userService.getUserDetails(id);
+    	return userService.getUserById(id);
+    	//return userService.getUserDetails(id);
     }
     
 	/*

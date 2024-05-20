@@ -23,4 +23,8 @@ public class ImageLibrary {
 	private String imageName;
 	@Column(name = "post_id")
 	private Long postId;
+	//@Column(name = "is_cover_image")
+	//private boolean isCoverImage;
+	@Column(name = "business_id")
+	private Long businessId;
 }

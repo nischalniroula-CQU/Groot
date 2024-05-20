@@ -16,5 +16,6 @@ public class ImageLibraryResponse {
     private String imageName;
     private Long postId;
     private boolean isCoverImage;
+    private Long businessId;
 
 }

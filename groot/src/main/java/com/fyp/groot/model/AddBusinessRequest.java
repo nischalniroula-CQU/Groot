@@ -1,5 +1,10 @@
 package com.fyp.groot.model;
 
+import java.util.List;
+
+import com.fyp.groot.entity.BusinessTiming;
+import com.fyp.groot.entity.ImageLibrary;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,4 +33,6 @@ public class AddBusinessRequest {
 	private Long categoryId;
 	private Long cultureId;
 	private Long ownerId;
+	private BusinessTiming businessTiming;
+	private List<ImageLibrary> images;
 }
