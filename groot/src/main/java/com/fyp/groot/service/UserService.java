@@ -15,6 +15,7 @@ import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -47,7 +48,7 @@ public class UserService {
 		user.setFirstName(signupRequest.getFirstName());
 		user.setLastName(signupRequest.getLastName());
 		user.setEmailId(signupRequest.getEmail());
-		user.setUsername(signupRequest.getEmail());
+		user.setUsername(signupRequest.getUsername());
 		user.setStatus("active");
 		user.setCity(signupRequest.getCity());
 		user.setCountry(signupRequest.getCountry());
@@ -56,8 +57,11 @@ public class UserService {
 		
 		user.setUserType(signupRequest.getUserType());
 		user.setAddress(signupRequest.getAddress());
-		user.setCultureId(signupRequest.getCulture());
-		user.setUniversityId(signupRequest.getUniversity());
+		user.setCultureId(signupRequest.getCultureId());
+		user.setUniversityId(signupRequest.getUniversityId());
+		user.setUserSince(OffsetDateTime.now());
+		user.setPlanId(signupRequest.getPlanId());
+		user.setDeviceUsed(signupRequest.getDeviceUsed());
 		
 		user.setFirebaseId(firebaseUser.getUid());
 		// Set other properties of user

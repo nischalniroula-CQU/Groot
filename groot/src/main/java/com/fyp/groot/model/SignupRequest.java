@@ -16,6 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SignupRequest {
 	
+	private String username;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -24,10 +25,13 @@ public class SignupRequest {
 	private String country;
     private String password;
     private String confrimPassword;
+    private String status;
+    private String deviceUsed;
     private String userType;
     private String address;
-    private String culture;
-    private String university;
+    private Long cultureId;
+    private Long universityId;
+    private Long planId;
     
 
 }

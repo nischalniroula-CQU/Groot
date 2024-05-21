@@ -36,6 +36,7 @@ public class SignupController {
 		login.setFirstName(signupRequest.getFirstName());
 		login.setLastName(signupRequest.getLastName());
 		login.setEmailId(signupRequest.getEmail());
+		login.setUsername(signupRequest.getUsername());
 		login.setCity(signupRequest.getCity());
 		login.setCountry(signupRequest.getCountry());
 		login.setPhoneNumber(signupRequest.getPhoneNumber());
@@ -43,9 +44,11 @@ public class SignupController {
 		
 		login.setUserType(signupRequest.getUserType());
 		login.setAddress(signupRequest.getAddress());
-		login.setCultureId(signupRequest.getCulture());
-		login.setUniversityId(signupRequest.getUniversity());
+		login.setCultureId(signupRequest.getCultureId());
+		login.setUniversityId(signupRequest.getUniversityId());
 		login.setUserSince(OffsetDateTime.now());
+		login.setPlanId(signupRequest.getPlanId());
+		login.setDeviceUsed(signupRequest.getDeviceUsed());
 		
 		try {
 

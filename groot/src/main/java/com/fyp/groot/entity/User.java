@@ -58,10 +58,10 @@ public class User {
 	private String userType;
 	
 	@Column(name = "culture_id")
-	private String cultureId;
+	private Long cultureId;
 	
 	@Column(name = "university_id")
-	private String universityId;
+	private Long universityId;
 
 	@Column(name = "plan_id")
 	private Long planId;
