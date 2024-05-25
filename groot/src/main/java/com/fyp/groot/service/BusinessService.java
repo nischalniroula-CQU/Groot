@@ -45,6 +45,32 @@ public class BusinessService {
 
 		return business;
 	}
+	
+	 private Business mapRequestToBusinessForUpdate(AddBusinessRequest request, Business business) {
+	        // Update existing properties, don't create a new Business object
+	        business.setName(request.getName());
+	        business.setSubtitle(request.getSubtitle());
+	        business.setBasicDetails(request.getBasicDetails());
+	        business.setContactMethod(request.getContactMethod());
+	        business.setPhoneNumber(request.getPhoneNumber());
+	        business.setEmailId(request.getEmailId());
+	        business.setLocation(request.getLocation());
+	        business.setAddress(request.getAddress());
+	        business.setCity(request.getCity());
+	        business.setCountry(request.getCountry());
+	        business.setPriceRange(request.getPriceRange());
+	        business.setStatus(request.getStatus());
+	        business.setAddOn(LocalDateTime.now());
+	        business.setLatitude(request.getLatitude());
+	        business.setLongitude(request.getLongitude());
+	        business.setCategoryId(request.getCategoryId());
+	        business.setCultureId(request.getCultureId());
+	        business.setOwnerId(request.getOwnerId());
+	        
+
+	        return business;
+	    }
+	
 
 	public ViewBusinessResponse viewBusiness(Long businessId) {
 		Business business = businessRepository.findById(businessId).orElseThrow(() -> new RuntimeException("Business not found with ID: " + businessId));
@@ -56,7 +82,7 @@ public class BusinessService {
 		AddBusinessResponse response = new AddBusinessResponse();
 
 		Business existingBusiness = businessRepository.findById(businessId).orElseThrow();
-		existingBusiness = mapRequestToBusiness(request, existingBusiness);
+		existingBusiness = mapRequestToBusinessForUpdate(request, existingBusiness);
 
 		Business updatedBusiness = businessRepository.save(existingBusiness);
 		

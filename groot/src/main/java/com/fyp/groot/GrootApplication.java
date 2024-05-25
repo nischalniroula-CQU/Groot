@@ -223,35 +223,35 @@ public class GrootApplication {
 //                    null, "ben_shewry", LocalDateTime.now().minusDays(30), "Ben", "Shewry", 
 //                    "ben.shewry@attica.com.au", "+61 3 9530 0112", 
 //                    "74 Glen Eira Rd", "Ripponlea", "Australia",
-//                    OffsetDateTime.now().minusYears(15), "Active", "iPhone 14 Pro", null, "Business Owner", "1", "1", 1L
+//                    OffsetDateTime.now().minusYears(15), "Active", "iPhone 14 Pro", null, "Business Owner", 1L, 1L, 1L // Adjusted to match your entity
 //                ));
 //            
 //            userRepository.save(new User(
 //                    null, "peter_gilmore", LocalDateTime.now().minusDays(15), "Peter", "Gilmore",
 //                    "peter.gilmore@quay.com.au", "+61 2 9251 5601",
 //                    "Upper Level, Overseas Passenger Terminal", "The Rocks", "Australia",
-//                    OffsetDateTime.now().minusYears(10), "Active", "Samsung Galaxy S23 Ultra", null, "Business Owner", "1", "2", 1L
+//                    OffsetDateTime.now().minusYears(10), "Active", "Samsung Galaxy S23 Ultra", null, "Business Owner", 1L, 2L, 1L 
 //                ));
-//            
-//            userRepository.save(new User(
+//
+//                userRepository.save(new User(
 //                    null, "dan_hunter", LocalDateTime.now().minusDays(5), "Dan", "Hunter",
 //                    "dan.hunter@brae.com.au", "+61 3 5562 5267",
 //                    "4285 Cape Otway Rd", "Birregurra", "Australia",
-//                    OffsetDateTime.now().minusYears(8), "Active", "Google Pixel 7", null, "Business Owner", "1", "3", 1L
+//                    OffsetDateTime.now().minusYears(8), "Active", "Google Pixel 7", null, "Business Owner", 1L, 3L, 1L 
 //                ));
-//            
-//            userRepository.save(new User(
+//
+//                userRepository.save(new User(
 //                    null, "jock_zonfrillo", LocalDateTime.now().minusDays(2), "Jock", "Zonfrillo",
 //                    "jock.zonfrillo@orana.com.au", "+61 8 8232 3445",
 //                    "285 Rundle St", "Adelaide", "Australia",
-//                    OffsetDateTime.now().minusYears(6), "Active", "iPhone 13", null, "Business Owner", "1", "4", 1L
+//                    OffsetDateTime.now().minusYears(6), "Active", "iPhone 13", null, "Business Owner", 1L, 4L, 1L 
 //                ));
-//            
-//            userRepository.save(new User(
+//
+//                userRepository.save(new User(
 //                    null, "martin_benn", LocalDateTime.now(), "Martin", "Benn",
 //                    "martin.benn@sepia.com.au", "+61 2 9265 6389",
 //                    "201 Sussex St", "Sydney", "Australia",
-//                    OffsetDateTime.now().minusYears(4), "Active", "OnePlus 11", null, "Business Owner", "1", "1", 1L
+//                    OffsetDateTime.now().minusYears(4), "Active", "OnePlus 11", null, "Business Owner", 1L, 5L, 1L 
 //                ));
 //            
 //            //----------------------------------------------------------------------
