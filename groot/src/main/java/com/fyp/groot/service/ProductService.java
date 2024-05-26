@@ -6,12 +6,16 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fyp.groot.entity.Business;
+import com.fyp.groot.entity.BusinessTiming;
+import com.fyp.groot.entity.ImageLibrary;
 import com.fyp.groot.entity.Product;
 import com.fyp.groot.model.AddProductRequest;
 import com.fyp.groot.model.AddProductResponse;
 import com.fyp.groot.model.GetAllProductsRequest;
 import com.fyp.groot.model.GetAllProductsResponse;
 import com.fyp.groot.model.GetProductsByForeignIdRequest;
+import com.fyp.groot.model.ViewBusinessResponse;
 import com.fyp.groot.repository.ProductRepository;
 
 @Service
@@ -72,6 +76,7 @@ public class ProductService {
 	public GetAllProductsResponse getProductsByForeignId(GetProductsByForeignIdRequest request) {
 		// Fetch all businesses from the repository
 		List<Product> products = productRepository.findAll();
+		//List<Product> products = productRepository.findByBusinessId(request);
 
 		// Apply filters based on request parameters
 
@@ -79,11 +84,33 @@ public class ProductService {
 			products = products.stream().filter(product -> request.getLinkedId().equals(product.getLinkedId()))
 					.collect(Collectors.toList());
 		}
+		
+		if (request.getProductTitle() != null) {
+			products = products.stream().filter(product -> request.getProductTitle().equalsIgnoreCase(product.getProductTitle())).collect(Collectors.toList());
+		}
+		
+		//List<GetAllProductsResponse> productsResponse = products.stream().map(this::mapProductToResponse).collect(Collectors.toList());
+
+//		List<GetAllProductsResponse> productsResponse = products.stream()
+//			    .map(product -> {
+//			        GetAllProductsResponse response = new GetAllProductsResponse();
+//			        response.setPromoId(product.getPromoId());
+//			        response.setLinkedId(product.getLinkedId());
+//			        response.setProductTitle(product.getProductTitle());
+//			        response.setProductDescription(product.getProductDescription());
+//			        response.setPrice(product.getPrice());
+//			        response.setStatus(product.getStatus());
+//			        return response;
+//			    })
+//			    .collect(Collectors.toList());
 
 		// Create and return response object
 		GetAllProductsResponse response = new GetAllProductsResponse();
 		response.setProducts(products);
 		return response;
 	}
+	
+	
+	
 
 }

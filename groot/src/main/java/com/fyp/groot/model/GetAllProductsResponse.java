@@ -15,6 +15,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class GetAllProductsResponse {
 	
+//	private Long promoId;
+//	private Long linkedId;
+//	private String productTitle;
+//	private String productDescription;
+//	private Double price;
+//	private String status;
 	private List<Product> products;
 
 }

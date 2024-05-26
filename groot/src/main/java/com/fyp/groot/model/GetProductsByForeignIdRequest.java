@@ -12,5 +12,7 @@ import lombok.Setter;
 public class GetProductsByForeignIdRequest {
 	
 	private Long linkedId;
+	private String productTitle;
+	//private Long businessId;
 
 }

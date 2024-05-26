@@ -9,5 +9,6 @@ import com.fyp.groot.entity.Product;
 public interface ProductRepository extends JpaRepository<Product, Long>{
 	
 	Product findByProductTitle(String String);
+	//public List<Product> findByBusinessId(Long businessId);
 
 }
