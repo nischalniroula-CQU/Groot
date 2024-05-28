@@ -14,6 +14,7 @@ import com.fyp.groot.service.EventService;
 import com.fyp.groot.service.UniversityService;
 import com.fyp.groot.service.UserService;
 import com.fyp.groot.service.InterestService;
+import com.fyp.groot.service.ProductService;
 import com.fyp.groot.service.TagService;
 
 @RestController
@@ -44,6 +45,9 @@ public class CountController {
     @Autowired
     private TagService tagService;
     
+    @Autowired
+    private ProductService productService;
+    
     @GetMapping("/allCounts")
     public ResponseEntity<Long> getCount(@RequestParam String entityType) {
         switch (entityType) {
@@ -63,7 +67,9 @@ public class CountController {
                 return ResponseEntity.ok(interestService.countInterests());
             case "tags":
                 return ResponseEntity.ok(tagService.countTags());
-            // ... cases for other entities ...
+            case "Product":
+            	return ResponseEntity.ok(productService.countProducts());
+            // ... cases for other entities ...countProducts
             default:
                 throw new IllegalArgumentException("Invalid entity type"); 
         }

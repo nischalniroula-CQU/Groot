@@ -105,6 +105,16 @@ public class BusinessService {
                 businessTimingRepository.save(request.getBusinessTiming());
             }
         }
+		
+		if (request.getImages() != null && !request.getImages().isEmpty()) {
+			List<ImageLibrary> existingImageLibrary = imageLibraryRepository.findByBusinessId(businessId);
+			if (existingImageLibrary != null && !existingImageLibrary.isEmpty()) {
+            for (ImageLibrary image : request.getImages()) { 
+                imageLibraryService.addImage(image);
+            }
+			}
+        }
+		
 		response.setBusiness(updatedBusiness);
 		return response;
 	}
