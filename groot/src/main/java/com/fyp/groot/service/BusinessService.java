@@ -106,14 +106,20 @@ public class BusinessService {
             }
         }
 		
-		if (request.getImages() != null && !request.getImages().isEmpty()) {
-			List<ImageLibrary> existingImageLibrary = imageLibraryRepository.findByBusinessId(businessId);
-			if (existingImageLibrary != null && !existingImageLibrary.isEmpty()) {
-            for (ImageLibrary image : request.getImages()) { 
-                imageLibraryService.addImage(image);
-            }
-			}
-        }
+		// Update or replace images
+	    if (request.getImages() != null) {
+	        List<ImageLibrary> existingImageLibrary = imageLibraryRepository.findByBusinessId(businessId);
+	        if (existingImageLibrary != null && !existingImageLibrary.isEmpty()) {
+	            // Remove existing images
+	            imageLibraryRepository.deleteAll(existingImageLibrary);
+	        }
+
+	        // Add new images
+	        for (ImageLibrary image : request.getImages()) {
+	            image.setBusinessId(businessId); // Ensure the image is associated with the business
+	            imageLibraryService.addImage(image);
+	        }
+	    }
 		
 		response.setBusiness(updatedBusiness);
 		return response;
