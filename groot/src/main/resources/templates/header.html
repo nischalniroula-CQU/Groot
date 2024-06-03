@@ -7,12 +7,10 @@
 				    <ul class="navbar-nav ms-auto">
 				        <li class="nav-item"><a class="nav-link active" th:href="index">Home</a></li>
 				        <li class="nav-item"><a class="nav-link" th:href="categories">Businesses</a></li>
-				        <li class="nav-item"><a class="nav-link" th:href="business">Individual</a></li>
-				        <li class="nav-item"><a class="nav-link" th:href="index">About</a></li>
-				        <li class="nav-item"><a class="nav-link" th:href="index">Contact</a></li>
+				        <li class="nav-item"><a class="nav-link" th:href="about">About</a></li>
 				    </ul>
-				    <a class="btn btn-primary ms-md-2" role="button" href="adminDashboard" style="background: rgb(19,69,106);">Admin Dashboard</a>
-				    <a class="btn btn-primary ms-md-2" role="button" href="#" style="background: rgb(19,69,106);">Profile</a>
+				    &nbsp;&nbsp;&nbsp;<a role="button" href="#" style="text-decoration:none; color:#000;">Hi <span id="usersname"></span></a>
+				    <div id="usermenu_placement"></div>
 				    <a class="btn btn-primary ms-md-2" role="button" id="logout" style="background: rgb(0,128,255);">Logout</a>
 				</div>
             </div>
@@ -21,9 +19,7 @@
 				    <ul class="navbar-nav ms-auto">
 				        <li class="nav-item"><a class="nav-link active" th:href="index">Home</a></li>
 				        <li class="nav-item"><a class="nav-link" th:href="categories">Businesses</a></li>
-				        <li class="nav-item"><a class="nav-link" th:href="business">Individual</a></li>
-				        <li class="nav-item"><a class="nav-link" th:href="index">About</a></li>
-				        <li class="nav-item"><a class="nav-link" th:href="index">Contact</a></li>
+				        <li class="nav-item"><a class="nav-link" th:href="about">About</a></li>
 				    </ul>
 				    <a class="btn btn-primary ms-md-2" role="button" href="login" style="background: rgb(19,69,106);">Log In</a>
 				</div>
@@ -31,4 +27,50 @@
         </div>
     </nav>
 </header>
+<script>
+$(document).ready(function() {
+    // Get the userToken from local storage and parse it
+    var userToken = JSON.parse(localStorage.getItem('userToken'));
+
+    if (userToken && userToken.userDetail && userToken.userDetail.uid) {
+    	var uid = userToken.userDetail.uid;
+
+        // Make an AJAX request to get user details
+        $.ajax({
+            url: "/api/user/" + uid,
+            method: "GET",
+            success: function(response) {
+            	
+            	var firstName = response.firstName || '';
+                var lastName = response.lastName || '';
+                var usersname = firstName + ' ' + lastName;
+
+                if (!firstName && !lastName) {
+                    usersname = 'User';
+                }
+                
+                $('#usersname').text(usersname);
+                var loginUserType = '';
+                if(response.userType == 'admin')
+                {
+                	loginUserType = 'admin';
+                	$('#usermenu_placement').html('<a class="btn btn-primary ms-md-2" role="button" href="adminDashboard" style="background: rgb(19,69,106);">Dashboard</a>');
+                }
+                else if(response.userType == 'businessOwner')
+                {
+                	loginUserType = 'businessOwner';
+                	$('#usermenu_placement').html('<a class="btn btn-primary ms-md-2" role="button" href="ownerDashboard" style="background: rgb(19,69,106);">Dashboard</a>');
+                }
+                else
+                {
+                	loginUserType = 'user';
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Failed to get user details:', status, error);
+            }
+        });
+    }
+});
+</script>
 <script src="/js/custom_functions.js"></script>

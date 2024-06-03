@@ -1,6 +1,7 @@
 package com.fyp.groot.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,9 +25,7 @@ public class User {
 	@Column
 	private String username;
 	@Column
-	private String password;
-	@Column
-	private Date lastLogin;
+	private LocalDateTime lastLogin;
 	@Column
 	private String firstName;
 	@Column

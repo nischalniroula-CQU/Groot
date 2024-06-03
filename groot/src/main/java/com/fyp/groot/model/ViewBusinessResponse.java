@@ -1,5 +1,8 @@
 package com.fyp.groot.model;
 
+import java.util.List;
+import com.fyp.groot.entity.BusinessTiming;
+import com.fyp.groot.entity.ImageLibrary;
 import lombok.*;
 
 @Getter
@@ -8,15 +11,16 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ViewBusinessResponse {
+	private Long businessId;
 	private String name;
 	private String subtitle;
-	private String categoryName;
+	private Long categoryId;
 	private Long cultureId;
 	private String basicDetail;
 	private String contactMethod;
 	private String phoneNumber;
 	private String email;
-	private String ownerName;
+	private Long ownerId;
 	private String latitude;
 	private String longitude;
 	private String address;
@@ -25,4 +29,6 @@ public class ViewBusinessResponse {
 	private String priceRange;
 	private String addedOn;
 	private String status;
+	private BusinessTiming businessTiming;
+	private List<ImageLibrary> images;
 }

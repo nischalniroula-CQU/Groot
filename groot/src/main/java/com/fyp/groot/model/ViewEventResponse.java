@@ -1,7 +1,5 @@
 package com.fyp.groot.model;
 
-import java.util.List;
-
 import com.fyp.groot.entity.Event;
 
 import lombok.AllArgsConstructor;

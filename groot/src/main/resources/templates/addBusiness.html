@@ -24,38 +24,214 @@
                                         <div class="col-md-6 col-xl-11">
                                             <div class="card mb-5" style="border-style: none;border-left-style: none;">
                                                 <form class="text-center" id="add-info-form" style="border-left-style: none;">
+                                                	<div class="mb-3">
+												        <p style="text-align:left;">Category</p>
+												        <select class="form-control mb-3" id="category" name="categoryId">
+													    	<option value="">All</option>
+													    </select>
+												    </div>
+												    <div class="mb-3">
+												        <p style="text-align:left;">Culture</p>
+												        <select class="form-control mb-3" id="culture" name="cultureId">
+													    	<option value="">All</option>
+													    </select>
+												    </div>
                                                     <div class="mb-3">
                                                     	<p style="text-align:left;">Business Name</p>
-                                                    	<input class="form-control" type="text" name="email">
+                                                    	<input class="form-control" type="text" name="name">
                                                     </div>
                                                     <div class="mb-3">
                                                     	<p style="text-align:left;">Sub Title</p>
-                                                    	<input class="form-control" type="text" name="email">
+                                                    	<input class="form-control" type="text" name="subtitle">
                                                     </div>
                                                     <div class="mb-3">
                                                     	<p style="text-align:left;">Description</p>
-                                                    	<textarea class="form-control" name="description" rows="8"></textarea>
+                                                    	<textarea class="form-control" name="basicDetails" rows="8"></textarea>
                                                     </div>
                                                     <div class="mb-3">
-                                                    	<p style="text-align:left;">Contact No</p>
-                                                    	<input class="form-control" type="text" name="email">
+												        <p style="text-align:left;">Contact Method</p>
+												        <select class="form-control mb-3" id="contactmethod" name="contactMethod">
+													    	<option value="Email">Email</option>
+													    	<option value="Phone">Phone</option>
+													    </select>
+												    </div>
+                                                    <div class="mb-3">
+                                                    	<p style="text-align:left;">Phone No</p>
+                                                    	<input class="form-control" type="text" name="phoneNumber">
                                                     </div>
                                                     <div class="mb-3">
                                                     	<p style="text-align:left;">Email ID</p>
-                                                    	<input class="form-control" type="text" name="email">
+                                                    	<input class="form-control" type="text" name="emailId">
                                                     </div>
                                                     <div class="mb-3">
                                                     	<p style="text-align:left;">Address</p>
-                                                    	<input class="form-control" type="text" name="email">
+                                                    	<input class="form-control" type="text" name="address">
                                                     </div>
                                                     <div class="mb-3">
                                                     	<p style="text-align:left;">City</p>
-                                                    	<input class="form-control" type="text" name="email">
+                                                    	<select class="form-control mb-3" id="city" name="city">
+													    	<option value="">All</option>
+													    </select>
                                                     </div>
                                                     <div class="mb-3">
+												        <p style="text-align:left;">Country</p>
+												        <select class="form-control mb-3" id="country" name="country">
+													    	<option value="">All</option>
+													    </select>
+												    </div>
+												    <div class="mb-3">
+												        <p style="text-align:left;">Latitude</p>
+												        <input class="form-control" type="text" name="latitude">
+												    </div>
+												    <div class="mb-3">
+												        <p style="text-align:left;">Longitude</p>
+												        <input class="form-control" type="text" name="longitude">
+												    </div>
+												    <div class="mb-3">
+												    	<div id="businessMap"></div>
+												    </div>
+                                                    <div class="mb-3">
                                                     	<p style="text-align:left;">Price Range</p>
-                                                    	<input class="form-control" type="text" name="email">
+                                                    	<input class="form-control" type="text" name="priceRange">
                                                     </div>
+                                                    <div class="mb-3">
+												        <p style="text-align:left;">Upload Images (first image will be considered as main image)</p>
+												        <input class="form-control" type="file" name="image1">
+												        <input class="form-control" type="file" name="image2">
+												        <input class="form-control" type="file" name="image3">
+												        <input class="form-control" type="file" name="image4">
+												        <input class="form-control" type="file" name="image5">
+												    </div>
+												    <!-- Business opening times for all 7 days -->
+												    <div class="mb-3">
+												        <p style="text-align:left;">Opening Times</p>
+												        <!-- Monday -->
+													    <div class="row align-items-center mb-2">
+													        <div class="col-md-2">
+													            <p>Monday</p>
+													        </div>
+													        <div class="col-md-3">
+													            <input class="form-control" type="time" name="monday_open">
+													        </div>
+													        <div class="col-md-3">
+													            <input class="form-control" type="time" name="monday_close">
+													        </div>
+													        <div class="col-md-4">
+													            <label>
+													                <input type="checkbox" name="monday_closed" onchange="toggleTimeInputs(this, 'monday_open', 'monday_close')"> Closed
+													            </label>
+													        </div>
+													    </div>
+													
+													    <!-- Tuesday -->
+													    <div class="row align-items-center mb-2">
+													        <div class="col-md-2">
+													            <p>Tuesday</p>
+													        </div>
+													        <div class="col-md-3">
+													            <input class="form-control" type="time" name="tuesday_open">
+													        </div>
+													        <div class="col-md-3">
+													            <input class="form-control" type="time" name="tuesday_close">
+													        </div>
+													        <div class="col-md-4">
+													            <label>
+													                <input type="checkbox" name="tuesday_closed" onchange="toggleTimeInputs(this, 'tuesday_open', 'tuesday_close')"> Closed
+													            </label>
+													        </div>
+													    </div>
+													
+													    <!-- Wednesday -->
+													    <div class="row align-items-center mb-2">
+													        <div class="col-md-2">
+													            <p>Wednesday</p>
+													        </div>
+													        <div class="col-md-3">
+													            <input class="form-control" type="time" name="wednesday_open">
+													        </div>
+													        <div class="col-md-3">
+													            <input class="form-control" type="time" name="wednesday_close">
+													        </div>
+													        <div class="col-md-4">
+													            <label>
+													                <input type="checkbox" name="wednesday_closed" onchange="toggleTimeInputs(this, 'wednesday_open', 'wednesday_close')"> Closed
+													            </label>
+													        </div>
+													    </div>
+													
+													    <!-- Thursday -->
+													    <div class="row align-items-center mb-2">
+													        <div class="col-md-2">
+													            <p>Thursday</p>
+													        </div>
+													        <div class="col-md-3">
+													            <input class="form-control" type="time" name="thursday_open">
+													        </div>
+													        <div class="col-md-3">
+													            <input class="form-control" type="time" name="thursday_close">
+													        </div>
+													        <div class="col-md-4">
+													            <label>
+													                <input type="checkbox" name="thursday_closed" onchange="toggleTimeInputs(this, 'thursday_open', 'thursday_close')"> Closed
+													            </label>
+													        </div>
+													    </div>
+													
+													    <!-- Friday -->
+													    <div class="row align-items-center mb-2">
+													        <div class="col-md-2">
+													            <p>Friday</p>
+													        </div>
+													        <div class="col-md-3">
+													            <input class="form-control" type="time" name="friday_open">
+													        </div>
+													        <div class="col-md-3">
+													            <input class="form-control" type="time" name="friday_close">
+													        </div>
+													        <div class="col-md-4">
+													            <label>
+													                <input type="checkbox" name="friday_closed" onchange="toggleTimeInputs(this, 'friday_open', 'friday_close')"> Closed
+													            </label>
+													        </div>
+													    </div>
+													
+													    <!-- Saturday -->
+													    <div class="row align-items-center mb-2">
+													        <div class="col-md-2">
+													            <p>Saturday</p>
+													        </div>
+													        <div class="col-md-3">
+													            <input class="form-control" type="time" name="saturday_open">
+													        </div>
+													        <div class="col-md-3">
+													            <input class="form-control" type="time" name="saturday_close">
+													        </div>
+													        <div class="col-md-4">
+													            <label>
+													                <input type="checkbox" name="saturday_closed" onchange="toggleTimeInputs(this, 'saturday_open', 'saturday_close')"> Closed
+													            </label>
+													        </div>
+													    </div>
+													
+													    <!-- Sunday -->
+													    <div class="row align-items-center mb-2">
+													        <div class="col-md-2">
+													            <p>Sunday</p>
+													        </div>
+													        <div class="col-md-3">
+													            <input class="form-control" type="time" name="sunday_open">
+													        </div>
+													        <div class="col-md-3">
+													            <input class="form-control" type="time" name="sunday_close">
+													        </div>
+													        <div class="col-md-4">
+													            <label>
+													                <input type="checkbox" name="sunday_closed" onchange="toggleTimeInputs(this, 'sunday_open', 'sunday_close')"> Closed
+													            </label>
+													        </div>
+													    </div>
+												    </div>
+												    </br>
                                                     <div class="mb-3">
                                                     	<button class="btn btn-primary d-block w-100" type="submit" style="background: rgb(19,69,106);">Save</button>
                                                     </div>
@@ -78,6 +254,265 @@
 	<script src="/js/custom_functions.js"></script>
     <script src="/js/script.js"></script>
     <script>
+    $(document).ready(function() {
+        // Function to fetch latitude and longitude from address
+        async function fetchCoordinatesFromAddress(address) {
+        	var settings = {
+        			  "url": "https://geocode.maps.co/search?q="+address+"&api_key=6652f45c2f45b142541318rps5a9928",
+        			  "method": "GET",
+        			  "timeout": 0,
+        			};
+
+        			$.ajax(settings).done(function (response) {
+        			  // Extract lat and lon from the response
+        			  var lat = response[0].lat;
+        			  var lon = response[0].lon;
+        			  
+        			  $('input[name="latitude"]').val(lat);
+                      $('input[name="longitude"]').val(lon);
+                      if(lat != '' && lon != '')
+                    	{
+                    	  	var mapApi = '<iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=' + lat + ',' + lon + '&hl=en&z=19&output=embed"></iframe>';
+                  	    	$('#businessMap').html(mapApi);
+                    	}
+        			});
+        }
+
+        // Update latitude and longitude input fields based on address
+        async function updateCoordinatesFromAddress() {
+            const address = $('input[name="address"]').val();
+            if (address) {
+                await fetchCoordinatesFromAddress(address);
+            }
+        }
+
+        // Listen for changes in the address field
+        $('input[name="address"]').on('change', updateCoordinatesFromAddress);
+    });
+
+    $(document).ready(function() {
+        $('#add-info-form').submit(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+			
+            function getUserId() {
+                var userToken = JSON.parse(localStorage.getItem('userToken'));
+                var uid = userToken.userDetail.uid;
+
+                return $.ajax({
+                    url: '/api/user/' + uid,
+                    method: 'GET'
+                }).then(function(response) {
+                    // Ensure the response contains the userId
+                    if (response && response.userId) {
+                        return response.userId;
+                    } else {
+                        throw new Error('Failed to retrieve userId from response');
+                    }
+                });
+            }
+            
+            getUserId().done(function(userId) {
+                // Serialize the form data
+                var formData = $('#add-info-form').serializeArray();
+                
+             	// Get the current timestamp
+                var currentTimestamp = new Date().toISOString().replace('T', ' ').split('.')[0];
+
+             	var formObject = {
+                    "status": "active",
+                    "ownerId": userId,
+                    "addOn": currentTimestamp,
+                    "images": [],
+                    "businessTiming": {}
+                };
+
+                // Convert the serialized array into a JSON object
+                $.each(formData, function(index, field) {
+                    formObject[field.name] = field.value;
+                });
+
+                // Process opening times
+                var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+                days.forEach(function(day) {
+                    if (formObject[day + '_closed']) {
+                        formObject.businessTiming[day] = 'Closed';
+                    } else {
+                        var openTime = formObject[day + '_open'];
+                        var closeTime = formObject[day + '_close'];
+                        formObject.businessTiming[day] = openTime + ' - ' + closeTime;
+                    }
+                    delete formObject[day + '_open'];
+                    delete formObject[day + '_close'];
+                    delete formObject[day + '_closed'];
+                });
+
+                // Add file input names to formObject
+                var files = $('input[type="file"]');
+                files.each(function(index) {
+                    if (this.files.length > 0) {
+                        var file = this.files[0];
+                        formObject.images.push({
+                            "type": file.type,
+                            "imageName": file.name,
+                            "postId": formObject['imagePostId' + index]
+                        });
+                    }
+                });
+
+                // Create the settings object for AJAX
+                var settings = {
+                    url: "/api/business/add",
+                    method: "POST",
+                    timeout: 0,
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Cookie": "JSESSIONID=93220C675784A6D747D74967918798FF"
+                    },
+                    data: JSON.stringify(formObject),
+                    success: function(response) {
+                        // handle the file uploads
+                        var fileData = new FormData();
+
+                        // Append files to FormData
+                        files.each(function() {
+                            if (this.files.length > 0) {
+                                fileData.append('files', this.files[0]);
+                            }
+                        });
+
+                        // Upload files
+                        $.ajax({
+                            url: "/api/upload/files",
+                            method: "POST",
+                            processData: false,
+                            contentType: false,
+                            data: fileData,
+                            success: function(fileResponse) {
+                                // Files uploaded successfully
+                            },
+                            error: function(xhr, status, error) {
+                                // Failed to upload files
+                            }
+                        });
+
+                        alert('Business added successfully');
+                        console.log('Business added successfully:', response);
+                        window.location.href = '/ownerBusinesses';
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Failed to add business');
+                        console.error('Failed to add business:', status, error);
+                    }
+                };
+
+                // Make the AJAX request
+                $.ajax(settings);
+            }).fail(function(xhr, status, error) {
+                alert('Failed to get user ID');
+                console.error('Failed to get user ID:', status, error);
+            });
+        });
+    });
+
+    // Function to toggle time input fields
+    function toggleTimeInputs(checkbox, openName, closeName) {
+        var openInput = document.getElementsByName(openName)[0];
+        var closeInput = document.getElementsByName(closeName)[0];
+        if (checkbox.checked) {
+            openInput.disabled = true;
+            closeInput.disabled = true;
+        } else {
+            openInput.disabled = false;
+            closeInput.disabled = false;
+        }
+    }
+
+    $(document).ready(function() {
+		$.ajax({
+            url: '/api/categories/getAll',
+            type: 'GET',
+            contentType: 'application/json',
+            headers: {
+                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+            },
+            success: function(response) {
+            	var categoryDropdown = $('#category');
+            	response.categories.forEach(function(category) {
+            		categoryDropdown.append($('<option>', {
+                        value: category.categoryId,
+                        text: category.categoryName
+                    }));
+                });
+            },
+            error: function() {
+                console.log('Failed to load categories');
+            }
+        });
+		
+		$.ajax({
+            url: '/api/cities/getAll',
+            type: 'GET',
+            contentType: 'application/json',
+            headers: {
+                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+            },
+            success: function(response) {
+            	var locationDropdown = $('#city');
+            	response.cities.forEach(function(location) {
+            		locationDropdown.append($('<option>', {
+                        value: location.cityId,
+                        text: location.cityName
+                    }));
+                });
+            },
+            error: function() {
+                console.log('Failed to load locations');
+            }
+        });
+		
+		$.ajax({
+            url: '/api/countries/getAll',
+            type: 'GET',
+            contentType: 'application/json',
+            headers: {
+                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+            },
+            success: function(response) {
+            	var locationDropdown = $('#country');
+            	response.countries.forEach(function(location) {
+            		locationDropdown.append($('<option>', {
+                        value: location.countryId,
+                        text: location.countryName
+                    }));
+                });
+            },
+            error: function() {
+                console.log('Failed to load locations');
+            }
+        });
+		
+        $.ajax({
+            url: '/api/cultures/getAll',
+            type: 'GET',
+            contentType: 'application/json',
+            headers: {
+                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+            },
+            success: function(response) {
+            	var cultureDropdown = $('#culture');
+            	response.cultures.forEach(function(culture) {
+                    cultureDropdown.append($('<option>', {
+                        value: culture.cultureId,
+                        text: culture.cultureName
+                    }));
+                });
+            },
+            error: function() {
+                console.log('Failed to load cultures');
+            }
+        });
+    });
+    
     $(document).ready(function() {
         // Load the header and footer into div
         $('#header').load('header');

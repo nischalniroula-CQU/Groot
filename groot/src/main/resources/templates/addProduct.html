@@ -25,20 +25,22 @@
                                             <div class="card mb-5" style="border-style: none;border-left-style: none;">
                                                 <form class="text-center" id="add-info-form" style="border-left-style: none;">
                                                     <div class="mb-3">
+                                                        <p style="text-align:left;">Select a business</p>
+                                                        <select class="form-control" id="linkedId" name="linkedId">
+                                                            <option value="">Select a business</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
                                                     	<p style="text-align:left;">Product Name</p>
-                                                    	<input class="form-control" type="text" name="email">
+                                                    	<input class="form-control" type="text" id="productTitle" name="productTitle">
                                                     </div>
                                                     <div class="mb-3">
                                                     	<p style="text-align:left;">Description</p>
-                                                    	<textarea class="form-control" name="description" rows="8"></textarea>
+                                                    	<textarea class="form-control" id="productDescription"  name="productDescription" rows="8"></textarea>
                                                     </div>
                                                     <div class="mb-3">
                                                     	<p style="text-align:left;">Price Range</p>
-                                                    	<input class="form-control" type="text" name="email">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                    	<p style="text-align:left;">Gallery</p>
-                                                    	<input class="form-control" type="file" name="email">
+                                                    	<input class="form-control" type="text" id="price" name="price">
                                                     </div>
                                                     <div class="mb-3">
                                                     	<button class="btn btn-primary d-block w-100" type="submit" style="background: rgb(19,69,106);">Save</button>
@@ -62,6 +64,95 @@
 	<script src="/js/custom_functions.js"></script>
     <script src="/js/script.js"></script>
     <script>
+    $(document).ready(function() {
+        var userToken = JSON.parse(localStorage.getItem('userToken'));
+
+        if (userToken && userToken.userDetail && userToken.userDetail.uid) {
+            var uid = userToken.userDetail.uid;
+
+            $.ajax({
+                url: "/api/user/" + uid,
+                method: "GET",
+                success: function(response) {
+                    var usernumber = response.userId;
+
+                    $.ajax({
+                        url: "/api/business/getbyfilter",
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Cookie": "JSESSIONID=93220C675784A6D747D74967918798FF"
+                        },
+                        data: JSON.stringify({
+                            categoryID: null,
+                            cultureID: null,
+                            ownerId: usernumber
+                        }),
+                        success: function(response) {
+                            if (response.businesses && Array.isArray(response.businesses)) {
+                                var dropdown = $('#linkedId');
+                                response.businesses.forEach(function(business) {
+                                    dropdown.append($('<option>', {
+                                        value: business.businessId,
+                                        text: business.name
+                                    }));
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Failed to fetch businesses:', status, error);
+                            alert('Failed to fetch businesses.');
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Failed to fetch user:', status, error);
+                    alert('Failed to fetch user.');
+                }
+            });
+        } else {
+            console.error('User token is missing or invalid');
+            alert('User token is missing or invalid.');
+        }
+
+        $('#add-info-form').submit(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var formData = $('#add-info-form').serializeArray();
+            var formObject = {
+            	"status": "active",
+            };
+            // Create the data object
+            $.each(formData, function(index, field) {
+                formObject[field.name] = field.value;
+            });
+
+            // Create the settings object for AJAX
+            var settings = {
+                "url": "/api/product/add",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Cookie": "JSESSIONID=E8930A4BA7F7EEFACD9CE772E8BEDF77"
+                },
+                "data": JSON.stringify(formObject),
+                success: function(response) {
+                    console.log('Success response:', response);
+                    $('#responseMessage').html('<div class="alert alert-success">Product added successfully!</div>');
+                    window.location.href = '/ownerProducts';
+                },
+                error: function(xhr, status, error) {
+                    console.error('Failed to add event:', status, error);
+                    $('#responseMessage').html('<div class="alert alert-danger">Failed to add Product.</div>');
+                }
+            };
+
+            // Make the AJAX request
+            $.ajax(settings);
+        });
+    });
+    
     $(document).ready(function() {
         // Load the header and footer into div
         $('#header').load('header');

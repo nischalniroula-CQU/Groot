@@ -28,7 +28,19 @@
                                                 <form class="text-center" id="add-info-form" style="border-left-style: none;">
                                                     <div class="mb-3">
                                                     	<p style="text-align:left;">University Name</p>
-                                                    	<input class="form-control" type="text" name="email">
+                                                    	<input class="form-control" type="text" id="universityName">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<p style="text-align:left;">City</p>
+                                                    	<input class="form-control" type="text" id="city">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<p style="text-align:left;">Location</p>
+                                                    	<input class="form-control" type="text" id="location">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                    	<p style="text-align:left;">Address</p>
+                                                    	<input class="form-control" type="text" id="address">
                                                     </div>
                                                     <div class="mb-3">
                                                     	<button class="btn btn-primary d-block w-100" type="submit" style="background: rgb(19,69,106);">Save</button>
@@ -51,6 +63,44 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="/js/custom_functions.js"></script>
     <script src="/js/script.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#add-info-form').submit(function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Get form values
+                var universityName = $('#universityName').val();
+                var city = $('#city').val();
+                var location = $('#location').val();
+                var address = $('#address').val();
+
+                // Prepare AJAX request
+                var settings = {
+                    "url": "/api/university/add",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify({
+                        "universityName": universityName,
+                        "city": city,
+                        "location": location,
+                        "address": address
+                    }),
+                };
+
+                $.ajax(settings).done(function(response) {
+                    console.log(response);
+                    alert("University added successfully!");
+                    window.location.href = '/adminUniversities';
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.error("Error:", textStatus, errorThrown);
+                    alert("Failed to add culture: " + textStatus);
+                });
+            });
+        });
+    </script>
     <script>
     $(document).ready(function() {
         // Load the header and footer into div

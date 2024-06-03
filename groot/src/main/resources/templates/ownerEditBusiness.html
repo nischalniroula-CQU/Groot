@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Groot - Update Business</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk&amp;display=swap">
+</head>
+<body>
+    <header id="header"></header>
+    <div class="container" style="margin-bottom: 0px;">
+        <div class="row">
+            <div class="col-md-12">
+                <section class="position-relative py-4 py-xl-5">
+                    <div class="container">
+                        <div class="row mb-5">
+                            <div class="col">
+                                <h2 style="color: var(--bs-success-text-emphasis);">Update Business</h2>
+                                <section class="position-relative py-4 py-xl-5" style="padding-top: 48px;margin-top: 0px;">
+                                    <div class="container">
+                                        <div class="col-md-6 col-xl-11">
+                                            <div class="card mb-5" style="border-style: none;border-left-style: none;">
+                                                <form class="text-center" id="update-info-form" style="border-left-style: none;">
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Category</p>
+                                                        <select class="form-control mb-3" id="category" name="categoryId">
+                                                            <option value="">All</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Culture</p>
+                                                        <select class="form-control mb-3" id="culture" name="cultureId">
+                                                            <option value="">All</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Business Name</p>
+                                                        <input class="form-control" type="text" name="name">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Sub Title</p>
+                                                        <input class="form-control" type="text" name="subtitle">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Description</p>
+                                                        <textarea class="form-control" name="basicDetails" rows="8"></textarea>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Contact Method</p>
+                                                        <select class="form-control mb-3" id="contactmethod" name="contactMethod">
+                                                            <option value="Email">Email</option>
+                                                            <option value="Phone">Phone</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Phone No</p>
+                                                        <input class="form-control" type="text" name="phoneNumber">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Email ID</p>
+                                                        <input class="form-control" type="text" name="emailId">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Address</p>
+                                                        <input class="form-control" type="text" name="address">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">City</p>
+                                                        <select class="form-control mb-3" id="city" name="city">
+                                                            <option value="">All</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Country</p>
+                                                        <select class="form-control mb-3" id="country" name="country">
+                                                            <option value="">All</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Latitude</p>
+                                                        <input class="form-control" type="text" name="latitude">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Longitude</p>
+                                                        <input class="form-control" type="text" name="longitude">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Price Range</p>
+                                                        <input class="form-control" type="text" name="priceRange">
+                                                    </div>
+                                                    <!-- Display Current Images -->
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Current Images:</p>
+                                                        <div id="current-images" style="text-align:left;"></div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Upload New Images</p>
+                                                        <div class="image-upload-container">
+													        <input class="form-control" type="file" name="image1">
+													        <label id="image1-label"></label>
+													    </div>
+													    <div class="image-upload-container">
+													        <input class="form-control" type="file" name="image2">
+													        <label id="image2-label"></label>
+													    </div>
+													    <div class="image-upload-container">
+													        <input class="form-control" type="file" name="image3">
+													        <label id="image3-label"></label>
+													    </div>
+													    <div class="image-upload-container">
+													        <input class="form-control" type="file" name="image4">
+													        <label id="image4-label"></label>
+													    </div>
+													    <div class="image-upload-container">
+													        <input class="form-control" type="file" name="image5">
+													        <label id="image5-label"></label>
+													    </div>
+                                                    </div>
+                                                    <!-- Display Current Timings -->
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Current Opening Times:</p>
+                                                        <div id="current-timings" style="text-align:left;"></div>
+                                                    </div>
+                                                    <!-- Business opening times for all 7 days -->
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Update Opening Times (New timing will overwrite the existing timing)</p>
+                                                        <!-- Monday -->
+                                                        <div class="row align-items-center mb-2">
+                                                            <div class="col-md-2">
+                                                                <p>Monday</p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" type="time" name="monday_open">
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" type="time" name="monday_close">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label>
+                                                                    <input type="checkbox" name="monday_closed" onchange="toggleTimeInputs(this, 'monday_open', 'monday_close')"> Closed
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                        <!-- Tuesday -->
+                                                        <div class="row align-items-center mb-2">
+                                                            <div class="col-md-2">
+                                                                <p>Tuesday</p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" type="time" name="tuesday_open">
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" type="time" name="tuesday_close">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label>
+                                                                    <input type="checkbox" name="tuesday_closed" onchange="toggleTimeInputs(this, 'tuesday_open', 'tuesday_close')"> Closed
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                        <!-- Wednesday -->
+                                                        <div class="row align-items-center mb-2">
+                                                            <div class="col-md-2">
+                                                                <p>Wednesday</p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" type="time" name="wednesday_open">
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" type="time" name="wednesday_close">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label>
+                                                                    <input type="checkbox" name="wednesday_closed" onchange="toggleTimeInputs(this, 'wednesday_open', 'wednesday_close')"> Closed
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                        <!-- Thursday -->
+                                                        <div class="row align-items-center mb-2">
+                                                            <div class="col-md-2">
+                                                                <p>Thursday</p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" type="time" name="thursday_open">
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" type="time" name="thursday_close">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label>
+                                                                    <input type="checkbox" name="thursday_closed" onchange="toggleTimeInputs(this, 'thursday_open', 'thursday_close')"> Closed
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                        <!-- Friday -->
+                                                        <div class="row align-items-center mb-2">
+                                                            <div class="col-md-2">
+                                                                <p>Friday</p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" type="time" name="friday_open">
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" type="time" name="friday_close">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label>
+                                                                    <input type="checkbox" name="friday_closed" onchange="toggleTimeInputs(this, 'friday_open', 'friday_close')"> Closed
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                        <!-- Saturday -->
+                                                        <div class="row align-items-center mb-2">
+                                                            <div class="col-md-2">
+                                                                <p>Saturday</p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" type="time" name="saturday_open">
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" type="time" name="saturday_close">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label>
+                                                                    <input type="checkbox" name="saturday_closed" onchange="toggleTimeInputs(this, 'saturday_open', 'saturday_close')"> Closed
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                        <!-- Sunday -->
+                                                        <div class="row align-items-center mb-2">
+                                                            <div class="col-md-2">
+                                                                <p>Sunday</p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" type="time" name="sunday_open">
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" type="time" name="sunday_close">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label>
+                                                                    <input type="checkbox" name="sunday_closed" onchange="toggleTimeInputs(this, 'sunday_open', 'sunday_close')"> Closed
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </br>
+                                                    <div class="mb-3">
+                                                        <button class="btn btn-primary d-block w-100" type="submit" style="background: rgb(19,69,106);">Update</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <div id="error-message" style="color: red;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <footer id="footer"></footer>
+    <script src="/js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/custom_functions.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+ 	// Function to toggle time input fields
+    function toggleTimeInputs(checkbox, openName, closeName) {
+        var openInput = document.getElementsByName(openName)[0];
+        var closeInput = document.getElementsByName(closeName)[0];
+        if (checkbox.checked) {
+            openInput.disabled = true;
+            closeInput.disabled = true;
+        } else {
+            openInput.disabled = false;
+            closeInput.disabled = false;
+        }
+    }
+    $(document).ready(function() {
+        // Function to load existing data
+        function loadBusinessData(businessId) {
+            var settings = {
+                "url": "/api/business/getbyid?businessId=" + businessId,
+                "method": "GET",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+            };
+
+            $.ajax(settings).done(function(response) {
+                if (response) {
+                    // Populate form fields with the received data
+                    $('input[name="name"]').val(response.name);
+                    $('input[name="subtitle"]').val(response.subtitle);
+                    $('textarea[name="basicDetails"]').val(response.basicDetail);
+                    $('input[name="phoneNumber"]').val(response.phoneNumber);
+                    $('input[name="emailId"]').val(response.email);
+                    $('input[name="address"]').val(response.address);
+                    $('input[name="latitude"]').val(response.latitude);
+                    $('input[name="longitude"]').val(response.longitude);
+                    $('input[name="priceRange"]').val(response.priceRange);
+                    
+                    loadCategories(response.categoryId); // Load categories and set value
+                    loadCultures(response.cultureId); // Load cultures and set value
+                    loadCities(response.city, 'city'); // Load cities and set value
+                    loadCountries(response.country, 'country'); // Load countries and set value
+                    
+                    $('#contactmethod').val(response.contactMethod);
+
+                 // Display current timings
+                    var businessTiming = response.businessTiming;
+                    var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+                    days.forEach(function(day) {
+                        if (businessTiming[day] === 'Closed') {
+                            $('input[name="' + day + '_closed"]').prop('checked', true);
+                            $('input[name="' + day + '_open"]').prop('disabled', true);
+                            $('input[name="' + day + '_close"]').prop('disabled', true);
+                        } else {
+                            var times = businessTiming[day].split(' - ');
+                            $('input[name="' + day + '_open"]').val(times[0]);
+                            $('input[name="' + day + '_close"]').val(times[1]);
+                        }
+                    });
+
+                }
+            }).fail(function() {
+                console.log('Failed to load business data');
+            });
+        }
+
+        function loadCategories(selectedCategoryId) {
+            $.ajax({
+                url: '/api/categories/getAll',
+                type: 'GET',
+                contentType: 'application/json',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                success: function(response) {
+                    var categoryDropdown = $('#category');
+                    response.categories.forEach(function(category) {
+                        categoryDropdown.append($('<option>', {
+                            value: category.categoryId,
+                            text: category.categoryName
+                        }));
+                    });
+                    $('#category').val(selectedCategoryId);
+                },
+                error: function() {
+                    console.log('Failed to load categories');
+                }
+            });
+        }
+
+        function loadCultures(selectedCultureId) {
+            $.ajax({
+                url: '/api/cultures/getAll',
+                type: 'GET',
+                contentType: 'application/json',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                success: function(response) {
+                    var cultureDropdown = $('#culture');
+                    response.cultures.forEach(function(culture) {
+                        cultureDropdown.append($('<option>', {
+                            value: culture.cultureId,
+                            text: culture.cultureName
+                        }));
+                    });
+                    $('#culture').val(selectedCultureId);
+                },
+                error: function() {
+                    console.log('Failed to load cultures');
+                }
+            });
+        }
+
+        function loadCities(selectedCityId, elementId) {
+            $.ajax({
+                url: '/api/cities/getAll',
+                type: 'GET',
+                contentType: 'application/json',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                success: function(response) {
+                    var locationDropdown = $('#' + elementId);
+                    response.cities.forEach(function(location) {
+                        locationDropdown.append($('<option>', {
+                            value: location.cityId,
+                            text: location.cityName
+                        }));
+                    });
+                    $('#' + elementId).val(selectedCityId);
+                },
+                error: function() {
+                    console.log('Failed to load locations');
+                }
+            });
+        }
+
+        function loadCountries(selectedCountryId, elementId) {
+            $.ajax({
+                url: '/api/countries/getAll',
+                type: 'GET',
+                contentType: 'application/json',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                success: function(response) {
+                    var locationDropdown = $('#' + elementId);
+                    response.countries.forEach(function(location) {
+                        locationDropdown.append($('<option>', {
+                            value: location.countryId,
+                            text: location.countryName
+                        }));
+                    });
+                    $('#' + elementId).val(selectedCountryId);
+                },
+                error: function() {
+                    console.log('Failed to load locations');
+                }
+            });
+        }
+
+        
+
+     	// Extract the 'id' parameter from the URL
+  	  	const queryParams = new URLSearchParams(window.location.search);
+  	  	const businessId = queryParams.get('id');
+  	  	
+        loadBusinessData(businessId);
+
+        $('#update-info-form').submit(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            function getUserId() {
+                var userToken = JSON.parse(localStorage.getItem('userToken'));
+                var uid = userToken.userDetail.uid;
+
+                return $.ajax({
+                    url: '/api/user/' + uid,
+                    method: 'GET'
+                }).then(function(response) {
+                    // Ensure the response contains the userId
+                    if (response && response.userId) {
+                        return response.userId;
+                    } else {
+                        throw new Error('Failed to retrieve userId from response');
+                    }
+                });
+            }
+            
+            getUserId().done(function(userId) {
+                // Create the formObject and get values from fields
+                var formObject = {
+	                "name": $('input[name="name"]').val(),
+	                "subtitle": $('input[name="subtitle"]').val(),
+	                "basicDetails": $('textarea[name="basicDetails"]').val(),
+	                "contactMethod": $('#contactmethod').val(),
+	                "phoneNumber": $('input[name="phoneNumber"]').val(),
+	                "emailId": $('input[name="emailId"]').val(),
+	                "location": $('input[name="address"]').val(),
+	                "address": $('input[name="address"]').val(),
+	                "city": $('#city').val(),
+	                "country": $('#country').val(),
+	                "priceRange": $('input[name="priceRange"]').val(),
+	                "status": "Active",
+	                "addOn": null,
+	                "latitude": $('input[name="latitude"]').val(),
+	                "longitude": $('input[name="longitude"]').val(),
+	                "categoryId": $('#category').val(),
+	                "cultureId": $('#culture').val(),
+	                "ownerId": userId,
+	                "images": [],
+	                "businessTiming": {}
+	            };
+
+                // Process opening times
+                var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+	            days.forEach(function(day) {
+	                if ($('input[name="' + day + '_closed"]').is(':checked')) {
+	                    formObject.businessTiming[day] = 'Closed';
+	                } else {
+	                    var openTime = $('input[name="' + day + '_open"]').val();
+	                    var closeTime = $('input[name="' + day + '_close"]').val();
+	                    formObject.businessTiming[day] = openTime + ' - ' + closeTime;
+	                }
+	            });
+
+	         	// Add file input names to formObject
+                var files = $('input[type="file"]');
+                files.each(function(index) {
+                    if (this.files.length > 0) {
+                        var file = this.files[0];
+                        formObject.images.push({
+                            "type": file.type,
+                            "imageName": file.name,
+                            "businessId": businessId
+                        });
+                    } 
+                });
+
+                
+             	// Create the settings object for AJAX
+                var settings = {
+                    url: "/api/business/update/" + businessId, // Update endpoint
+                    method: "PUT",
+                    timeout: 0,
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    data: JSON.stringify(formObject),
+                    success: function(response) {
+                        // Handle the file uploads
+                        var fileData = new FormData();
+
+                        // Append files to FormData
+                        files.each(function() {
+                            if (this.files.length > 0) {
+                                fileData.append('files', this.files[0]);
+                            }
+                        });
+
+                        // Upload files
+                        $.ajax({
+                            url: "/api/upload/files",
+                            method: "POST",
+                            processData: false,
+                            contentType: false,
+                            data: fileData,
+                            success: function(fileResponse) {
+                                // Files uploaded successfully
+                            },
+                            error: function(xhr, status, error) {
+                                // Failed to upload files
+                            }
+                        });
+
+                        alert('Business updated successfully');
+                        console.log('Business updated successfully:', response);
+                        window.location.href = '/ownerBusinesses';
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Failed to update business');
+                        console.error('Failed to update business:', status, error);
+                    }
+                };
+
+                // Make the AJAX request
+                $.ajax(settings);
+            }).fail(function(xhr, status, error) {
+                alert('Failed to get user ID');
+                console.error('Failed to get user ID:', status, error);
+            });
+        });
+    });
+
+
+
+
+    
+    $(document).ready(function() {
+        // Load the header and footer into div
+        $('#header').load('header');
+        $('#footer').load('footer');
+    });
+    </script>
+</body>
+</html>

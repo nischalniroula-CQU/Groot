@@ -22,52 +22,38 @@
                                     <div class="container">
                                         <div class="col-md-6 col-xl-11">
                                             <div class="card mb-5" style="border-style: none;border-left-style: none;">
-                                                <form class="text-center" id="add-info-form" style="border-left-style: none;">
+                                                <form class="text-center" id="eventForm" style="border-left-style: none;">
                                                     <div class="mb-3">
-                                                    	<p style="text-align:left;">Event Name</p>
-                                                    	<input class="form-control" type="text" name="email">
+                                                        <p style="text-align:left;">Select a business</p>
+                                                        <select class="form-control" id="businessID" name="businessID">
+                                                            <option value="">Select a business</option>
+                                                        </select>
                                                     </div>
                                                     <div class="mb-3">
-                                                    	<p style="text-align:left;">Description</p>
-                                                    	<textarea class="form-control" name="description" rows="8"></textarea>
+                                                        <p style="text-align:left;">Event Name</p>
+                                                        <input class="form-control" type="text" id="eventName" name="eventName" required>
                                                     </div>
                                                     <div class="mb-3">
-                                                    	<p style="text-align:left;">Contact No</p>
-                                                    	<input class="form-control" type="text" name="email">
+                                                        <p style="text-align:left;">Address</p>
+                                                        <input class="form-control" type="text" id="location" name="location" required>
                                                     </div>
                                                     <div class="mb-3">
-                                                    	<p style="text-align:left;">Email ID</p>
-                                                    	<input class="form-control" type="text" name="email">
+                                                        <p style="text-align:left;">Price Range</p>
+                                                        <input class="form-control" type="number" id="priceRange" name="priceRange" required>
                                                     </div>
                                                     <div class="mb-3">
-                                                    	<p style="text-align:left;">Address</p>
-                                                    	<input class="form-control" type="text" name="email">
+                                                        <p style="text-align:left;">Maximum Seats</p>
+                                                        <input class="form-control" type="number" id="maxSeat" name="maxSeat" required>
                                                     </div>
                                                     <div class="mb-3">
-                                                    	<p style="text-align:left;">City</p>
-                                                    	<input class="form-control" type="text" name="email">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                    	<p style="text-align:left;">Price Range</p>
-                                                    	<input class="form-control" type="text" name="email">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                    	<p style="text-align:left;">Maximum Seats</p>
-                                                    	<input class="form-control" type="text" name="email">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                    	<p style="text-align:left;">Gallery</p>
-                                                    	<input class="form-control" type="file" name="email">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                    	<button class="btn btn-primary d-block w-100" type="submit" style="background: rgb(19,69,106);">Save</button>
+                                                        <button class="btn btn-primary d-block w-100" type="submit" style="background: rgb(19,69,106);">Save</button>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </section>
-                                <div id="error-message" style="color: red;"></div>
+                                <div id="responseMessage" class="mt-3"></div>
                             </div>
                         </div>
                     </div>
@@ -78,14 +64,100 @@
     <footer id="footer"></footer>
     <script src="/js/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="/js/custom_functions.js"></script>
-    <script src="/js/script.js"></script>
+    <script src="/js/custom_functions.js"></script>
     <script>
-    $(document).ready(function() {
-        // Load the header and footer into div
-        $('#header').load('header');
-        $('#footer').load('footer');
-    });
+        $(document).ready(function() {
+            var userToken = JSON.parse(localStorage.getItem('userToken'));
+
+            if (userToken && userToken.userDetail && userToken.userDetail.uid) {
+                var uid = userToken.userDetail.uid;
+
+                $.ajax({
+                    url: "/api/user/" + uid,
+                    method: "GET",
+                    success: function(response) {
+                        var usernumber = response.userId;
+
+                        $.ajax({
+                            url: "/api/business/getbyfilter",
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Cookie": "JSESSIONID=93220C675784A6D747D74967918798FF"
+                            },
+                            data: JSON.stringify({
+                                categoryID: null,
+                                cultureID: null,
+                                ownerId: usernumber
+                            }),
+                            success: function(response) {
+                                if (response.businesses && Array.isArray(response.businesses)) {
+                                    var dropdown = $('#businessID');
+                                    response.businesses.forEach(function(business) {
+                                        dropdown.append($('<option>', {
+                                            value: business.businessId,
+                                            text: business.name
+                                        }));
+                                    });
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Failed to fetch businesses:', status, error);
+                                alert('Failed to fetch businesses.');
+                            }
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Failed to fetch user:', status, error);
+                        alert('Failed to fetch user.');
+                    }
+                });
+            } else {
+                console.error('User token is missing or invalid');
+                alert('User token is missing or invalid.');
+            }
+
+            $('#eventForm').submit(function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                var formData = $('#eventForm').serializeArray();
+                var formObject = {};
+                // Create the data object
+                $.each(formData, function(index, field) {
+                    formObject[field.name] = field.value;
+                });
+
+                // Create the settings object for AJAX
+                var settings = {
+                    "url": "/api/events/add",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Cookie": "JSESSIONID=E8930A4BA7F7EEFACD9CE772E8BEDF77"
+                    },
+                    "data": JSON.stringify(formObject),
+                    success: function(response) {
+                        console.log('Success response:', response);
+                        $('#responseMessage').html('<div class="alert alert-success">Event added successfully!</div>');
+                        window.location.href = '/ownerEvents';
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Failed to add event:', status, error);
+                        $('#responseMessage').html('<div class="alert alert-danger">Failed to add event.</div>');
+                    }
+                };
+
+                // Make the AJAX request
+                $.ajax(settings);
+            });
+        });
+
+        $(document).ready(function() {
+            // Load the header and footer into div
+            $('#header').load('header');
+            $('#footer').load('footer');
+        });
     </script>
 </body>
 </html>

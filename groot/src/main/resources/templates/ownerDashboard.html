@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Groot - Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk&amp;display=swap">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body style="--bs-primary: #13456a;--bs-primary-rgb: 19,69,106;--bs-secondary: #FF8889;--bs-secondary-rgb: 255,136,137;">
+    
+    <header id="ownerHeader"></header>
+    
+    <div class="container" style="margin-top: 2vw;">
+        <div class="row">
+            <h4>Business Dashboard</h4>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 2vw; margin-bottom: 2vw;">
+	    <div class="row">
+	        <div class="col-xl-4 col-lg-4">
+	            <div class="card l-bg-cherry">
+	                <div class="card-statistic-3 p-4">
+	                    <div class="card-icon card-icon-large"><i class="fas fa-shopping-cart"></i></div>
+	                    <div class="mb-4">
+	                        <h5 class="card-title mb-0"><a href="ownerBusinesses">Business</a></h5>
+	                    </div>
+	                    <div class="row align-items-center mb-2 d-flex">
+	                        <div class="col-8">
+	                            <h2 class="d-flex align-items-center mb-0">
+	                                <span id="businessCounts"></span>
+    								<span id="businessError" style="color: red;"></span>
+	                            </h2>
+	                        </div>
+	                    </div>
+	                    <div class="progress mt-1 " data-height="8" style="height: 8px;">
+	                        <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="col-xl-4 col-lg-4">
+	            <div class="card l-bg-blue-dark">
+	                <div class="card-statistic-3 p-4">
+	                    <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div>
+	                    <div class="mb-4">
+	                        <h5 class="card-title mb-0"><a href="ownerEvents">Events</a></h5>
+	                    </div>
+	                    <div class="row align-items-center mb-2 d-flex">
+	                        <div class="col-8">
+	                            <h2 class="d-flex align-items-center mb-0">
+	                                <span id="eventsCounts"></span>
+    								<span id="eventsError" style="color: red;"></span>
+	                            </h2>
+	                        </div>
+	                    </div>
+	                    <div class="progress mt-1 " data-height="8" style="height: 8px;">
+	                        <div class="progress-bar l-bg-green" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="col-xl-4 col-lg-4">
+	            <div class="card l-bg-green-dark">
+	                <div class="card-statistic-3 p-4">
+	                    <div class="card-icon card-icon-large"><i class="fas fa-ticket-alt"></i></div>
+	                    <div class="mb-4">
+	                        <h5 class="card-title mb-0"><a href="ownerProducts">Products</a></h5>
+	                    </div>
+	                    <div class="row align-items-center mb-2 d-flex">
+	                        <div class="col-8">
+	                            <h2 class="d-flex align-items-center mb-0">
+	                                <span id="productsCounts"></span>
+    								<span id="productsError" style="color: red;"></span>
+	                            </h2>
+	                        </div>
+	                    </div>
+	                    <div class="progress mt-1 " data-height="8" style="height: 8px;">
+	                        <div class="progress-bar l-bg-orange" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			var userToken = JSON.parse(localStorage.getItem('userToken'));
+			
+		    if (userToken && userToken.userDetail && userToken.userDetail.uid) {
+		    	var uid = userToken.userDetail.uid;
+		    	var usernumber = '';
+		    	
+		    	$.ajax({
+		            url: "/api/user/" + uid,
+		            method: "GET",
+		            success: function(response) {
+		            	usernumber = response.userId;
+		            
+				        // List of entity types
+				        var entityTypes = ['business'];
+				
+				        // Function to fetch and display counts for each entity type
+				        entityTypes.forEach(function(entityType) {
+				            $.ajax({
+				                url: '/api/count/allCountsByUID',
+				                type: 'GET',
+				                contentType: 'application/json',
+				                data: { entityType: entityType, userId: usernumber  }, // Send entityType as a query parameter
+				                success: function(response) {
+				                    $('#' + entityType + 'Counts').text(response); // Update respective span by ID
+				                },
+				                error: function(xhr) {
+				                    console.log('Failed to retrieve count for ' + entityType + ':', xhr.responseText);
+				                    $('#' + entityType + 'Error').text('Failed to retrieve count: ' + xhr.responseText); // Update respective error span by ID
+				                }
+				            });
+				        });
+		            },
+		            error: function(xhr, status, error) {
+		                console.error('Failed to get user details:', status, error);
+		            }
+		        });
+		    	
+		    	
+		    	$.ajax({
+		    	    url: "/api/user/" + uid,
+		    	    method: "GET",
+		    	    success: function(response) {
+		    	        var usernumber = response.userId;
+
+		    	        $.ajax({
+		    	            url: "/api/business/getbyfilter",
+		    	            method: "POST",
+		    	            headers: {
+		    	                "Content-Type": "application/json",
+		    	                "Cookie": "JSESSIONID=93220C675784A6D747D74967918798FF"
+		    	            },
+		    	            data: JSON.stringify({
+		    	                categoryID: null,
+		    	                cultureID: null,
+		    	                ownerId: usernumber
+		    	            }),
+		    	            success: function(response) {
+		    	                if (response.businesses && Array.isArray(response.businesses)) {
+		    	                    var businessIds = response.businesses.map(function(business) {
+		    	                        return business.businessId;
+		    	                    });
+
+		    	                    // List of entity types
+		    	                    var entityTypes = ['events', 'products'];
+
+		    	                    // Function to fetch and display counts for each entity type
+		    	                    entityTypes.forEach(function(entityType) {
+		    	                        $.ajax({
+		    	                            url: '/api/count/allCountsByBID',
+		    	                            type: 'GET',
+		    	                            contentType: 'application/json',
+		    	                            data: {
+		    	                                entityType: entityType,
+		    	                                businessIds: JSON.stringify(businessIds) // URL-encode the JSON string
+		    	                            },
+		    	                            success: function(response) {
+		    	                                $('#' + entityType + 'Counts').text(response); // Update respective span by ID
+		    	                            },
+		    	                            error: function(xhr) {
+		    	                                console.log('Failed to retrieve count for ' + entityType + ':', xhr.responseText);
+		    	                                $('#' + entityType + 'Error').text('Failed to retrieve count: ' + xhr.responseText); // Update respective error span by ID
+		    	                            }
+		    	                        });
+		    	                    });
+
+		    	                }
+		    	            },
+		    	            error: function(xhr, status, error) {
+		    	                console.error('Failed to fetch businesses:', status, error);
+		    	                alert('Failed to fetch businesses.');
+		    	            }
+		    	        });
+		    	    },
+		    	    error: function(xhr, status, error) {
+		    	        console.error('Failed to fetch user:', status, error);
+		    	        alert('Failed to fetch user.');
+		    	    }
+		    	});
+
+		    }
+	    });
+	</script>
+    <footer id="footer"></footer>
+    <script src="/js/custom_functions.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Load the header and footer into div
+        $('#ownerHeader').load('ownerHeader');
+        $('#footer').load('footer');
+    });
+    </script>
+</body>
+
+</html>

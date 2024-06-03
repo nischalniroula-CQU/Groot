@@ -9,61 +9,103 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk&amp;display=swap">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<style>
+    .image-item {
+        overflow: hidden;
+        height: 200px; /* Set the desired height */
+        margin-bottom: 15px;
+    }
+    .image-item img {
+        height: 100%;
+        width: auto;
+        object-fit: cover;
+    }
+</style>
 <body style="--bs-primary: #13456a;--bs-primary-rgb: 19,69,106;--bs-secondary: #FF8889;--bs-secondary-rgb: 255,136,137;">
     
     <header id="header"></header>
-    
+
     <div class="row">
-	    <div style="height:200px; width:100%; overflow:hidden;" >
-	    	<img src="img/general_header.jpg" class="img-fluid" alt="Beauty Salon">
+	    <div style="height:200px; width:100%; overflow:hidden;" id="headerImage">
+	    	
 	    </div>
 	    <div class="col-md-10" style="margin:auto;">
 		    <div class="container-fluid">
 		        <!-- Main Content and Sidebar -->
 		        <div class="row">
 			        <div class="col-md-12">
-				        <h2 class="mt-3">Beauty Salon</h2>
-				        Featured | 5k Views | Address : Xyz apartment, Melbourne, VIC 2034 | Joined 8th Jan 2024 | Save | Report
+				        <h2 class="mt-3" id="businessName"></h2>
+				        <h6 id="businessSubtitle"></h6>
+				        <span id="businessAddress2"></span> | <span id="businessPriceRange"></span> | <span id="overall-rating"></span>
 			        </div>
 		        </div>
 		        <div class="row" style="margin-top:20px;">
 		            <div class="col-md-8">
-		                <img src="https://via.placeholder.com/800x400" class="img-fluid" alt="Beauty Salon">
-		                <h2 class="mt-3">Beauty Salon</h2>
-		                <p>We are a full service hair salon that cares for every hair texture. We also provide nail services and do eyebrows and eyelashes.</p>
+		                <hr>
+		                <h5>Description</h5>
+		                <p id="businessDetail"></p>
+		                <hr>
+		                <div id="businessImages">
+						    <h5>Gallery</h5>
+						    <div class="row" id="imageGallery">
+						        <!-- Images will be inserted here -->
+						    </div>
+						</div>
+						<br><hr><br>
+						<h5>Reviews</h5>
+						<div id="new-review"></div>
+						<br>
+						<div id="review-list"></div>
 		            </div>
 		            <div class="col-md-4">
 		                <div class="card">
 		                    <div class="card-body">
-		                        <h5 class="card-title">Listing Details</h5>
-		                        <p><strong>Location:</strong> New York, NY, USA</p>
-		                        <p><strong>Phone:</strong> 555-1234</p>
-		                        <a href="#" class="btn btn-primary">View Website</a>
+		                        <h5 class="card-title">Details</h5>
+		                        <hr>
+		                        <p><strong>Category:</strong> <span id="businessCategory"></span></p>
+		                        <p><strong>Culture:</strong> <span id="businessCulture"></span></p>
+		                        <p><strong>Location:</strong> <span id="businessAddress"></span></p>
+		                        <p><strong>Phone:</strong> <span id="businessContact"></span></p>
+    							<p><strong>Email:</strong> <span id="businessEmail"></span></p>
+    							<p><strong>Preferred Contact Method:</strong> <span id="businessContactMethod"></span></p>
 		                    </div>
 		                </div>
+		                
+		                <div class="card mt-3">
+		                    <div class="card-body">
+		                        <h5 class="card-title">Reach Us</h5>
+		                        <hr>
+		                        <div id="businessMap"></div>
+		                    </div>
+		                </div>
+		                
 		                <div class="card mt-3">
 		                    <div class="card-body">
 		                        <h5 class="card-title">Opening time</h5>
-		                        <ul>
-		                            <li>Mon: 9am - 10pm</li>
-		                            <li>Tue: 9am - 10pm</li>
-		                            <li>Wed: 9am - 10pm</li>
-		                            <li>Thu: 9am - 10pm</li>
-		                            <li>Fri: 9am - 10pm</li>
-		                            <li>Sat: 9am - 10pm</li>
-		                            <li>Sun: 9am - 10pm</li>
-		                        </ul>
+		                        <hr>
+		                        <div id="businessTiming">
+								    <ul id="timingList">
+								        <!-- Timing details will be inserted here -->
+								    </ul>
+								</div>
 		                    </div>
 		                </div>
+		                
 		                <div class="card mt-3">
 		                    <div class="card-body">
-		                        <h5 class="card-title">Nearby</h5>
-		                        <ul>
-		                            <li>Kevin's Barber - 1.7 miles</li>
-		                            <li>Sky The Day Spa - 0.2 miles</li>
-		                            <li>The Nail Bar - 0.1 miles</li>
-		                        </ul>
+		                        <h5 class="card-title">Products</h5>
+		                        <div id="productView">
+								</div>
+		                    </div>
+		                </div>
+		                
+		                <div class="card mt-3">
+		                    <div class="card-body">
+		                        <h5 class="card-title">Events</h5>
+		                        <div id="eventView">
+								</div>
 		                    </div>
 		                </div>
 		            </div>
@@ -72,10 +114,385 @@
 		</div>
 	</div>
     
-
     <footer id="footer"></footer>
     <script src="/js/custom_functions.js"></script>
     <script src="/js/script.js"></script>
+    <script>
+    $(document).ready(function() {
+    	var userToken = JSON.parse(localStorage.getItem('userToken'));
+
+        if (!userToken || !userToken.userDetail || !userToken.userDetail.uid) {
+        	$('#new-review').html('<p>Please log in to add a review.</p><hr>');
+            return;
+        }
+
+        var uid = userToken.userDetail.uid;
+
+        // Make an AJAX request to get user details
+        $.ajax({
+            url: "/api/user/" + uid,
+            method: "GET",
+            success: function(response) {
+                var userId = response.userId;
+                
+                $('#new-review').html(`
+                		<h6>Add New Review</h6>
+                        <form id="review-form">
+                            <textarea class="form-control" id="review-text" placeholder="Enter your review"></textarea>
+                            </br>
+                            <select class="form-control" id="rating-select">
+                                <option value="" disabled selected>Select your rating</option>
+                                <option value="1">1 - Poor</option>
+                                <option value="2">2 - Fair</option>
+                                <option value="3">3 - Good</option>
+                                <option value="4">4 - Very Good</option>
+                                <option value="5">5 - Excellent</option>
+                            </select>
+                            </br>
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                        </form>
+                        <br>
+                        <hr>
+                `);
+
+                $('#review-form').submit(function(event) {
+                    event.preventDefault(); // Prevent the default form submission
+
+                    // Get the values from the form
+                    var reviewText = $('#review-text').val();
+                    var ratingValue = $('#rating-select').val();
+
+                    // Ensure both fields are filled
+                    if (!reviewText || !ratingValue) {
+                        alert('Please fill out both the review and rating.');
+                        return;
+                    }
+                    
+                 	// Extract the 'id' parameter from the URL
+              	  	const queryParams = new URLSearchParams(window.location.search);
+              	  	const businessId = queryParams.get('id');
+
+                    // Get the current timestamp
+                    var currentTimestamp = new Date().toISOString().replace('T', ' ').split('.')[0];
+
+                    // Create the settings object for AJAX
+                    var settings = {
+                        "url": "/api/review/add",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json"
+                        },
+                        "data": JSON.stringify({
+                        	"addOn": currentTimestamp,
+                            "businessId": businessId,
+                            "rating": ratingValue,
+                            "review": reviewText,
+                            "status": "active",
+                            "userId": userId
+                        })
+                    };
+
+                    // Make the AJAX request
+                    $.ajax(settings).done(function(response) {
+                        console.log(response);
+                        alert('Review submitted successfully');
+                        // Optionally, clear the form fields
+                        $('#review-form')[0].reset();
+                    }).fail(function(xhr, status, error) {
+                        console.error('Failed to submit review:', status, error);
+                        alert('Failed to submit review. Please try again.');
+                    });
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Failed to get user details:', status, error);
+            }
+        });
+    });
+    
+    function fetchCategoryById(categoryId) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: `/api/categories/getByID/${categoryId}`,
+                type: 'GET',
+                success: function(response) {
+                    resolve(response.categoryName); // Resolve the promise with the specific value
+                },
+                error: function(xhr) {
+                    reject(xhr.responseText); // Reject the promise with the error message
+                }
+            });
+        });
+    }
+    
+    function fetchCultureById(cultureId) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: `/api/cultures/getByID/${cultureId}`,
+                type: 'GET',
+                success: function(response) {
+                    resolve(response.cultureName); // Resolve the promise with the specific value
+                },
+                error: function(xhr) {
+                    reject(xhr.responseText); // Reject the promise with the error message
+                }
+            });
+        });
+    }
+    
+    $(document).ready(function() {
+    	  // Extract the 'id' parameter from the URL
+    	  const queryParams = new URLSearchParams(window.location.search);
+    	  const businessId = queryParams.get('id');
+
+    	  // Define the AJAX settings with the businessId
+    	  var settings = {
+    	    "url": `/api/business/getbyid?businessId=${businessId}`,
+    	    "method": "GET",
+    	    "timeout": 0,
+    	    "headers": {
+    	      "Cookie": "JSESSIONID=57DB45FAD152B1E6F48C1C9F0DF19784"
+    	    },
+    	  };
+
+    	  // Perform the AJAX request
+    	  $.ajax(settings).done(function (response) {
+    	    console.log(response);
+    	    // Update the DOM with the fetched business details
+    	    updateBusinessDetails(response);
+    	  });
+
+    	  // Function to update the DOM elements with the business information
+    	  function updateBusinessDetails(business) {
+    	    $('#businessName').text(business.name);
+    	    $('#businessSubName').text(business.name);
+    	    $('#businessSubtitle').text(business.subtitle);
+    	    
+    	    fetchCategoryById(business.categoryId)
+            .then(categoryName => {
+                $('#businessCategory').text(categoryName || 'Not specified');
+            })
+            .catch(error => {
+                $('#businessCategory').text('Not specified');
+            });
+    	    
+    	    fetchCultureById(business.cultureId)
+            .then(cultureName => {
+                $('#businessCulture').text(cultureName || 'Not specified');
+            })
+            .catch(error => {
+                console.error('Failed to fetch culture:', error);
+                $('#businessCulture').text('Not specified');
+            });
+    	    
+    	    $('#businessDetail').text(business.basicDetail);
+    	    $('#businessContact').text(business.phoneNumber);
+    	    $('#businessEmail').text(business.email);
+    	    $('#businessContactMethod').text(business.contactMethod);
+    	    $('#businessAddress').text(`${business.address}, ${business.city}, ${business.country}`);
+    	    $('#businessAddress2').text(`${business.address}, ${business.city}, ${business.country}`);
+    	    $('#businessPriceRange').text(business.priceRange);
+    	    $('#businessStatus').text(business.status);
+    	    $('#businessLatitude').text(business.latitude);
+    	    $('#businessLongitude').text(business.longitude);
+    	    var mapApi = '<iframe width="100%" height="170" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=' + business.latitude + ',' + business.longitude + '&hl=en&z=14&output=embed"></iframe>';
+    	    $('#businessMap').html(mapApi);
+    	    
+    	 	// Update business timing
+            var timingList = '';
+            timingList += `<li>Monday: ${business.businessTiming.monday}</li>`;
+            timingList += `<li>Tuesday: ${business.businessTiming.tuesday}</li>`;
+            timingList += `<li>Wednesday: ${business.businessTiming.wednesday}</li>`;
+            timingList += `<li>Thursday: ${business.businessTiming.thursday}</li>`;
+            timingList += `<li>Friday: ${business.businessTiming.friday}</li>`;
+            timingList += `<li>Saturday: ${business.businessTiming.saturday}</li>`;
+            timingList += `<li>Sunday: ${business.businessTiming.sunday}</li>`;
+            $('#timingList').html(timingList);
+            
+            // Update header image
+            var headerImage = 'general_header.jpg';
+		    if (business.images && business.images.length > 0) {
+		    	headerImage = 'listing/'+business.images[0].imageName;
+		    }
+		    var headerHtml = '<img src="img/'+ headerImage +'" class="img-fluid" alt="Beauty Salon" style="width:100%;">';
+    	    $('#headerImage').html(headerHtml);
+    	    
+         	// Update business images
+            var imageGallery = '<div class="row">';
+            business.images.forEach(function(image, index) {
+                if (index > 0 && index % 3 === 0) {
+                    imageGallery += '</div><div class="row">';
+                }
+                imageGallery += `<div class="image-item col-md-4" style="overflow:hidden; height:100%;">
+                                    <a data-fancybox="gallery" href="/img/listing/${image.imageName}">
+                                        <img class="img-fluid" src="/img/listing/${image.imageName}" alt="${image.type}">
+                                    </a>
+                                 </div>`;
+            });
+            imageGallery += '</div>';
+            $('#imageGallery').html(imageGallery);
+            
+            // Initialize FancyBox
+            $('[data-fancybox="gallery"]').fancybox({
+                buttons: [
+                    "zoom",
+                    "close"
+                ]
+            });
+    	  }
+    	  
+    	  if (businessId) {
+    	        var settings = {
+    	            "url": "/api/product/getbyfilter",
+    	            "method": "POST",
+    	            "timeout": 0,
+    	            "headers": {
+    	                "Content-Type": "application/json",
+    	                "Cookie": "JSESSIONID=FA0C058881015A965282546196C34666"
+    	            },
+    	            "data": JSON.stringify({
+    	                "linkedId": businessId,
+    	                "productTitle": null
+    	            })
+    	        };
+
+    	        $.ajax(settings).done(function (response) {
+    	            console.log(response);
+    	            if (response.products && Array.isArray(response.products) && response.products.length > 0) {
+    	                var content = '';
+    	                response.products.forEach(function(product) {
+    	                    content += '<hr><div class="product-entry">' +
+    	                        '<h5>' + (product.productTitle || 'No Title') + '</h5>' +
+    	                        '<p>' + (product.productDescription || 'No Description') + '</p>' +
+    	                        '<p><strong>Price:</strong> $' + (product.price || 'No Price') + '</p>' +
+    	                        '</div>';
+    	                });
+    	                $('#productView').html(content);
+    	            } else {
+    	                $('#productView').text('No products found.');
+    	            }
+    	        }).fail(function(xhr) {
+    	            console.error('Failed to retrieve products:', xhr.responseText);
+    	        });
+    	    }
+    	  
+    	  if (businessId) {
+              var settings = {
+                  "url": "/api/events/getAll",
+                  "method": "POST",
+                  "timeout": 0,
+                  "headers": {
+                      "Content-Type": "application/json",
+                      "Cookie": "JSESSIONID=FA0C058881015A965282546196C34666"
+                  },
+                  "data": JSON.stringify({
+                      "businessId": businessId,
+                      "eventName": null,
+                      "location": null
+                  })
+              };
+
+              $.ajax(settings).done(function (response) {
+                  console.log(response);
+                  if (response.event && Array.isArray(response.event) && response.event.length > 0) {
+                      var content = '';
+                      response.event.forEach(function(wrapper) {
+                          var event = wrapper.event;
+                          content += '<hr><div class="event-entry">' +
+                              '<h5>' + (event.eventName || 'No Name') + '</h5>' +
+                              '<p>' + (event.location || 'No Location') + '</p>' +
+                              '<p><strong>Max Seat:</strong> ' + (event.maxSeat || 'No Max Seat') + ' <strong>Price:</strong> ' + (event.priceRange || 'No Price Range') + '</p>' +
+                              '</div>';
+                      });
+                      $('#eventView').html(content);
+                  } else {
+                      $('#eventView').text('No events found.');
+                  }
+              }).fail(function(xhr) {
+                  console.error('Failed to retrieve events:', xhr.responseText);
+                  $('#eventView').text('Failed to retrieve events.');
+              });
+          }
+    	  
+    	});
+
+    $(document).ready(function() {
+    	const queryParams = new URLSearchParams(window.location.search);
+  	  	const businessId = queryParams.get('id');
+
+        var settings = {
+            "url": `/api/review/getbyBusinessid?businessId=${businessId}`,
+            "method": "GET",
+            "timeout": 0,
+        };
+
+        $.ajax(settings)
+            .done(function(response) {
+                console.log(response);
+                var totalRating = 0;
+	            var numberOfReviews = response.length;
+
+	            response.forEach(function(review) {
+	                totalRating += Number(review.rating);
+	            });
+
+	            var overallRating = numberOfReviews > 0 ? totalRating / numberOfReviews : 0;
+                displayReviews(response, overallRating);
+            })
+            .fail(function(xhr, status, error) {
+                //console.log('Failed to load reviews:', error);
+            });
+
+        function displayReviews(reviews, overallRating) {
+            var reviewList = $('#review-list');
+            reviewList.empty(); // Clear any existing reviews
+			
+            if (overallRating && overallRating > 0) {
+            	var overAllStars = '★'.repeat(Math.round(overallRating)) + '☆'.repeat(5 - Math.round(overallRating));
+            } else {
+            	var overAllStars = '☆'.repeat(5);
+            }
+            
+            $('#overall-rating').text(overAllStars + ' (' + overallRating.toFixed(1) + ')' );
+            
+            reviews.forEach(function(review) {
+            	var stars = '';
+                if (review.rating && review.rating > 0) {
+                    stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+                } else {
+                    stars = '☆'.repeat(5);
+                }
+
+                var reviewUsername = 'Anonymous';
+                
+                $.ajax({
+                    url: `/api/user/id/${review.userId}`,
+                    method: "GET",
+                    success: function(response) {
+                        var firstName = response.firstName || '';
+                        var lastName = response.lastName || '';
+                        reviewUsername = firstName + ' ' + lastName;
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Failed to get user details:', status, error);
+                    },
+                    complete: function() {
+                        var reviewHtml = `
+                            <div class="review-item" style="border:1px solid #e8e8e8; padding:7px 10px 7px 10px; border-radious:4px;">
+                                <p><strong></strong> ${review.review}</p>
+                                <p>${stars} by ${reviewUsername} on ${review.addOn}</p>
+                            </div>
+                        `;
+                        reviewList.append(reviewHtml);
+                    }
+                });
+            });
+        }
+
+        
+    });
+	</script>
     <script>
     $(document).ready(function() {
         // Load the header and footer into div
@@ -83,5 +500,6 @@
         $('#footer').load('footer');
     });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 </body>
 </html>

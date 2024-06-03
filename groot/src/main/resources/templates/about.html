@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>About Us - Groot</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk&amp;display=swap">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body style="--bs-primary: #13456a;--bs-primary-rgb: 19,69,106;--bs-secondary: #FF8889;--bs-secondary-rgb: 255,136,137;">
+    <header id="header"></header>
+    
+    <div class="container" style="margin-top: 2vw;">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1 style="color: rgb(19,69,106);font-size: 4rem;font-family: 'Voikhov', Times, serif;text-align: center;margin-top: 23px;margin-bottom: 23px;"><strong>About Us</strong></h1>
+                <p style="color: #13456a;font-family: 'Space Grotesk', inter, serif;text-align: center;">Welcome to Groot, your gateway to a world of cultural discovery. Explore diverse cuisines, traditions, and experiences from around the globe, all in one place. Connect with communities, find your favorites, and embark on a journey of cultural exploration with us.</p>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 4vw;">
+            <div class="col-md-9">
+                <h2 style="font-family: 'Voikhov', Times, serif;"><strong>Our Mission</strong></h2>
+                <p style="font-family: 'Space Grotesk', inter, serif;">At Groot, our mission is to bridge cultural gaps and bring people together through the power of shared experiences. We believe in the richness of cultural diversity and aim to make it accessible to everyone.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="/img/mission.jpg" class="img-fluid" alt="Our Mission">
+            </div>
+        </div>
+        <div class="row" style="margin-top: 4vw;">
+            <div class="col-md-3">
+                <img src="/img/vision.jpg" class="img-fluid" alt="Our Vision">
+            </div>
+            <div class="col-md-9">
+                <h2 style="font-family: 'Voikhov', Times, serif;"><strong>Our Vision</strong></h2>
+                <p style="font-family: 'Space Grotesk', inter, serif;">Our vision is a world where cultural boundaries are blurred, and everyone can experience the beauty and richness of different cultures. We strive to create a platform that fosters understanding, appreciation, and celebration of cultural diversity.</p>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 4vw;">
+            <div class="col-md-12 text-center">
+                <h2 style="font-family: 'Voikhov', Times, serif;"><strong>Meet the Team</strong></h2>
+                <p style="font-family: 'Space Grotesk', inter, serif;">Our team is composed of passionate individuals from diverse backgrounds, all united by a common goal: to bring the world closer together through cultural exploration. Get to know the people behind Groot!</p>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 2vw;">
+            <div class="col-md-4 text-center">
+                <h5 class="mt-3">Nischal</h5>
+                <p>Founder & CEO</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <h5 class="mt-3">Sayyar</h5>
+                <p>Chief Technology Officer</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <h5 class="mt-3">Sriharshan</h5>
+                <p>Head of Marketing</p>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer"></footer>
+    <script src="/js/custom_functions.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Load the header and footer into div
+        $('#header').load('header');
+        $('#footer').load('footer');
+    });
+    </script>
+</body>
+</html>

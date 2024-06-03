@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Groot - Welcome to the home of business</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk&amp;display=swap">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        	const queryParams = new URLSearchParams(window.location.search);
+      	  	const id = queryParams.get('id');
+      	  	const type = queryParams.get('type');
+      	  	
+	      	switch(type) {
+	        case 'events':
+	            returnUrl = '/adminEvents';
+	            break;
+	        case 'product':
+	            returnUrl = '/adminProducts';
+	            break;
+	        case 'business':
+	            returnUrl = '/adminBusinesses';
+	            break;
+	      	}
+	      	
+            if (type && id) {
+                var url = "/api/" + type + "/delete/" + id;
+
+                var settings = {
+                    "url": url,
+                    "method": "DELETE",
+                    "timeout": 0,
+                    success: function(response) {
+                        console.log(response);
+                        window.location.href = returnUrl;
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Failed to delete item:', status, error);
+                        alert('Failed to delete item.');
+                        window.location.href = returnUrl;
+                    }
+                };
+
+                $.ajax(settings);
+            } else {
+                console.error('Type and ID parameters are required');
+                window.location.href = returnUrl;
+            }
+        });
+    </script>
+</body>
+</html>

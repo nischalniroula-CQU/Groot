@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Groot - Manage Universities</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk&amp;display=swap">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body style="--bs-primary: #13456a;--bs-primary-rgb: 19,69,106;--bs-secondary: #FF8889;--bs-secondary-rgb: 255,136,137;">
+    
+    <header id="adminHeader"></header>
+    
+    <div class="container" style="margin-top: 2vw;">
+        <div class="row">
+            <h4>
+            	Manage Category 
+            </h4>
+        </div>
+    </div>
+    
+    <div class="container" style="margin-bottom: 0px;">
+        <div class="row">
+            <div class="col-md-12">
+                <section class="position-relative py-4 py-xl-5">
+                    <div class="container">
+                        <div class="row mb-5">
+                            <div class="col">
+                                <section class="position-relative py-4 py-xl-5" style="padding-top: 48px;margin-top: 0px;">
+                                    <div class="container">
+                                        <div class="col-md-6 col-xl-11">
+                                            <div class="card mb-5" style="border-style: none;border-left-style: none;">
+                                                <form class="text-center" id="update-info-form" style="border-left-style: none;">
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Category</p>
+                                                        <input class="form-control" type="text" name="category">
+                                                    </div>
+                                                    </br>
+                                                    <div class="mb-3">
+                                                        <button class="btn btn-primary d-block w-100" type="submit" style="background: rgb(19,69,106);">Update</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <div id="error-message" style="color: red;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script>
+    $(document).ready(function() {
+    	// Get the id parameter from the URL
+        const queryParams = new URLSearchParams(window.location.search);
+        const id = queryParams.get('id');
+        
+        if (id) {
+            var settings = {
+                "url": "/api/categories/getByID/" + id,
+                "method": "GET",
+                "timeout": 0,
+                "headers": {
+                    "Cookie": "JSESSIONID=DF30AD15E63883EAF81CE91D102EA695"
+                },
+            };
+
+            $.ajax(settings).done(function(response) {
+                console.log(response);
+                // Populate the form fields with the response data
+                $('input[name="category"]').val(response.categoryName);
+            });
+        }
+        
+     	// Handle form submission
+        $('#update-info-form').submit(function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get the field values
+            var categoryName = $('input[name="category"]').val();
+
+            var updateSettings = {
+                "url": "/api/categories/update/" + id,
+                "method": "PUT",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+                    "categoryName": categoryName
+                }),
+            };
+
+            console.log("Update settings:", updateSettings); // Log the request settings
+
+            $.ajax(updateSettings).done(function(response) {
+                console.log("Response:", response); // Log the response
+                window.location.href = '/adminCategories';
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error:", textStatus, errorThrown); // Log any error
+                alert("Update failed: " + textStatus);
+            });
+        });
+    });
+    </script>
+
+    <footer id="footer"></footer>
+    <script src="/js/custom_functions.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+	    
+	</script>
+    <script>
+    $(document).ready(function() {
+        // Load the header and footer into div
+        $('#adminHeader').load('adminHeader');
+        $('#footer').load('footer');
+    });
+    </script>
+</body>
+
+</html>

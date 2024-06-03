@@ -23,4 +23,6 @@ public class ImageLibrary {
 	private String imageName;
 	@Column(name = "post_id")
 	private Long postId;
+	@Column(name = "business_id")
+	private Long businessId;
 }

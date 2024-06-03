@@ -27,7 +27,7 @@
                                                 <form class="text-center" id="add-info-form" style="border-left-style: none;">
                                                     <div class="mb-3">
                                                     	<p style="text-align:left;">Category Name</p>
-                                                    	<input class="form-control" type="text" name="email">
+                                                    	<input class="form-control" type="text" id="categoryName">
                                                     </div>
                                                     <div class="mb-3">
                                                     	<button class="btn btn-primary d-block w-100" type="submit" style="background: rgb(19,69,106);">Save</button>
@@ -50,6 +50,38 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="/js/custom_functions.js"></script>
     <script src="/js/script.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#add-info-form').submit(function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Get form values
+                var categoryName = $('#categoryName').val();
+
+                // Prepare AJAX request
+                var settings = {
+                    "url": "/api/categories/addCategory",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify({
+                        "categoryName": categoryName
+                    }),
+                };
+
+                $.ajax(settings).done(function(response) {
+                    console.log(response);
+                    alert("Category added successfully!");
+                    window.location.href = '/adminCategories';
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.error("Error:", textStatus, errorThrown);
+                    alert("Failed to add category: " + errorThrown);
+                });
+            });
+        });
+    </script>
     <script>
     $(document).ready(function() {
         // Load the header and footer into div

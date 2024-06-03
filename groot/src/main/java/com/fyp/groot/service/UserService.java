@@ -1,6 +1,5 @@
 package com.fyp.groot.service;
 
-import com.fyp.groot.entity.Event;
 import com.fyp.groot.entity.User;
 import com.fyp.groot.model.SignupRequest;
 import com.fyp.groot.repository.UserRepository;
@@ -15,208 +14,142 @@ import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Optional;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * UserService handles the business logic for user-related operations.
+ */
 @Service
 public class UserService {
 
-	private static final String COLLECTION_NAME = "users";
+    private static final String COLLECTION_NAME = "users";
 
-	@Autowired
-	private FirebaseUserService firebaseUserService;
+    @Autowired
+    private FirebaseUserService firebaseUserService;
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	//	UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-	//    .setEmail(signupRequest.getEmail())
-	//    .setPassword(signupRequest.getPassword());
-	//UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
+    /**
+     * Creates a new user in Firebase and links it with a local user entity.
+     * 
+     * @param signupRequest the signup request containing user details
+     * @return the created UserRecord
+     * @throws FirebaseAuthException if an error occurs while creating the user in Firebase
+     */
+    public UserRecord createUserAndLinkFirebaseUser(SignupRequest signupRequest) throws FirebaseAuthException {
+        // Create user in Firebase
+        UserRecord firebaseUser = firebaseUserService.createUser(signupRequest);
 
-	public UserRecord createUserAndLinkFirebaseUser(SignupRequest signupRequest) throws FirebaseAuthException {
-		// Create user in Firebase
-		UserRecord firebaseUser = firebaseUserService.createUser(signupRequest);
+        // Create local user and link with Firebase user ID
+        User user = new User();
+        user.setFirstName(signupRequest.getFirstName());
+        user.setLastName(signupRequest.getLastName());
+        user.setEmailId(signupRequest.getEmail());
+        user.setUsername(signupRequest.getEmail());
+        user.setStatus("active");
+        user.setCity(signupRequest.getCity());
+        user.setCountry(signupRequest.getCountry());
+        user.setPhoneNumber(signupRequest.getPhoneNumber());
+        user.setUserType(signupRequest.getUserType());
+        user.setAddress(signupRequest.getAddress());
+        user.setCultureId(signupRequest.getCulture());
+        user.setUniversityId(signupRequest.getUniversity());
+        user.setFirebaseId(firebaseUser.getUid());
+        // Set other properties of user
 
-		// Create local user and link with Firebase user ID
-		User user = new User();
-				
-		user.setFirstName(signupRequest.getFirstName());
-		user.setLastName(signupRequest.getLastName());
-		user.setEmailId(signupRequest.getEmail());
-		user.setUsername(signupRequest.getEmail());
-		user.setStatus("active");
-		user.setCity(signupRequest.getCity());
-		user.setCountry(signupRequest.getCountry());
-		user.setPhoneNumber(signupRequest.getPhoneNumber());
-		user.setPassword(signupRequest.getPassword());
-		
-		user.setUserType(signupRequest.getUserType());
-		user.setAddress(signupRequest.getAddress());
-		user.setCultureId(signupRequest.getCulture());
-		user.setUniversityId(signupRequest.getUniversity());
-		
-		user.setFirebaseId(firebaseUser.getUid());
-		// Set other properties of user
+        // Save local user to the database
+        userRepository.save(user);
 
-		// Save local user to the database
-		userRepository.save(user);
+        return firebaseUser;
+    }
 
-		return firebaseUser;
-	}
+    /**
+     * Retrieves a user by its ID.
+     * 
+     * @param id the ID of the user to retrieve
+     * @return an Optional containing the user if found
+     */
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
+    }
 
+    /**
+     * Retrieves a user by its entity user ID.
+     * 
+     * @param id the entity user ID
+     * @return an Optional containing the user if found
+     */
+    public Optional<User> getUserByUserId(Long id) {
+        return userRepository.findById(id);
+    }
 
-	/*
-	 * public String saveUser(User user) throws InterruptedException,
-	 * ExecutionException {
-	 *
-	 * Firestore dbFirestore = FirestoreClient.getFirestore();
-	 * ApiFuture<WriteResult> collectionApiFuture =
-	 * dbFirestore.collection(COLLECTION_NAME).document(user.getId()).set(user);
-	 *
-	 * return collectionApiFuture.get().getUpdateTime().toString();
-	 *
-	 * }
-	 */
+    /**
+     * Retrieves user details from Firestore by Firebase ID.
+     * 
+     * @param id the Firebase ID of the user
+     * @return the user details if found
+     * @throws InterruptedException if the thread is interrupted while fetching user details
+     * @throws ExecutionException if an error occurs while fetching user details
+     */
+    public User getUserDetails(String id) throws InterruptedException, ExecutionException {
+        Firestore dbFirestore = FirestoreClient.getFirestore();
+        DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(id);
+        ApiFuture<DocumentSnapshot> future = documentReference.get();
+        DocumentSnapshot document = future.get();
 
-	public User getUserDetails(String id) throws InterruptedException, ExecutionException {
+        if (document.exists()) {
+            return document.toObject(User.class);
+        } else {
+            return null;
+        }
+    }
 
-		Firestore dbFirestore = FirestoreClient.getFirestore();
-		DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(id);
-		ApiFuture<DocumentSnapshot> future = documentReference.get();
-		DocumentSnapshot document = future.get();
+    /**
+     * Retrieves user metadata by Firebase ID.
+     * 
+     * @param id the Firebase ID of the user
+     * @return the user metadata if found
+     * @throws InterruptedException if the thread is interrupted while fetching user metadata
+     * @throws ExecutionException if an error occurs while fetching user metadata
+     */
+    public User getUserMeta(String id) throws InterruptedException, ExecutionException {
+        Optional<User> optionalUser = userRepository.findByFirebaseId(id);
+        return optionalUser.orElse(null);
+    }
 
-		User user = null;
-		if (document.exists()) {
-			user = document.toObject(User.class);
-			return user;
-		} else {
-			return null;
-		}
-	}
+    /**
+     * Deletes a user by its Firebase ID from Firestore.
+     * 
+     * @param id the Firebase ID of the user to delete
+     * @return a message indicating successful deletion
+     * @throws InterruptedException if the thread is interrupted while deleting the user
+     * @throws ExecutionException if an error occurs while deleting the user
+     */
+    public String deleteUser(String id) throws InterruptedException, ExecutionException {
+        Firestore dbFirestore = FirestoreClient.getFirestore();
+        ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection(COLLECTION_NAME).document(id).delete();
 
+        return "Document with user id " + id + " has been deleted successfully";
+    }
 
-	/*
-	 * public String updateUser(User user) throws InterruptedException,
-	 * ExecutionException {
-	 *
-	 * Firestore dbFirestore = FirestoreClient.getFirestore();
-	 * ApiFuture<WriteResult> collectionApiFuture =
-	 * dbFirestore.collection(COLLECTION_NAME).document(user.getId()).set(user);
-	 *
-	 * return collectionApiFuture.get().getUpdateTime().toString();
-	 *
-	 * }
-	 */
-
-	public String deleteUser(String id) throws InterruptedException, ExecutionException {
-
-		Firestore dbFirestore = FirestoreClient.getFirestore();
-		ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection(COLLECTION_NAME).document(id).delete();
-
-		return "Document with user id" + id + "has been deleted successfully";
-
-	}
-	public List<User> getAllUserDetails() {
+    /**
+     * Retrieves all user details.
+     * 
+     * @return a list of all users
+     */
+    public List<User> getAllUserDetails() {
         return userRepository.findAll();
     }
-	
-	
-/*
-	public List<User> getAllUserDetails() throws InterruptedException, ExecutionException {
 
-		Firestore dbFirestore = FirestoreClient.getFirestore();
-
-		Iterable<DocumentReference> documentIterable = dbFirestore.collection(COLLECTION_NAME).listDocuments();
-		Iterator<DocumentReference> iterator = documentIterable.iterator();
-
-		List<User> userList = new ArrayList<>();
-		User user = null;
-
-		while (iterator.hasNext()) {
-			DocumentReference documentReference = iterator.next();
-			ApiFuture<DocumentSnapshot> future = documentReference.get();
-			DocumentSnapshot document = future.get();
-
-			user = document.toObject(User.class);
-			userList.add(user);
-
-		}
-
-		return userList;
-
-	}
-	*/
-
-public long countUsers() {
-    return userRepository.count();
+    /**
+     * Counts the total number of users.
+     * 
+     * @return the total number of users
+     */
+    public long countUsers() {
+        return userRepository.count();
+    }
 }
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
- * @Autowired private UserRepository userRepository;
- *
- * public User save(User user) { return userRepository.save(user); }
- *
- * public Optional<User> findByFirebaseId(String firebaseId) { return
- * userRepository.findByFirebaseId(firebaseId); }
- *
- * public UserRecord createUser(String email, String password) throws
- * FirebaseAuthException { UserRecord.CreateRequest request = new
- * UserRecord.CreateRequest() .setEmail(email) .setPassword(password);
- *
- *
- * UserRecord firebaseUser = firebaseUserService.createUser(email, password);
- * LocalUser localUser = new LocalUser();
- * localUser.setFirebaseId(firebaseUser.getUid()); // Set other properties
- * userRepository.save(localUser);
- *
- *
- * return FirebaseAuth.getInstance().createUser(request); }
- *
- * public void updateUser(String uid, String email, String password) throws
- * FirebaseAuthException { UserRecord.UpdateRequest request = new
- * UserRecord.UpdateRequest(uid) .setEmail(email) .setPassword(password);
- *
- * FirebaseAuth.getInstance().updateUser(request); }
- */
-
-// @Override
-/*
- * public User login(String username, String password) { return
- * userRepository.findByUsernameAndPassword(username, password); }
- */
-
-/*
- * public BaseResponse userLogin(UserLoginRequest request, BaseResponse
- * response, String apiName) {
- *
- * response.setResponseCode(Constant.SUCCESS_RESPONSE_CODE);
- * response.setResponseDesc(Constant.SUCCESS_RESPONSE_DESC);
- *
- * return response; }
- */
-

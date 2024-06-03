@@ -42,14 +42,12 @@
 	                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
 	            },
 	            success: function(response) {
-	                var content = '<table class="table"><thead class="thead-dark"><tr><th>ID</th><th>Culture</th><th>Status</th><th>Action</th></tr></thead><tbody>';
+	                var content = '<table class="table"><thead class="thead-dark"><tr><th>Culture</th><th>Action</th></tr></thead><tbody>';
 	                response.cultures.forEach(function(culture) {
 	                		               
 	                    content += '<tr class="culture-entry">' +
-	                               '<td width="25%">' + culture.cultureId + '</td>' +
 	                               '<td width="20%">' + culture.cultureName + '</td>' +
-	                               '<td width="20%">' + culture.status + '</td>' +
-	                               '<td width="15%"><a href="/?adminEditCulture&id=' + culture.cultureId + '"><button class="btn btn-primary">Edit</button></a>&nbsp;<a href="/adminDelete&type=culture&id=' + culture.cultureId + '"><button class="btn btn-danger">Delete</button></a></td>' +
+	                               '<td width="15%"><a href="/adminEditCulture?id=' + culture.cultureId + '"><button class="btn btn-primary">Edit</button></a></td>' +
 	                               '</tr>';
 	                });
 	                content += '</tbody></table>';

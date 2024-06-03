@@ -1,11 +1,15 @@
 	if (localStorage.getItem('userToken')) {
-        // User is logged in, update UI accordingly
-        // For example:
+        // User is logged in and admin
         document.getElementById('usernotloggedin').style.display = 'none'; // Hide login button
         document.getElementById('userloggedin').style.display = 'block'; // Show logout button
-    } else {
-        // User is not logged in, update UI accordingly
-        // For example:
+    }
+    else if (localStorage.getItem('userToken') && loginUserType == 'businessOwner') {
+        // User is logged in, and businessowner
+        document.getElementById('usernotloggedin').style.display = 'none'; // Hide login button
+        document.getElementById('userloggedin').style.display = 'block'; // Show logout button
+    }
+    else {
+        // User is not logged in
         document.getElementById('usernotloggedin').style.display = 'block'; // Show login button
         document.getElementById('userloggedin').style.display = 'none'; // Hide logout button
     }

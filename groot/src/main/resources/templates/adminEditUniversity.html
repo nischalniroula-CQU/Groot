@@ -18,59 +18,124 @@
         <div class="row">
             <h4>
             	Manage Universities 
-            	<a href="adminAddUniversity"><button style="float:right; width: 200px;" class="btn btn-success">Add New University</button></a>
             </h4>
         </div>
     </div>
-    <div class="container" style="margin-top: 2vw; margin-bottom: 2vw;">
-	    <div class="row">
-	        <table class="table">
-	        <thead class="thead-dark">
-	            <tr>
-	                <th>University</th>
-	                <th>Records</th>
-	                <th>Action</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	            <div id="university-container"></div>
-	            <div id="university-error" style="color: red;"></div>
-	        </tbody>
-	    	</table>
-	    </div>
-	</div>
+    
+    <div class="container" style="margin-bottom: 0px;">
+        <div class="row">
+            <div class="col-md-12">
+                <section class="position-relative py-4 py-xl-5">
+                    <div class="container">
+                        <div class="row mb-5">
+                            <div class="col">
+                                <section class="position-relative py-4 py-xl-5" style="padding-top: 48px;margin-top: 0px;">
+                                    <div class="container">
+                                        <div class="col-md-6 col-xl-11">
+                                            <div class="card mb-5" style="border-style: none;border-left-style: none;">
+                                                <form class="text-center" id="update-info-form" style="border-left-style: none;">
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">University</p>
+                                                        <input class="form-control" type="text" name="university">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Address</p>
+                                                        <input class="form-control" type="text" name="address">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">City</p>
+                                                        <input class="form-control" type="text" name="city">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <p style="text-align:left;">Location</p>
+                                                        <input class="form-control" type="text" name="location">
+                                                    </div>
+                                                    </br>
+                                                    <div class="mb-3">
+                                                        <button class="btn btn-primary d-block w-100" type="submit" style="background: rgb(19,69,106);">Update</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <div id="error-message" style="color: red;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script>
+    $(document).ready(function() {
+    	// Get the id parameter from the URL
+        const queryParams = new URLSearchParams(window.location.search);
+        const id = queryParams.get('id');
+        
+        if (id) {
+            var settings = {
+                "url": "/api/university/getOne?id=" + id,
+                "method": "GET",
+                "timeout": 0,
+                "headers": {
+                    "Cookie": "JSESSIONID=DF30AD15E63883EAF81CE91D102EA695"
+                },
+            };
+
+            $.ajax(settings).done(function(response) {
+                console.log(response);
+                // Populate the form fields with the response data
+                $('input[name="university"]').val(response.university.universityName);
+                $('input[name="address"]').val(response.university.address);
+                $('input[name="city"]').val(response.university.city);
+                $('input[name="location"]').val(response.university.location);
+            });
+        }
+        
+     	// Handle form submission
+        $('#update-info-form').submit(function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get the field values
+            var universityName = $('input[name="university"]').val();
+            var address = $('input[name="address"]').val();
+            var city = $('input[name="city"]').val();
+            var location = $('input[name="location"]').val();
+
+            var updateSettings = {
+                "url": "/api/university/update/" + id,
+                "method": "PUT",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+                    "universityName": universityName,
+                    "address": address,
+                    "city": city,
+                    "location": location
+                }),
+            };
+
+            console.log("Update settings:", updateSettings); // Log the request settings
+
+            $.ajax(updateSettings).done(function(response) {
+                console.log("Response:", response); // Log the response
+                window.location.href = '/adminUniversities';
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error:", textStatus, errorThrown); // Log any error
+                alert("Update failed: " + textStatus);
+            });
+        });
+    });
+    </script>
 
     <footer id="footer"></footer>
     <script src="/js/custom_functions.js"></script>
     <script src="/js/script.js"></script>
     <script>
-	    $(document).ready(function() {
-	        $.ajax({
-	            url: '/api/university/getAll',
-	            type: 'GET',
-	            contentType: 'application/json',
-	            headers: {
-	                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
-	            },
-	            success: function(response) {
-	                var content = '';
-	                response.universities.forEach(function(university) {
-	                    // Constructing HTML content for each university
-	                		               
-	                    content += '<tr class="university-entry">' +
-	                               '<td width="25%">' + university.universityName + '</td>' +
-	                               '<td width="25%">' + university.city + '</td>' +
-	                               '<td width="25%"><a href="/?adminEditUniversity&id=' + university.id + '"><button class="btn btn-primary">Edit</button></a>&nbsp;<a href="?adminEditUniversity&id=' + university.id + '"><button class="btn btn-danger">Delete</button></a></td>' +
-	                               '</tr>';
-	                });
-	                $('#university-container').html(content);
-	            },
-	            error: function(xhr) {
-	                console.log('Failed to retrieve universities:', xhr.responseText);
-	                $('#university-error').text('Failed to retrieve university data: ' + xhr.responseText);
-	            }
-	        });
-	    });
+	    
 	</script>
     <script>
     $(document).ready(function() {

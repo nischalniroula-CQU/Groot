@@ -1,0 +1,70 @@
+<header>
+	<nav class="navbar navbar-expand-md bg-body py-3">
+		<div class="container"><a class="navbar-brand d-flex align-items-center" href="index"><img src="/img/GrootLogo.png" width="104" height="30"></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+			<div id="userloggedin">
+				<div class="collapse navbar-collapse" id="navcol-2">
+					<!-- Menu when the user is logged in -->
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item"><a class="nav-link" th:href="ownerDashboard">Dashboard</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="ownerBusinesses">My Businesses</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="ownerEvents">My Events</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="ownerProducts">My Products</a></li>
+					</ul>
+					&nbsp;&nbsp;&nbsp;<a role="button" href="#" style="text-decoration:none; color:#000;">Hi <span id="usersname"></span></a>
+
+					<a class="btn btn-primary ms-md-2" role="button" id="logout" style="background: rgb(0,128,255);">Logout</a>
+				</div>
+	       </div>
+	    </div>
+	</nav>
+</header>
+<script>
+	$(document).ready(function() {
+	    // Get the userToken from local storage and parse it
+	    var userToken = JSON.parse(localStorage.getItem('userToken'));
+	
+	    if (userToken && userToken.userDetail && userToken.userDetail.uid) {
+	    	var uid = userToken.userDetail.uid;
+	
+	        // Make an AJAX request to get user details
+	        $.ajax({
+	            url: "/api/user/" + uid,
+	            method: "GET",
+	            success: function(response) {
+	            	var userid = response.userId;
+	            	var firstName = response.firstName || '';
+	                var lastName = response.lastName || '';
+	                var usersname = firstName + ' ' + lastName;
+	
+	                if (!firstName && !lastName) {
+	                    usersname = 'User';
+	                }
+	                
+	                $('#usersname').text(usersname);
+	                if(response.userType == 'admin')
+	                {
+	                	$('#usermenu_placement').html('<a class="btn btn-primary ms-md-2" role="button" href="adminDashboard" style="background: rgb(19,69,106);">Admin Dashboard</a>');
+	                }
+	                else if(response.userType == 'businessOwner')
+	                {
+	                	$('#usermenu_placement').html('<a class="btn btn-primary ms-md-2" role="button" href="ownerDashboard" style="background: rgb(19,69,106);">Dashboard</a>');
+	                }
+	                else
+	                {
+	                    //$('#usermenu_placement').html('<a class="btn btn-primary ms-md-2" role="button" href="userDashboard" style="background: rgb(19,69,106);">Dashboard</a>');
+	                }
+	            },
+	            error: function(xhr, status, error) {
+	                console.error('Failed to get user details:', status, error);
+	            }
+	        });
+	    }
+	});
+	function logout() {
+	    // Remove the userToken from localStorage
+	    localStorage.removeItem('userToken');
+	    window.location.href = '/index';
+	}
+	// Add event listener to logout button
+	document.getElementById('logout').addEventListener('click', logout);
+</script>

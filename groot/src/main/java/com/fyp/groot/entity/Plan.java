@@ -24,5 +24,3 @@ public class Plan {
 	@Column(name = "price")
 	private String price;
 }
-
-

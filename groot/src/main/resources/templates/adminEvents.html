@@ -18,7 +18,7 @@
         <div class="row">
             <h4>
             	Manage Events 
-            	<a href="addEvent"><button style="float:right; width: 200px;" class="btn btn-success">Add New Event</button></a>
+            	<!-- <a href="addEvent"><button style="float:right; width: 200px;" class="btn btn-success">Add New Event</button></a> -->
             </h4>
         </div>
     </div>
@@ -33,36 +33,88 @@
     <script src="/js/custom_functions.js"></script>
     <script src="/js/script.js"></script>
     <script>
-	    $(document).ready(function() {
-	        $.ajax({
-	            url: '/api/events/getAll',
-	            type: 'GET',
-	            contentType: 'application/json',
-	            headers: {
-	                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
-	            },
-	            success: function(response) {
-	                var content = '<table class="table"><thead class="thead-dark"><tr><th>Event</th><th>Business Name</th><th>Location</th><th>Max Seat</th><th>Price</th><th>Action</th></tr></thead><tbody>';
-	                response.event.forEach(function(evt) {
-	                		               
-	                    content += '<tr class="culture-entry">' +
-	                               '<td width="25%">' + evt.eventName + '</td>' +
-	                               '<td width="20%">' + evt.businessId + '</td>' +
-	                               '<td width="10%">' + evt.location + '</td>' +
-	                               '<td width="10%">' + evt.maxSeat + '</td>' +
-	                               '<td width="10%">' + evt.priceRange + '</td>' +
-	                               '<td width="15%"><a href="/?adminEditEvent&id=' + evt.eventId + '"><button class="btn btn-primary">Edit</button></a>&nbsp;<a href="/adminDelete&type=event&id=' + evt.eventId + '"><button class="btn btn-danger">Delete</button></a></td>' +
-	                               '</tr>';
-	                });
-	                content += '</tbody></table>';
-	                $('#event-container').html(content);
-	            },
-	            error: function(xhr) {
-	                console.log('Failed to retrieve universities:', xhr.responseText);
-	                $('#event-error').text('Failed to retrieve university data: ' + xhr.responseText);
-	            }
-	        });
-	    });
+    $(document).ready(function() {
+        $(document).on('click', '.delete-event', function(event) {
+            event.preventDefault();
+            var eventId = $(this).data('id');
+            if (confirm('Do you want to delete this event?')) {
+                window.location.href = '/adminDelete?type=events&id=' + eventId;
+            }
+        });
+    });
+    function fetchBusinessById(businessId) {
+        return $.ajax({
+            url: `/api/business/getbyid`,
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            data: { businessId: businessId }
+        }).then(function(response) {
+            return response.name;
+        }).catch(function() {
+            return 'Not specified';
+        });
+    }
+
+    $(document).ready(function() {
+        var params = {
+            eventName: null,
+            location: null,
+            businessId: null
+        };
+
+        $.ajax({
+            url: '/api/events/getAll',
+            type: 'POST',
+            contentType: 'application/json',
+            headers: {
+                "Cookie": "JSESSIONID=934B0E0C2B4F0E35CC8454CB2A28AE6B"
+            },
+            data: JSON.stringify(params),
+            success: function(response) {
+                var content = '<table class="table"><thead class="thead-dark"><tr><th>Event</th><th>Business Name</th><th>Location</th><th>Max Seat</th><th>Price</th><th>Action</th></tr></thead><tbody>';
+
+                var eventPromises = response.event.map(function(wrapper) {
+                    var evt = wrapper.event;
+                    return fetchBusinessById(evt.businessId).then(function(businessName) {
+                        return {
+                            event: evt,
+                            businessName: businessName
+                        };
+                    });
+                });
+
+                Promise.all(eventPromises).then(function(allEventData) {
+                    allEventData.forEach(function(data) {
+                        var evt = data.event;
+                        var businessName = data.businessName;
+
+                        content += '<tr class="culture-entry">' +
+                            '<td width="25%">' + evt.eventName + '</td>' +
+                            '<td width="20%">' + businessName + '</td>' +
+                            '<td width="10%">' + evt.location + '</td>' +
+                            '<td width="10%">' + evt.maxSeat + '</td>' +
+                            '<td width="10%">' + evt.priceRange + '</td>' +
+                            '<td width="15%"><a href="#" class="delete-event" data-id="' + evt.eventId + '"><button class="btn btn-danger">Delete</button></a></td>' +
+                            '</tr>';
+                    });
+
+                    content += '</tbody></table>';
+                    $('#event-container').html(content);
+                }).catch(function(error) {
+                    console.error('Failed to retrieve business names:', error);
+                    $('#event-error').text('Failed to retrieve business names.');
+                });
+            },
+            error: function(xhr) {
+                console.log('Failed to retrieve events:', xhr.responseText);
+                $('#event-error').text('Failed to retrieve event data: ' + JSON.stringify(params));
+            }
+        });
+    });
+
+
 	</script>
     <script>
     $(document).ready(function() {

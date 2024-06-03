@@ -5,24 +5,29 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fyp.groot.entity.University;
 import com.fyp.groot.model.GetUniversitiesResponse;
 import com.fyp.groot.model.GetUniversityByIdResponse;
 import com.fyp.groot.service.UniversityService;
 
+/**
+ * UniversityController handles HTTP requests for university-related operations.
+ */
 @RestController
 @RequestMapping("/api/university")
 public class UniversityController {
-	
-	@Autowired
+
+    @Autowired
     private UniversityService universityService;
-		
-	@GetMapping("/getAll")
+
+    /**
+     * Handles GET requests to get all universities.
+     * 
+     * @return a ResponseEntity containing the response with the list of all universities
+     */
+    @GetMapping("/getAll")
     public ResponseEntity<GetUniversitiesResponse> viewUniversities() {
         List<University> universities = universityService.getAllUniversities();
         GetUniversitiesResponse response = new GetUniversitiesResponse();
@@ -30,39 +35,53 @@ public class UniversityController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-	@GetMapping("/getOne")
-	public ResponseEntity<GetUniversityByIdResponse> viewUniversities(@RequestParam String id) {
-		University university = universityService.getUniversityById(Long.parseLong(id));
-		GetUniversityByIdResponse response = new GetUniversityByIdResponse(university);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
-	
-	//Example for getting on foreign key
-//	@GetMapping("/by-student/{studentId}") // Fetch universities by student ID (foreign key)
-//	public ResponseEntity<List<UniversityResponse>> getUniversitiesByStudentId(@PathVariable Long studentId) {
-//	    List<UniversityResponse> responses = universityService.getUniversitiesByStudentId(studentId);
-//	    return ResponseEntity.ok(responses);
-//	}
-	
-	
-	
-	
+    /**
+     * Handles GET requests to get a university by its ID.
+     * 
+     * @param id the ID of the university to retrieve
+     * @return a ResponseEntity containing the university details
+     */
+    @GetMapping("/getOne")
+    public ResponseEntity<GetUniversityByIdResponse> viewUniversity(@RequestParam String id) {
+        University university = universityService.getUniversityById(Long.parseLong(id));
+        GetUniversityByIdResponse response = new GetUniversityByIdResponse(university);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
-//	@PostMapping("/addUniversity")
-//    public ResponseEntity<AddUniversityResponse> addUniversity(@RequestBody AddUniversityRequest request) {
-//        University university = new University();
-//        university.setUniversityName(request.getUniversityName());
-//        university.setCity(request.getCity());
-//        university.setLocation(request.getLocation());
-//        university.setAddress(request.getAddress());
-//
-//        University addedUniversity = universityService.addUniversity(university);
-//
-//        AddUniversityResponse response = new AddUniversityResponse();
-//        response.setUniversityId(addedUniversity.getUniversityId());
-//        response.setMessage("University added successfully");
-//
-//        return new ResponseEntity<>(response, HttpStatus.CREATED);
-//    }
-	
+    /**
+     * Handles POST requests to add a new university.
+     * 
+     * @param university the request body containing the new university details
+     * @return a ResponseEntity containing the added university
+     */
+    @PostMapping("/add")
+    public ResponseEntity<University> addUniversity(@RequestBody University university) {
+        University addedUniversity = universityService.addUniversity(university);
+        return new ResponseEntity<>(addedUniversity, HttpStatus.CREATED);
+    }
+
+    /**
+     * Handles PUT requests to update a university.
+     * 
+     * @param universityId the ID of the university to update
+     * @param university the request body containing the updated university details
+     * @return a ResponseEntity containing the updated university
+     */
+    @PutMapping("/update/{id}")
+    public ResponseEntity<University> updateUniversity(@PathVariable("id") Long universityId, @RequestBody University university) {
+        University updatedUniversity = universityService.updateUniversity(university, universityId);
+        return new ResponseEntity<>(updatedUniversity, HttpStatus.OK);
+    }
+
+    /**
+     * Handles DELETE requests to delete a university by its ID.
+     * 
+     * @param universityId the ID of the university to delete
+     * @return a ResponseEntity with HTTP status OK
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteUniversity(@PathVariable("id") Long universityId) {
+        universityService.deleteUniversity(universityId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
